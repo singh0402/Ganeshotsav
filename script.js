@@ -65,29 +65,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const eventCards = document.querySelectorAll('.event-card');
     console.log('Event Cards Found:', eventCards.length);
     
+    // Force events to be visible on all devices
+    eventCards.forEach(card => {
+        card.style.display = 'block';
+        card.style.visibility = 'visible';
+        card.style.opacity = '1';
+    });
+    
     // Force flexbox layout on mobile
     if (window.innerWidth <= 768) {
         const eventsGrid = document.querySelector('.events-grid');
         if (eventsGrid) {
             eventsGrid.style.display = 'flex';
             eventsGrid.style.flexDirection = 'column';
+            eventsGrid.style.visibility = 'visible';
+            eventsGrid.style.opacity = '1';
         }
     }
+    
+    // Force show events after a short delay to override any CSS conflicts
+    setTimeout(() => {
+        forceShowEvents();
+    }, 100);
+    
+    // Also force show events after a longer delay to ensure they're visible
+    setTimeout(() => {
+        forceShowEvents();
+    }, 500);
 });
 
 // Handle window resize for mobile responsiveness
 window.addEventListener('resize', () => {
     const eventsGrid = document.querySelector('.events-grid');
+    const eventCards = document.querySelectorAll('.event-card');
+    
+    // Always ensure events are visible
+    eventCards.forEach(card => {
+        card.style.display = 'block';
+        card.style.visibility = 'visible';
+        card.style.opacity = '1';
+    });
     
     if (window.innerWidth <= 768) {
         if (eventsGrid) {
             eventsGrid.style.display = 'flex';
             eventsGrid.style.flexDirection = 'column';
+            eventsGrid.style.visibility = 'visible';
+            eventsGrid.style.opacity = '1';
         }
     } else {
         if (eventsGrid) {
             eventsGrid.style.display = 'grid';
             eventsGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
+            eventsGrid.style.visibility = 'visible';
+            eventsGrid.style.opacity = '1';
         }
     }
 });
@@ -233,7 +264,7 @@ function showNotification(message, type = 'info') {
     document.body.appendChild(notification);
 }
 
-// Add CSS animations for notifications
+// Add CSS animations for notifications and critical event visibility overrides
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideInRight {
@@ -277,6 +308,71 @@ style.textContent = `
     
     .notification-close:hover {
         opacity: 0.8;
+    }
+    
+    /* CRITICAL: Force events to be visible on all devices */
+    #events {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+    
+    .events-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+    
+    .event-card {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+    
+    /* Mobile-specific overrides */
+    @media (max-width: 768px) {
+        #events {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            padding: 60px 0 !important;
+        }
+        
+        .events-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 1.5rem !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 2rem 0 !important;
+            padding: 0 !important;
+        }
+        
+        .event-card {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 0 1.5rem 0 !important;
+            padding: 1.5rem !important;
+        }
     }
 `;
 document.head.appendChild(style);
@@ -448,6 +544,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Force show all events function
+function forceShowEvents() {
+    const eventsGrid = document.querySelector('.events-grid');
+    const eventCards = document.querySelectorAll('.event-card');
+    
+    if (eventsGrid) {
+        eventsGrid.style.display = 'flex';
+        eventsGrid.style.flexDirection = 'column';
+        eventsGrid.style.visibility = 'visible';
+        eventsGrid.style.opacity = '1';
+        eventsGrid.style.width = '100%';
+        eventsGrid.style.maxWidth = '100%';
+        eventsGrid.style.overflow = 'visible';
+    }
+    
+    eventCards.forEach(card => {
+        card.style.display = 'block';
+        card.style.visibility = 'visible';
+        card.style.opacity = '1';
+        card.style.width = '100%';
+        card.style.maxWidth = '100%';
+        card.style.overflow = 'visible';
+    });
+    
+    console.log('Events forced to be visible. Total cards:', eventCards.length);
+    
+    // Debug: Log computed styles for first few cards
+    if (eventCards.length > 0) {
+        console.log('First event card computed styles:', {
+            display: window.getComputedStyle(eventCards[0]).display,
+            visibility: window.getComputedStyle(eventCards[0]).visibility,
+            opacity: window.getComputedStyle(eventCards[0]).opacity,
+            width: window.getComputedStyle(eventCards[0]).width,
+            height: window.getComputedStyle(eventCards[0]).height
+        });
+    }
+}
+
 // Add event filtering functionality
 function filterEvents(category) {
     const eventCards = document.querySelectorAll('.event-card');
@@ -480,6 +614,65 @@ function searchEvents(query) {
 }
 
 
+
+// Add window load event to ensure events are visible
+window.addEventListener('load', () => {
+    console.log('Window loaded, forcing events to be visible...');
+    forceShowEvents();
+    
+    // Additional check after images and resources are loaded
+    setTimeout(() => {
+        forceShowEvents();
+    }, 1000);
+});
+
+// Add mutation observer to watch for changes that might hide events
+const eventsObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && 
+            (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
+            // Check if events are hidden and force them visible
+            const eventCards = document.querySelectorAll('.event-card');
+            eventCards.forEach(card => {
+                if (card.style.display === 'none' || 
+                    card.style.visibility === 'hidden' || 
+                    card.style.opacity === '0') {
+                    card.style.display = 'block';
+                    card.style.visibility = 'visible';
+                    card.style.opacity = '1';
+                }
+            });
+        }
+    });
+});
+
+// Start observing the events section for changes
+document.addEventListener('DOMContentLoaded', () => {
+    const eventsSection = document.querySelector('#events');
+    if (eventsSection) {
+        eventsObserver.observe(eventsSection, {
+            attributes: true,
+            attributeFilter: ['style', 'class'],
+            subtree: true
+        });
+    }
+    
+    // Periodic check to ensure events stay visible
+    setInterval(() => {
+        const eventCards = document.querySelectorAll('.event-card');
+        eventCards.forEach(card => {
+            const computedStyle = window.getComputedStyle(card);
+            if (computedStyle.display === 'none' || 
+                computedStyle.visibility === 'hidden' || 
+                parseFloat(computedStyle.opacity) === 0) {
+                console.log('Event card was hidden, forcing visible:', card);
+                card.style.display = 'block';
+                card.style.visibility = 'visible';
+                card.style.opacity = '1';
+            }
+        });
+    }, 2000); // Check every 2 seconds
+});
 
 // Add event reminder functionality
 function setEventReminder(eventName, eventTime, eventDate) {
@@ -677,4 +870,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 console.log('Windows Society Ganeshotsav 2025 website loaded successfully! 🎉');
 console.log('Festival Dates: August 27 - September 6, 2025');
-console.log('Total Events: 25+ activities and competitions'); 
+console.log('Total Events: 25+ activities and competitions');
+
+// Add a test button to manually show events (for debugging)
+document.addEventListener('DOMContentLoaded', () => {
+    const testButton = document.createElement('button');
+    testButton.textContent = '🔍 Debug: Show Events';
+    testButton.style.cssText = `
+        position: fixed;
+        top: 100px;
+        left: 20px;
+        z-index: 10000;
+        background: #8B4513;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+    `;
+    testButton.addEventListener('click', () => {
+        console.log('Debug button clicked');
+        forceShowEvents();
+        alert('Events forced visible! Check console for details.');
+    });
+    document.body.appendChild(testButton);
+}); 
