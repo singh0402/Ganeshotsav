@@ -167,15 +167,7 @@ registrationForm.addEventListener('submit', function(e) {
     // Reset form
     this.reset();
     
-    // Log registration data (in real app, this would be sent to server)
-    console.log('Registration Data:', {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        age: data.age,
-        events: selectedEvents,
-        message: data.message
-    });
+    // Registration data would be sent to server in real app
 });
 
 // Contact form handling
@@ -205,13 +197,7 @@ contactForm.addEventListener('submit', function(e) {
     // Reset form
     this.reset();
     
-    // Log contact data (in real app, this would be sent to server)
-    console.log('Contact Data:', {
-        name: data.contactName,
-        email: data.contactEmail,
-        subject: data.contactSubject,
-        message: data.contactMessage
-    });
+    // Contact data would be sent to server in real app
 });
 
 // Notification system
@@ -372,6 +358,102 @@ style.textContent = `
             margin: 0 0 1.5rem 0 !important;
             padding: 1.5rem !important;
         }
+        
+        /* Mobile music player adjustments */
+        .music-player {
+            bottom: 20px !important;
+            left: 20px !important;
+            right: 20px !important;
+            min-width: auto !important;
+            width: calc(100% - 40px) !important;
+        }
+        
+        .music-controls {
+            flex-direction: column !important;
+            gap: 10px !important;
+            text-align: center !important;
+        }
+        
+        .volume-control {
+            justify-content: center !important;
+        }
+    }
+    
+    /* Music player specific styles */
+    .music-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .music-toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        background: #8B4513;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+    
+    .music-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    
+    .music-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .music-title {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #FFD700;
+    }
+    
+    .volume-control {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .volume-slider {
+        width: 80px;
+        height: 4px;
+        background: #FFD700;
+        border-radius: 2px;
+        outline: none;
+        -webkit-appearance: none;
+    }
+    
+    .volume-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        background: #FFD700;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    
+    .volume-slider::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: #FFD700;
+        border-radius: 50%;
+        cursor: pointer;
+        border: none;
+    }
+    
+    .volume-icon {
+        color: #FFD700;
+        font-size: 0.9rem;
     }
 `;
 document.head.appendChild(style);
@@ -850,35 +932,136 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         addEventCountdown();
     } catch (error) {
-        console.log('Event countdown initialization skipped:', error.message);
+        // Event countdown initialization skipped
     }
 });
 
-console.log('Windows Society Ganeshotsav 2025 website loaded successfully! 🎉');
-console.log('Festival Dates: August 27 - September 6, 2025');
-console.log('Total Events: 25+ activities and competitions');
+// Website loaded successfully
 
-// Add a test button to manually show events (for debugging)
-document.addEventListener('DOMContentLoaded', () => {
-    const testButton = document.createElement('button');
-    testButton.textContent = '🔍 Debug: Show Events';
-    testButton.style.cssText = `
-        position: fixed;
-        top: 100px;
-        left: 20px;
-        z-index: 10000;
-        background: #8B4513;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 12px;
+// Background Music Player
+function createMusicPlayer() {
+    // Create music player container
+    const musicPlayer = document.createElement('div');
+    musicPlayer.className = 'music-player';
+    musicPlayer.innerHTML = `
+        <div class="music-controls">
+            <button class="music-toggle" id="musicToggle">
+                <i class="fas fa-play" id="musicIcon"></i>
+            </button>
+            <div class="music-info">
+                <span class="music-title">Ganesh Aarti</span>
+                <div class="volume-control">
+                    <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
+                    <i class="fas fa-volume-up volume-icon"></i>
+                </div>
+            </div>
+        </div>
+        <audio id="backgroundMusic" loop>
+            <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+            <!-- Fallback: You can replace this with actual Ganesh Aarti audio file -->
+        </audio>
     `;
-    testButton.addEventListener('click', () => {
-        console.log('Debug button clicked');
-        forceShowEvents();
-        alert('Events forced visible! Check console for details.');
+    
+    // Add styles
+    musicPlayer.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        background: rgba(139, 69, 19, 0.95);
+        color: white;
+        padding: 15px;
+        border-radius: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        border: 2px solid #FFD700;
+        transition: all 0.3s ease;
+        min-width: 200px;
+    `;
+    
+    // Add hover effect
+    musicPlayer.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+        this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.4)';
     });
-    document.body.appendChild(testButton);
+    
+    musicPlayer.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+    });
+    
+    // Add to page
+    document.body.appendChild(musicPlayer);
+    
+    // Get elements
+    const musicToggle = document.getElementById('musicToggle');
+    const musicIcon = document.getElementById('musicIcon');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const volumeSlider = document.getElementById('volumeSlider');
+    
+    // Music control functionality
+    let isPlaying = false;
+    
+    musicToggle.addEventListener('click', function() {
+        if (isPlaying) {
+            backgroundMusic.pause();
+            musicIcon.className = 'fas fa-play';
+            isPlaying = false;
+            this.style.background = '#8B4513';
+        } else {
+            backgroundMusic.play().catch(e => {
+                console.log('Auto-play prevented. User must interact first.');
+                showNotification('Click play to start music', 'info');
+            });
+            musicIcon.className = 'fas fa-pause';
+            isPlaying = true;
+            this.style.background = '#FFD700';
+            this.style.color = '#8B4513';
+        }
+    });
+    
+    // Volume control
+    volumeSlider.addEventListener('input', function() {
+        backgroundMusic.volume = this.value / 100;
+        
+        // Update volume icon
+        const volumeIcon = document.querySelector('.volume-icon');
+        if (this.value == 0) {
+            volumeIcon.className = 'fas fa-volume-mute';
+        } else if (this.value < 50) {
+            volumeIcon.className = 'fas fa-volume-down';
+        } else {
+            volumeIcon.className = 'fas fa-volume-up';
+        }
+    });
+    
+    // Add mobile touch support
+    musicPlayer.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        musicToggle.click();
+    });
+    
+    // Auto-pause when page becomes hidden (mobile optimization)
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden && isPlaying) {
+            backgroundMusic.pause();
+            musicIcon.className = 'fas fa-play';
+            isPlaying = false;
+            musicToggle.style.background = '#8B4513';
+        }
+    });
+    
+    // Show music player after user interaction
+    document.addEventListener('click', function() {
+        musicPlayer.style.opacity = '1';
+    }, { once: true });
+    
+    // Initially hide music player until user interacts
+    musicPlayer.style.opacity = '0';
+    musicPlayer.style.transition = 'opacity 0.5s ease';
+}
+
+// Initialize music player when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    createMusicPlayer();
 }); 
