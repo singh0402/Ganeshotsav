@@ -334,17 +334,43 @@ body {
 }
 
 .events-grid {
-    display: grid !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 3rem;
 }
 
+@media (min-width: 769px) {
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+}
+
+/* Mobile-first approach - Events are always visible */
 .event-card {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
+@media (min-width: 769px) {
+    .event-card {
+        padding: 2rem;
+        margin-bottom: 0;
+    }
+}
+
+/* Mobile-specific event styling */
 @media (max-width: 768px) {
     .events {
         padding: 60px 0;
@@ -352,44 +378,6 @@ body {
     
     .events .container {
         padding: 0 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .events {
-        padding: 40px 0;
-    }
-    
-    .events .container {
-        padding: 0 15px;
-    }
-}
-
-.events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
-
-@media (max-width: 768px) {
-    .events-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem !important;
-        margin: 0 10px !important;
-        display: grid !important;
-    }
-    
-    .event-card {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: 100% !important;
-        max-width: none !important;
-    }
-    
-    .event-card {
-        padding: 1.5rem;
-        margin: 0;
     }
     
     .event-details {
@@ -429,18 +417,47 @@ body {
     }
 }
 
-.event-card {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border: 1px solid #f0f0f0;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    min-height: 200px;
+@media (max-width: 480px) {
+    .events {
+        padding: 40px 0;
+    }
+    
+    .events .container {
+        padding: 0 15px;
+    }
+    
+    .event-card {
+        padding: 1rem;
+    }
+    
+    .event-details {
+        padding: 0.8rem;
+    }
+    
+    .contact-persons span {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.5rem;
+    }
+    
+    .event-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .event-icon i {
+        font-size: 1.2rem;
+    }
+    
+    .event-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .event-card p {
+        font-size: 0.85rem;
+    }
 }
+
+
 
 .event-card:hover {
     transform: translateY(-10px);

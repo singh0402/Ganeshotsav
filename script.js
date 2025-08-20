@@ -61,45 +61,33 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
     
-    // Debug: Ensure events are visible
-    const eventsSection = document.querySelector('.events');
-    const eventsGrid = document.querySelector('.events-grid');
+    // Ensure events are visible on all devices
     const eventCards = document.querySelectorAll('.event-card');
+    console.log('Event Cards Found:', eventCards.length);
     
-    console.log('Events Section:', eventsSection);
-    console.log('Events Grid:', eventsGrid);
-    console.log('Event Cards Count:', eventCards.length);
-    
-    // Force visibility on mobile
+    // Force flexbox layout on mobile
     if (window.innerWidth <= 768) {
-        eventCards.forEach(card => {
-            card.style.display = 'block';
-            card.style.visibility = 'visible';
-            card.style.opacity = '1';
-        });
-        
+        const eventsGrid = document.querySelector('.events-grid');
         if (eventsGrid) {
-            eventsGrid.style.display = 'grid';
-            eventsGrid.style.gridTemplateColumns = '1fr';
+            eventsGrid.style.display = 'flex';
+            eventsGrid.style.flexDirection = 'column';
         }
     }
 });
 
 // Handle window resize for mobile responsiveness
 window.addEventListener('resize', () => {
-    const eventCards = document.querySelectorAll('.event-card');
     const eventsGrid = document.querySelector('.events-grid');
     
     if (window.innerWidth <= 768) {
-        eventCards.forEach(card => {
-            card.style.display = 'block';
-            card.style.visibility = 'visible';
-            card.style.opacity = '1';
-        });
-        
+        if (eventsGrid) {
+            eventsGrid.style.display = 'flex';
+            eventsGrid.style.flexDirection = 'column';
+        }
+    } else {
         if (eventsGrid) {
             eventsGrid.style.display = 'grid';
-            eventsGrid.style.gridTemplateColumns = '1fr';
+            eventsGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
         }
     }
 });
