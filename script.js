@@ -472,11 +472,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Countdown timer for registration deadline
+// Countdown timer for festival start
 function updateCountdown() {
-    const deadline = new Date('August 25, 2025 23:59:59').getTime();
+    const festivalStart = new Date('August 27, 2025 00:00:00').getTime();
     const now = new Date().getTime();
-    const distance = deadline - now;
+    const distance = festivalStart - now;
     
     if (distance > 0) {
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -496,10 +496,10 @@ function updateCountdown() {
             }
         }
     } else {
-        // Registration deadline passed
+        // Festival has started
         const countdownElement = document.querySelector('.countdown-timer');
         if (countdownElement) {
-            countdownElement.innerHTML = '<div class="countdown-expired">Registration Closed</div>';
+            countdownElement.innerHTML = '<div class="countdown-expired">🎉 Festival Started! 🎉</div>';
         }
     }
 }
