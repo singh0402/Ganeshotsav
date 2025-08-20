@@ -358,102 +358,6 @@ style.textContent = `
             margin: 0 0 1.5rem 0 !important;
             padding: 1.5rem !important;
         }
-        
-        /* Mobile music player adjustments */
-        .music-player {
-            bottom: 20px !important;
-            left: 20px !important;
-            right: 20px !important;
-            min-width: auto !important;
-            width: calc(100% - 40px) !important;
-        }
-        
-        .music-controls {
-            flex-direction: column !important;
-            gap: 10px !important;
-            text-align: center !important;
-        }
-        
-        .volume-control {
-            justify-content: center !important;
-        }
-    }
-    
-    /* Music player specific styles */
-    .music-controls {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-    
-    .music-toggle {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: none;
-        background: #8B4513;
-        color: white;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-    }
-    
-    .music-toggle:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    }
-    
-    .music-info {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    .music-title {
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: #FFD700;
-    }
-    
-    .volume-control {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .volume-slider {
-        width: 80px;
-        height: 4px;
-        background: #FFD700;
-        border-radius: 2px;
-        outline: none;
-        -webkit-appearance: none;
-    }
-    
-    .volume-slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 16px;
-        height: 16px;
-        background: #FFD700;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-    
-    .volume-slider::-moz-range-thumb {
-        width: 16px;
-        height: 16px;
-        background: #FFD700;
-        border-radius: 50%;
-        cursor: pointer;
-        border: none;
-    }
-    
-    .volume-icon {
-        color: #FFD700;
-        font-size: 0.9rem;
     }
 `;
 document.head.appendChild(style);
@@ -938,149 +842,78 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Website loaded successfully
 
-// Background Music Player
-function createMusicPlayer() {
-    // Create music player container
-    const musicPlayer = document.createElement('div');
-    musicPlayer.className = 'music-player';
-    musicPlayer.innerHTML = `
-        <div class="music-controls">
-            <button class="music-toggle" id="musicToggle">
-                <i class="fas fa-play" id="musicIcon"></i>
-            </button>
-            <div class="music-info">
-                <span class="music-title">Jai Ganesh Deva</span>
-                <div class="volume-control">
-                    <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
-                    <i class="fas fa-volume-up volume-icon"></i>
-                </div>
-            </div>
-        </div>
-        <audio id="backgroundMusic" loop>
-            <source src="jai-ganesh-deva.mp3" type="audio/mpeg">
-            <source src="jai-ganesh-deva.ogg" type="audio/ogg">
-            <!-- Fallback: Traditional Ganesh Aarti -->
-            Your browser does not support the audio element.
-        </audio>
+// Background Music Player - Hidden Player with Auto-play
+function createBackgroundMusic() {
+    // Create hidden audio element
+    const backgroundMusic = document.createElement('audio');
+    backgroundMusic.id = 'backgroundMusic';
+    backgroundMusic.loop = true;
+    backgroundMusic.volume = 0.3; // Set to 30% volume for background
+    backgroundMusic.preload = 'auto';
+    
+    // Add audio sources
+    backgroundMusic.innerHTML = `
+        <source src="jai-ganesh-deva.mp3" type="audio/mpeg">
+        <source src="jai-ganesh-deva.ogg" type="audio/ogg">
     `;
     
-    // Add styles
-    musicPlayer.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        left: 30px;
-        background: rgba(139, 69, 19, 0.95);
-        color: white;
-        padding: 15px;
-        border-radius: 25px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        backdrop-filter: blur(10px);
-        border: 2px solid #FFD700;
-        transition: all 0.3s ease;
-        min-width: 200px;
-    `;
-    
-    // Add hover effect
-    musicPlayer.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-5px)';
-        this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.4)';
-    });
-    
-    musicPlayer.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
-    });
-    
-    // Add to page
-    document.body.appendChild(musicPlayer);
-    
-    // Get elements
-    const musicToggle = document.getElementById('musicToggle');
-    const musicIcon = document.getElementById('musicIcon');
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    const volumeSlider = document.getElementById('volumeSlider');
-    const musicTitle = document.querySelector('.music-title');
-    
-    // Music control functionality
-    let isPlaying = false;
+    // Add to page (hidden)
+    document.body.appendChild(backgroundMusic);
     
     // Audio loading and error handling
     backgroundMusic.addEventListener('loadstart', function() {
-        musicTitle.textContent = 'Loading...';
+        console.log('Loading Jai Ganesh Deva...');
     });
     
     backgroundMusic.addEventListener('canplay', function() {
-        musicTitle.textContent = 'Jai Ganesh Deva';
-        musicToggle.disabled = false;
+        console.log('Jai Ganesh Deva ready to play');
+        // Try to play automatically after user interaction
+        document.addEventListener('click', function startMusic() {
+            backgroundMusic.play().then(() => {
+                console.log('Jai Ganesh Deva playing in background');
+                showNotification('🎵 Jai Ganesh Deva playing in background', 'success');
+            }).catch(e => {
+                console.log('Auto-play prevented, user must interact first');
+            });
+            document.removeEventListener('click', startMusic);
+        }, { once: true });
     });
     
     backgroundMusic.addEventListener('error', function() {
-        musicTitle.textContent = 'Audio not available';
-        musicToggle.disabled = true;
+        console.log('Audio file not found. Please check the file path.');
         showNotification('Audio file not found. Please check the file path.', 'error');
-    });
-    
-    musicToggle.addEventListener('click', function() {
-        if (isPlaying) {
-            backgroundMusic.pause();
-            musicIcon.className = 'fas fa-play';
-            isPlaying = false;
-            this.style.background = '#8B4513';
-            this.style.color = 'white';
-        } else {
-            backgroundMusic.play().catch(e => {
-                showNotification('Click play to start Jai Ganesh Deva', 'info');
-            });
-            musicIcon.className = 'fas fa-pause';
-            isPlaying = true;
-            this.style.background = '#FFD700';
-            this.style.color = '#8B4513';
-        }
-    });
-    
-    // Volume control
-    volumeSlider.addEventListener('input', function() {
-        backgroundMusic.volume = this.value / 100;
-        
-        // Update volume icon
-        const volumeIcon = document.querySelector('.volume-icon');
-        if (this.value == 0) {
-            volumeIcon.className = 'fas fa-volume-mute';
-        } else if (this.value < 50) {
-            volumeIcon.className = 'fas fa-volume-down';
-        } else {
-            volumeIcon.className = 'fas fa-volume-up';
-        }
-    });
-    
-    // Add mobile touch support
-    musicPlayer.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        musicToggle.click();
     });
     
     // Auto-pause when page becomes hidden (mobile optimization)
     document.addEventListener('visibilitychange', function() {
-        if (document.hidden && isPlaying) {
+        if (document.hidden) {
             backgroundMusic.pause();
-            musicIcon.className = 'fas fa-play';
-            isPlaying = false;
-            musicToggle.style.background = '#8B4513';
+        } else {
+            // Resume when page becomes visible again
+            if (backgroundMusic.readyState >= 2) { // HAVE_CURRENT_DATA
+                backgroundMusic.play().catch(e => {
+                    // Ignore play errors when resuming
+                });
+            }
         }
     });
     
-    // Show music player after user interaction
-    document.addEventListener('click', function() {
-        musicPlayer.style.opacity = '1';
-    }, { once: true });
-    
-    // Initially hide music player until user interacts
-    musicPlayer.style.opacity = '0';
-    musicPlayer.style.transition = 'opacity 0.5s ease';
+    // Add keyboard shortcut for music control (hidden feature)
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 'm') { // Ctrl+M to toggle music
+            if (backgroundMusic.paused) {
+                backgroundMusic.play().catch(e => {
+                    showNotification('🎵 Music resumed', 'success');
+                });
+            } else {
+                backgroundMusic.pause();
+                showNotification('🔇 Music paused', 'info');
+            }
+        }
+    });
 }
 
-// Initialize music player when DOM is loaded
+// Initialize background music when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    createMusicPlayer();
+    createBackgroundMusic();
 }); 
