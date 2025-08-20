@@ -949,7 +949,7 @@ function createMusicPlayer() {
                 <i class="fas fa-play" id="musicIcon"></i>
             </button>
             <div class="music-info">
-                <span class="music-title">Ganesh Aarti</span>
+                <span class="music-title">Jai Ganesh Deva</span>
                 <div class="volume-control">
                     <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
                     <i class="fas fa-volume-up volume-icon"></i>
@@ -957,8 +957,10 @@ function createMusicPlayer() {
             </div>
         </div>
         <audio id="backgroundMusic" loop>
-            <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
-            <!-- Fallback: You can replace this with actual Ganesh Aarti audio file -->
+            <source src="jai-ganesh-deva.mp3" type="audio/mpeg">
+            <source src="jai-ganesh-deva.ogg" type="audio/ogg">
+            <!-- Fallback: Traditional Ganesh Aarti -->
+            Your browser does not support the audio element.
         </audio>
     `;
     
@@ -998,9 +1000,26 @@ function createMusicPlayer() {
     const musicIcon = document.getElementById('musicIcon');
     const backgroundMusic = document.getElementById('backgroundMusic');
     const volumeSlider = document.getElementById('volumeSlider');
+    const musicTitle = document.querySelector('.music-title');
     
     // Music control functionality
     let isPlaying = false;
+    
+    // Audio loading and error handling
+    backgroundMusic.addEventListener('loadstart', function() {
+        musicTitle.textContent = 'Loading...';
+    });
+    
+    backgroundMusic.addEventListener('canplay', function() {
+        musicTitle.textContent = 'Jai Ganesh Deva';
+        musicToggle.disabled = false;
+    });
+    
+    backgroundMusic.addEventListener('error', function() {
+        musicTitle.textContent = 'Audio not available';
+        musicToggle.disabled = true;
+        showNotification('Audio file not found. Please check the file path.', 'error');
+    });
     
     musicToggle.addEventListener('click', function() {
         if (isPlaying) {
@@ -1008,10 +1027,10 @@ function createMusicPlayer() {
             musicIcon.className = 'fas fa-play';
             isPlaying = false;
             this.style.background = '#8B4513';
+            this.style.color = 'white';
         } else {
             backgroundMusic.play().catch(e => {
-                console.log('Auto-play prevented. User must interact first.');
-                showNotification('Click play to start music', 'info');
+                showNotification('Click play to start Jai Ganesh Deva', 'info');
             });
             musicIcon.className = 'fas fa-pause';
             isPlaying = true;
