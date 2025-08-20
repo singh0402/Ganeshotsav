@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Ensure events are visible on all devices
     const eventCards = document.querySelectorAll('.event-card');
-    console.log('Event Cards Found:', eventCards.length);
     
     // Force events to be visible on all devices
     eventCards.forEach(card => {
@@ -568,18 +567,7 @@ function forceShowEvents() {
         card.style.overflow = 'visible';
     });
     
-    console.log('Events forced to be visible. Total cards:', eventCards.length);
-    
-    // Debug: Log computed styles for first few cards
-    if (eventCards.length > 0) {
-        console.log('First event card computed styles:', {
-            display: window.getComputedStyle(eventCards[0]).display,
-            visibility: window.getComputedStyle(eventCards[0]).visibility,
-            opacity: window.getComputedStyle(eventCards[0]).opacity,
-            width: window.getComputedStyle(eventCards[0]).width,
-            height: window.getComputedStyle(eventCards[0]).height
-        });
-    }
+    // Events are now visible
 }
 
 // Add event filtering functionality
@@ -617,7 +605,6 @@ function searchEvents(query) {
 
 // Add window load event to ensure events are visible
 window.addEventListener('load', () => {
-    console.log('Window loaded, forcing events to be visible...');
     forceShowEvents();
     
     // Additional check after images and resources are loaded
@@ -665,7 +652,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (computedStyle.display === 'none' || 
                 computedStyle.visibility === 'hidden' || 
                 parseFloat(computedStyle.opacity) === 0) {
-                console.log('Event card was hidden, forcing visible:', card);
                 card.style.display = 'block';
                 card.style.visibility = 'visible';
                 card.style.opacity = '1';
