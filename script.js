@@ -612,28 +612,68 @@ function addEventCountdown() {
     const eventCards = document.querySelectorAll('.event-card');
     
     eventCards.forEach(card => {
-        const eventDate = card.querySelector('.event-details .time').textContent;
-        if (eventDate.includes('Aug') || eventDate.includes('Sep')) {
-            // Add countdown for upcoming events
-            const countdownElement = document.createElement('div');
-            countdownElement.className = 'event-countdown';
-            countdownElement.style.cssText = `
-                margin-top: 1rem;
-                padding: 0.5rem;
-                background: #f9f9f9;
-                border-radius: 8px;
-                font-size: 0.9rem;
-                color: #666;
-                text-align: center;
-            `;
-            
-            card.appendChild(countdownElement);
+        // Find the date/time information in the event-details
+        const dateElement = card.querySelector('.event-details span:first-child');
+        
+        if (dateElement && dateElement.textContent) {
+            const eventDate = dateElement.textContent;
+            if (eventDate.includes('Aug') || eventDate.includes('Sep')) {
+                // Add countdown for upcoming events
+                const countdownElement = document.createElement('div');
+                countdownElement.className = 'event-countdown';
+                countdownElement.style.cssText = `
+                    margin-top: 1rem;
+                    padding: 0.5rem;
+                    background: #f9f9f9;
+                    border-radius: 8px;
+                    font-size: 0.9rem;
+                    color: #666;
+                    text-align: center;
+                `;
+                
+                // Calculate days until event (simple example)
+                const today = new Date();
+                const eventYear = 2025;
+                let eventMonth, eventDay;
+                
+                if (eventDate.includes('Aug')) {
+                    eventMonth = 7; // August is month 7 (0-indexed)
+                    eventDay = parseInt(eventDate.match(/(\d+)/)[1]);
+                } else if (eventDate.includes('Sep')) {
+                    eventMonth = 8; // September is month 8 (0-indexed)
+                    eventDay = parseInt(eventDate.match(/(\d+)/)[1]);
+                }
+                
+                if (eventMonth !== undefined && eventDay) {
+                    const eventDateObj = new Date(eventYear, eventMonth, eventDay);
+                    const timeDiff = eventDateObj.getTime() - today.getTime();
+                    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    
+                    if (daysDiff > 0) {
+                        countdownElement.textContent = `${daysDiff} days until event`;
+                    } else if (daysDiff === 0) {
+                        countdownElement.textContent = 'Event is today!';
+                    } else {
+                        countdownElement.textContent = 'Event completed';
+                    }
+                } else {
+                    countdownElement.textContent = 'Event coming soon';
+                }
+                
+                card.appendChild(countdownElement);
+            }
         }
     });
 }
 
-// Initialize event countdown
-document.addEventListener('DOMContentLoaded', addEventCountdown);
+// Initialize event countdown with error handling
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        addEventCountdown();
+    } catch (error) {
+        console.log('Event countdown initialization skipped:', error.message);
+    }
+});
 
 console.log('Windows Society Ganeshotsav 2025 website loaded successfully! 🎉');
 console.log('Festival Dates: August 27 - September 6, 2025');
