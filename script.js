@@ -1430,144 +1430,622 @@ function copyLink() {
 
 
 
-// Mobile performance optimizations
-function initializeMobilePerformance() {
-    // Lazy loading for images
-    initializeLazyLoading();
+// Mobile UX Enhancements
+
+// Mobile-specific initialization
+function initializeMobileUX() {
+    // Add mobile-specific classes to body
+    if (window.innerWidth <= 768) {
+        document.body.classList.add('mobile-device');
+        
+        // Initialize mobile-specific features
+        initializeMobileNavigation();
+        initializeMobileGestures();
+        initializeMobilePerformance();
+        initializeMobileAccessibility();
+        initializeMobileForms();
+    }
     
-    // Optimize viewport for mobile
-    optimizeViewport();
+    // Handle orientation changes
+    window.addEventListener('orientationchange', handleOrientationChange);
     
-    // Add mobile-specific CSS classes
-    addMobileClasses();
-    
-    // Optimize animations for mobile
-    optimizeMobileAnimations();
-    
-    // Add mobile gesture hints
-    addGestureHints();
+    // Handle viewport changes
+    window.addEventListener('resize', handleMobileResize);
 }
 
-// Initialize lazy loading for images
-function initializeLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                observer.unobserve(img);
+// Enhanced mobile navigation
+function initializeMobileNavigation() {
+    // Smooth scroll to sections with mobile offset
+    document.querySelectorAll('.nav-link, .bottom-nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const offset = window.innerWidth <= 768 ? 80 : 0;
+                const targetPosition = targetSection.offsetTop - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                const navMenu = document.querySelector('.nav-menu');
+                const hamburger = document.querySelector('.hamburger');
+                if (navMenu && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
             }
         });
     });
     
-    images.forEach(img => imageObserver.observe(img));
+    // Add mobile navigation indicators
+    addMobileNavigationIndicators();
+    
+    // Initialize mobile bottom navigation highlighting
+    highlightCurrentSection();
 }
 
-// Optimize viewport for mobile
-function optimizeViewport() {
-    // Add viewport meta tag if not present
-    if (!document.querySelector('meta[name="viewport"]')) {
-        const viewport = document.createElement('meta');
-        viewport.name = 'viewport';
-        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover';
-        document.head.appendChild(viewport);
+// Add mobile navigation indicators
+function addMobileNavigationIndicators() {
+    // Create section indicators
+    const sections = document.querySelectorAll('section[id]');
+    const bottomNav = document.querySelector('.mobile-bottom-nav');
+    
+    if (bottomNav && sections.length > 0) {
+        sections.forEach(section => {
+            const indicator = document.createElement('div');
+            indicator.className = 'section-indicator';
+            indicator.style.cssText = `
+                position: absolute;
+                top: -2px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 2px;
+                background: #8B4513;
+                transition: width 0.3s ease;
+                border-radius: 1px;
+            `;
+            
+            section.appendChild(indicator);
+        });
+    }
+}
+
+// Highlight current section in mobile navigation
+function highlightCurrentSection() {
+    const sections = document.querySelectorAll('section[id]');
+    const bottomNavLinks = document.querySelectorAll('.bottom-nav-link');
+    
+    if (sections.length === 0 || bottomNavLinks.length === 0) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.id;
+                
+                // Update bottom navigation
+                bottomNavLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Update section indicator
+                const indicator = entry.target.querySelector('.section-indicator');
+                if (indicator) {
+                    indicator.style.width = '100%';
+                }
+            } else {
+                // Reset section indicator
+                const indicator = entry.target.querySelector('.section-indicator');
+                if (indicator) {
+                    indicator.style.width = '0';
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    sections.forEach(section => observer.observe(section));
+}
+
+// Enhanced mobile gestures
+function initializeMobileGestures() {
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    let isScrolling = false;
+    
+    // Touch start
+    document.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        startTime = Date.now();
+        isScrolling = false;
+    }, { passive: true });
+    
+    // Touch move
+    document.addEventListener('touchmove', function(e) {
+        if (!startX || !startY) return;
+        
+        const deltaX = e.touches[0].clientX - startX;
+        const deltaY = e.touches[0].clientY - startY;
+        
+        // Determine if user is scrolling or swiping
+        if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
+            isScrolling = true;
+        }
+    }, { passive: true });
+    
+    // Touch end - handle gestures
+    document.addEventListener('touchend', function(e) {
+        if (!startX || !startY || isScrolling) return;
+        
+        const deltaX = e.changedTouches[0].clientX - startX;
+        const deltaY = e.changedTouches[0].clientY - startY;
+        const deltaTime = Date.now() - startTime;
+        
+        // Minimum swipe distance and maximum time
+        const minSwipeDistance = 50;
+        const maxSwipeTime = 300;
+        
+        if (deltaTime < maxSwipeTime) {
+            // Horizontal swipe
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0) {
+                    // Swipe right - go to previous section
+                    handleSwipeRight();
+                } else {
+                    // Swipe left - go to next section
+                    handleSwipeLeft();
+                }
+            }
+            
+            // Vertical swipe
+            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > minSwipeDistance) {
+                if (deltaY > 0) {
+                    // Swipe down - scroll to top
+                    handleSwipeDown();
+                } else {
+                    // Swipe up - scroll to bottom
+                    handleSwipeUp();
+                }
+            }
+        }
+        
+        // Reset values
+        startX = 0;
+        startY = 0;
+        startTime = 0;
+    }, { passive: true });
+}
+
+// Mobile performance optimizations
+function initializeMobilePerformance() {
+    // Reduce animations on mobile for better performance
+    if (window.innerWidth <= 768) {
+        document.documentElement.style.setProperty('--animation-duration', '0.2s');
+        document.documentElement.style.setProperty('--animation-timing', 'ease-out');
+        
+        // Pause animations when scrolling for performance
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            document.body.classList.add('scrolling');
+            clearTimeout(scrollTimeout);
+            
+            scrollTimeout = setTimeout(() => {
+                document.body.classList.remove('scrolling');
+            }, 100);
+        }, { passive: true });
     }
     
-    // Add mobile-specific meta tags
-    const mobileMeta = [
-        { name: 'mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
-        { name: 'theme-color', content: '#8B4513' }
+    // Lazy load images on mobile
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                }
+            });
+        });
+        
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+}
+
+// Mobile accessibility improvements
+function initializeMobileAccessibility() {
+    // Add ARIA labels for mobile
+    const eventCards = document.querySelectorAll('.event-card');
+    eventCards.forEach((card, index) => {
+        const title = card.querySelector('.event-title')?.textContent || 'Event';
+        card.setAttribute('aria-label', `${title} - Tap for details`);
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        
+        // Add keyboard navigation
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+    
+    // Add skip links for mobile
+    addSkipLinks();
+    
+    // Improve focus management
+    improveFocusManagement();
+}
+
+// Add skip links for accessibility
+function addSkipLinks() {
+    const skipLinks = [
+        { href: '#home', text: 'Skip to main content' },
+        { href: '#events', text: 'Skip to events' },
+        { href: '#contact', text: 'Skip to contact' }
     ];
     
-    mobileMeta.forEach(meta => {
-        if (!document.querySelector(`meta[name="${meta.name}"]`)) {
-            const metaTag = document.createElement('meta');
-            metaTag.name = meta.name;
-            metaTag.content = meta.content;
-            document.head.appendChild(metaTag);
+    const skipContainer = document.createElement('div');
+    skipContainer.className = 'skip-links';
+    skipContainer.style.cssText = `
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        z-index: 1001;
+    `;
+    
+    skipLinks.forEach(link => {
+        const skipLink = document.createElement('a');
+        skipLink.href = link.href;
+        skipLink.textContent = link.text;
+        skipLink.style.cssText = `
+            background: #8B4513;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: top 0.3s ease;
+        `;
+        
+        skipLink.addEventListener('focus', function() {
+            this.style.top = '6px';
+        });
+        
+        skipLink.addEventListener('blur', function() {
+            this.style.top = '-40px';
+        });
+        
+        skipContainer.appendChild(skipLink);
+    });
+    
+    document.body.insertBefore(skipContainer, document.body.firstChild);
+}
+
+// Improve focus management
+function improveFocusManagement() {
+    // Trap focus in mobile menu when open
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            if (navMenu.classList.contains('active')) {
+                // Focus first menu item
+                const firstLink = navMenu.querySelector('.nav-link');
+                if (firstLink) {
+                    setTimeout(() => firstLink.focus(), 100);
+                }
+            }
+        });
+    }
+    
+    // Return focus when menu closes
+    document.addEventListener('click', function(e) {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.focus();
+            }
         }
     });
 }
 
-// Add mobile-specific CSS classes
-function addMobileClasses() {
-    const body = document.body;
+// Enhanced mobile forms
+function initializeMobileForms() {
+    const formInputs = document.querySelectorAll('input, textarea, select');
     
-    // Detect mobile device
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        body.classList.add('mobile-device');
-    }
-    
-    // Detect iOS
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        body.classList.add('ios-device');
-    }
-    
-    // Detect Android
-    if (/Android/.test(navigator.userAgent)) {
-        body.classList.add('android-device');
-    }
-    
-    // Detect touch capability
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-        body.classList.add('touch-device');
-    }
-    
-    // Detect screen size
-    if (window.innerWidth <= 768) {
-        body.classList.add('mobile-view');
-    }
-    
-    // Update on resize
-    window.addEventListener('resize', () => {
-        body.classList.toggle('mobile-view', window.innerWidth <= 768);
+    formInputs.forEach(input => {
+        // Prevent zoom on iOS
+        if (input.type === 'text' || input.type === 'email' || input.type === 'tel') {
+            input.style.fontSize = '16px';
+        }
+        
+        // Add mobile-friendly focus styles
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+            
+            // Scroll input into view on mobile
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    this.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }, 300);
+            }
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+        
+        // Add mobile-specific validation
+        input.addEventListener('input', function() {
+            validateMobileInput(this);
+        });
     });
+    
+    // Enhance form submission for mobile
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                showNotification('Message sent successfully! We will get back to you soon.', 'success');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+    }
 }
 
-// Optimize animations for mobile
-function initializeMobileAnimations() {
-    // Reduce animation complexity on mobile
-    if (window.innerWidth <= 768) {
-        document.documentElement.style.setProperty('--animation-duration', '0.2s');
-        document.documentElement.style.setProperty('--animation-timing', 'ease-out');
+// Validate mobile input
+function validateMobileInput(input) {
+    const value = input.value.trim();
+    const type = input.type;
+    let isValid = true;
+    let message = '';
+    
+    switch (type) {
+        case 'email':
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            isValid = emailRegex.test(value);
+            message = isValid ? '' : 'Please enter a valid email address';
+            break;
+        case 'tel':
+            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+            isValid = phoneRegex.test(value);
+            message = isValid ? '' : 'Please enter a valid phone number';
+            break;
+        case 'text':
+            isValid = value.length >= 2;
+            message = isValid ? '' : 'Please enter at least 2 characters';
+            break;
     }
     
-    // Pause animations when scrolling for performance
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-        document.body.classList.add('scrolling');
-        clearTimeout(scrollTimeout);
+    // Show/hide validation message
+    let validationMsg = input.parentElement.querySelector('.validation-message');
+    if (!validationMsg && !isValid) {
+        validationMsg = document.createElement('div');
+        validationMsg.className = 'validation-message';
+        validationMsg.style.cssText = `
+            color: #f44336;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        `;
+        validationMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i>${message}`;
+        input.parentElement.appendChild(validationMsg);
+    } else if (validationMsg && isValid) {
+        validationMsg.remove();
+    } else if (validationMsg && !isValid) {
+        validationMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i>${message}`;
+    }
+    
+    // Update input styling
+    input.style.borderColor = isValid ? '#4CAF50' : '#f44336';
+    input.style.backgroundColor = isValid ? 'white' : '#fff5f5';
+}
+
+// Handle orientation changes
+function handleOrientationChange() {
+    setTimeout(() => {
+        // Recalculate mobile-specific dimensions
+        if (window.innerWidth <= 768) {
+            document.body.classList.add('mobile-device');
+            initializeMobileUX();
+        } else {
+            document.body.classList.remove('mobile-device');
+        }
+    }, 100);
+}
+
+// Handle mobile resize
+function handleMobileResize() {
+    if (window.innerWidth <= 768) {
+        document.body.classList.add('mobile-device');
+    } else {
+        document.body.classList.remove('mobile-device');
+    }
+}
+
+// Initialize mobile UX when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initializeMobileUX();
+});
+
+// Add mobile-specific event listeners
+window.addEventListener('load', () => {
+    if (window.innerWidth <= 768) {
+        // Add mobile-specific features after page load
+        addMobileEnhancements();
+    }
+});
+
+// Add mobile enhancements
+function addMobileEnhancements() {
+    // Add pull-to-refresh functionality
+    addPullToRefresh();
+    
+    // Add mobile gesture hints
+    addMobileGestureHints();
+    
+    // Add mobile performance monitoring
+    addMobilePerformanceMonitoring();
+}
+
+// Add pull-to-refresh functionality
+function addPullToRefresh() {
+    let startY = 0;
+    let currentY = 0;
+    let pullDistance = 0;
+    let isPulling = false;
+    let refreshIndicator = null;
+    
+    // Create refresh indicator
+    function createRefreshIndicator() {
+        if (refreshIndicator) return refreshIndicator;
         
-        scrollTimeout = setTimeout(() => {
-            document.body.classList.remove('scrolling');
-        }, 100);
+        refreshIndicator = document.createElement('div');
+        refreshIndicator.className = 'pull-refresh-indicator';
+        refreshIndicator.innerHTML = `
+            <div class="refresh-content">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Pull to refresh</span>
+            </div>
+        `;
+        refreshIndicator.style.cssText = `
+            position: fixed;
+            top: -60px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(135deg, #8B4513, #FFD700);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: top 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        `;
+        
+        document.body.appendChild(refreshIndicator);
+        return refreshIndicator;
+    }
+    
+    // Touch start
+    document.addEventListener('touchstart', function(e) {
+        if (window.pageYOffset === 0) {
+            startY = e.touches[0].clientY;
+            isPulling = true;
+        }
+    }, { passive: true });
+    
+    // Touch move
+    document.addEventListener('touchmove', function(e) {
+        if (!isPulling) return;
+        
+        currentY = e.touches[0].clientY;
+        pullDistance = currentY - startY;
+        
+        if (pullDistance > 0 && window.pageYOffset === 0) {
+            e.preventDefault();
+            
+            const indicator = createRefreshIndicator();
+            const progress = Math.min(pullDistance / 100, 1);
+            
+            indicator.style.top = `${Math.min(pullDistance - 60, 0)}px`;
+            
+            if (pullDistance > 100) {
+                indicator.querySelector('.refresh-content span').textContent = 'Release to refresh';
+                indicator.querySelector('.refresh-content i').className = 'fas fa-arrow-down';
+            } else {
+                indicator.querySelector('.refresh-content span').textContent = 'Pull to refresh';
+                indicator.querySelector('.refresh-content i').className = 'fas fa-arrow-down';
+            }
+        }
+    }, { passive: false });
+    
+    // Touch end
+    document.addEventListener('touchend', function(e) {
+        if (!isPulling) return;
+        
+        if (pullDistance > 100) {
+            // Trigger refresh
+            const indicator = createRefreshIndicator();
+            indicator.querySelector('.refresh-content span').textContent = 'Refreshing...';
+            indicator.querySelector('.refresh-content i').className = 'fas fa-spinner fa-spin';
+            
+            // Simulate refresh
+            setTimeout(() => {
+                indicator.style.top = '-60px';
+                showNotification('Page refreshed!', 'success');
+                
+                setTimeout(() => {
+                    if (indicator.parentNode) {
+                        indicator.remove();
+                    }
+                }, 300);
+            }, 1500);
+        } else {
+            // Reset indicator
+            const indicator = createRefreshIndicator();
+            indicator.style.top = '-60px';
+        }
+        
+        // Reset values
+        isPulling = false;
+        pullDistance = 0;
     }, { passive: true });
 }
 
-// Add gesture hints for mobile users
-function addGestureHints() {
+// Add mobile gesture hints
+function addMobileGestureHints() {
     // Only show on first visit
-    if (localStorage.getItem('gestureHintsShown')) return;
+    if (localStorage.getItem('mobileGestureHintsShown')) return;
     
     setTimeout(() => {
         const hint = document.createElement('div');
-        hint.className = 'gesture-hint';
+        hint.className = 'mobile-gesture-hint';
         hint.innerHTML = `
             <div class="hint-content">
                 <i class="fas fa-hand-pointer"></i>
-                <span>Swipe left/right to navigate sections</span>
+                <span>Swipe left/right to navigate sections • Pull down to refresh</span>
                 <button class="hint-close">&times;</button>
             </div>
         `;
         
         hint.style.cssText = `
             position: fixed;
-            bottom: 100px;
+            bottom: 120px;
             left: 20px;
             right: 20px;
             background: rgba(139, 69, 19, 0.95);
@@ -1584,7 +2062,7 @@ function addGestureHints() {
         const closeBtn = hint.querySelector('.hint-close');
         closeBtn.addEventListener('click', () => {
             hint.remove();
-            localStorage.setItem('gestureHintsShown', 'true');
+            localStorage.setItem('mobileGestureHintsShown', 'true');
         });
         
         // Auto-remove after 8 seconds
@@ -1592,8 +2070,46 @@ function addGestureHints() {
             if (hint.parentNode) {
                 hint.style.animation = 'slideUpOut 0.5s ease';
                 setTimeout(() => hint.remove(), 500);
-                localStorage.setItem('gestureHintsShown', 'true');
+                localStorage.setItem('mobileGestureHintsShown', 'true');
             }
         }, 8000);
     }, 2000);
+}
+
+// Add mobile performance monitoring
+function addMobilePerformanceMonitoring() {
+    // Monitor scroll performance
+    let scrollCount = 0;
+    let lastScrollTime = Date.now();
+    
+    window.addEventListener('scroll', () => {
+        scrollCount++;
+        const now = Date.now();
+        
+        if (now - lastScrollTime > 1000) {
+            // If scrolling is too frequent, reduce animations
+            if (scrollCount > 50) {
+                document.body.classList.add('reduce-animations');
+            }
+            scrollCount = 0;
+            lastScrollTime = now;
+        }
+    }, { passive: true });
+    
+    // Monitor touch performance
+    let touchCount = 0;
+    let lastTouchTime = Date.now();
+    
+    document.addEventListener('touchstart', () => {
+        touchCount++;
+        const now = Date.now();
+        
+        if (now - lastTouchTime > 1000) {
+            if (touchCount > 30) {
+                document.body.classList.add('reduce-animations');
+            }
+            touchCount = 0;
+            lastTouchTime = now;
+        }
+    }, { passive: true });
 } 
