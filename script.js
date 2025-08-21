@@ -1,17 +1,4 @@
-// Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-}));
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -701,9 +688,7 @@ function shareEvent(eventName, eventTime, eventDate) {
 // Add keyboard navigation
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        // Close mobile menu
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+        // Handle escape key functionality
     }
 });
 
@@ -1192,7 +1177,6 @@ function initializePullToRefresh() {
             // Simulate refresh (in real app, this would refresh data)
             setTimeout(() => {
                 indicator.style.top = '-60px';
-                showNotification('Page refreshed!', 'success');
                 
                 // Refresh past events
                 hidePastEvents();
@@ -1444,6 +1428,14 @@ function initializeMobileUX() {
         initializeMobilePerformance();
         initializeMobileAccessibility();
         initializeMobileForms();
+        
+        // Initialize modern mobile features
+        initializeStaggeredAnimations();
+        initializeModernInteractions();
+        initializeBottomSheetNavigation();
+        initializeSkeletonLoading();
+        addHapticFeedback();
+        initializeVoiceNavigation();
     }
     
     // Handle orientation changes
@@ -1738,32 +1730,7 @@ function addSkipLinks() {
 
 // Improve focus management
 function improveFocusManagement() {
-    // Trap focus in mobile menu when open
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
-            if (navMenu.classList.contains('active')) {
-                // Focus first menu item
-                const firstLink = navMenu.querySelector('.nav-link');
-                if (firstLink) {
-                    setTimeout(() => firstLink.focus(), 100);
-                }
-            }
-        });
-    }
-    
-    // Return focus when menu closes
-    document.addEventListener('click', function(e) {
-        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
-                hamburger.focus();
-            }
-        }
-    });
+
 }
 
 // Enhanced mobile forms
@@ -2007,7 +1974,6 @@ function addPullToRefresh() {
             // Simulate refresh
             setTimeout(() => {
                 indicator.style.top = '-60px';
-                showNotification('Page refreshed!', 'success');
                 
                 setTimeout(() => {
                     if (indicator.parentNode) {
@@ -2112,4 +2078,245 @@ function addMobilePerformanceMonitoring() {
             lastTouchTime = now;
         }
     }, { passive: true });
+} 
+
+// ===== MODERN MOBILE FEATURES =====
+
+// Initialize staggered animations for event cards
+function initializeStaggeredAnimations() {
+    const eventCards = document.querySelectorAll('.event-card');
+    
+    // Create intersection observer for staggered animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Stagger the animation based on index
+                setTimeout(() => {
+                    entry.target.style.animation = `cardSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(40px) scale(0.95)';
+                }, index * 100);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '50px'
+    });
+    
+    eventCards.forEach(card => {
+        observer.observe(card);
+    });
+}
+
+// Initialize modern interactions (ripple effects, micro-animations)
+function initializeModernInteractions() {
+    // Add ripple effect to buttons
+    const buttons = document.querySelectorAll('.btn, .register-btn, .fab-button');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', createRippleEffect);
+        button.addEventListener('touchstart', createRippleEffect);
+    });
+    
+    // Add icon bounce effects
+    const icons = document.querySelectorAll('.fas, .far, .fab');
+    icons.forEach(icon => {
+        icon.addEventListener('click', () => {
+            icon.style.animation = 'iconBounce 0.6s ease';
+            setTimeout(() => {
+                icon.style.animation = '';
+            }, 600);
+        });
+    });
+}
+
+// Create ripple effect on button click
+function createRippleEffect(event) {
+    const button = event.currentTarget;
+    const ripple = document.createElement('span');
+    
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: buttonRipple 0.6s ease-out;
+        pointer-events: none;
+    `;
+    
+    button.style.position = 'relative';
+    button.style.overflow = 'hidden';
+    button.appendChild(ripple);
+    
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// Initialize bottom sheet navigation
+function initializeBottomSheetNavigation() {
+    // Create bottom sheet navigation
+    const bottomSheet = document.createElement('div');
+    bottomSheet.className = 'bottom-sheet-nav';
+    bottomSheet.innerHTML = `
+        <div class="bottom-sheet-handle"></div>
+        <div class="bottom-sheet-content">
+            <h3>Quick Navigation</h3>
+            <div class="bottom-sheet-links">
+                <a href="#hero" class="bottom-sheet-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#events" class="bottom-sheet-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Events</span>
+                </a>
+                <a href="#contact" class="bottom-sheet-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+                <a href="#about" class="bottom-sheet-link">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(bottomSheet);
+    
+    // Add bottom sheet trigger to FAB
+    const fabButton = document.querySelector('.fab-button');
+    if (fabButton) {
+        fabButton.addEventListener('click', () => {
+            bottomSheet.classList.toggle('active');
+        });
+    }
+    
+    // Close bottom sheet when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!bottomSheet.contains(e.target)) {
+            const fabButton = document.querySelector('.fab-button');
+            if (!fabButton || !fabButton.contains(e.target)) {
+                bottomSheet.classList.remove('active');
+            }
+        }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            bottomSheet.classList.remove('active');
+        }
+    });
+}
+
+// Initialize skeleton loading
+function initializeSkeletonLoading() {
+    // Show skeleton loading initially
+    const eventCards = document.querySelectorAll('.event-card');
+    
+    eventCards.forEach((card, index) => {
+        // Create skeleton version
+        const skeleton = card.cloneNode(true);
+        skeleton.className = 'skeleton-card';
+        skeleton.innerHTML = `
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-button"></div>
+        `;
+        
+        // Replace with skeleton temporarily
+        card.style.display = 'none';
+        card.parentNode.insertBefore(skeleton, card);
+        
+        // Show actual content after delay
+        setTimeout(() => {
+            skeleton.remove();
+            card.style.display = 'flex';
+            card.style.animation = `cardFadeIn 0.8s ease forwards`;
+        }, 500 + (index * 200));
+    });
+}
+
+// Add haptic feedback for mobile devices
+function addHapticFeedback() {
+    if ('vibrate' in navigator) {
+        const interactiveElements = document.querySelectorAll('.btn, .register-btn, .fab-button, .event-card');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('touchstart', () => {
+                navigator.vibrate(10);
+            });
+        });
+    }
+}
+
+// Initialize voice navigation support
+function initializeVoiceNavigation() {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+        
+        // Add voice command button
+        const voiceButton = document.createElement('button');
+        voiceButton.className = 'voice-nav-btn';
+        voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+        voiceButton.style.cssText = `
+            position: fixed;
+            bottom: 180px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B4513, #FFD700);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        `;
+        
+        document.body.appendChild(voiceButton);
+        
+        voiceButton.addEventListener('click', () => {
+            recognition.start();
+            voiceButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        });
+        
+        recognition.onresult = (event) => {
+            const command = event.results[0][0].transcript.toLowerCase();
+            voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+            
+            // Handle voice commands
+            if (command.includes('home') || command.includes('go home')) {
+                document.querySelector('#hero').scrollIntoView({ behavior: 'smooth' });
+            } else if (command.includes('events') || command.includes('show events')) {
+                document.querySelector('#events').scrollIntoView({ behavior: 'smooth' });
+            } else if (command.includes('contact') || command.includes('contact us')) {
+                document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+        
+        recognition.onerror = () => {
+            voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+        };
+    }
 } 
