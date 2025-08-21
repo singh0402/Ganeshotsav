@@ -1432,10 +1432,8 @@ function initializeMobileUX() {
         // Initialize modern mobile features
         initializeStaggeredAnimations();
         initializeModernInteractions();
-        initializeBottomSheetNavigation();
         initializeSkeletonLoading();
         addHapticFeedback();
-        initializeVoiceNavigation();
     }
     
     // Handle orientation changes
@@ -1463,13 +1461,7 @@ function initializeMobileNavigation() {
                     behavior: 'smooth'
                 });
                 
-                // Close mobile menu if open
-                const navMenu = document.querySelector('.nav-menu');
-                const hamburger = document.querySelector('.hamburger');
-                if (navMenu && navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    hamburger.classList.remove('active');
-                }
+                // Mobile menu handling removed
             }
         });
     });
@@ -2162,63 +2154,7 @@ function createRippleEffect(event) {
     }, 600);
 }
 
-// Initialize bottom sheet navigation
-function initializeBottomSheetNavigation() {
-    // Create bottom sheet navigation
-    const bottomSheet = document.createElement('div');
-    bottomSheet.className = 'bottom-sheet-nav';
-    bottomSheet.innerHTML = `
-        <div class="bottom-sheet-handle"></div>
-        <div class="bottom-sheet-content">
-            <h3>Quick Navigation</h3>
-            <div class="bottom-sheet-links">
-                <a href="#hero" class="bottom-sheet-link">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-                <a href="#events" class="bottom-sheet-link">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Events</span>
-                </a>
-                <a href="#contact" class="bottom-sheet-link">
-                    <i class="fas fa-envelope"></i>
-                    <span>Contact</span>
-                </a>
-                <a href="#about" class="bottom-sheet-link">
-                    <i class="fas fa-info-circle"></i>
-                    <span>About</span>
-                </a>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(bottomSheet);
-    
-    // Add bottom sheet trigger to FAB
-    const fabButton = document.querySelector('.fab-button');
-    if (fabButton) {
-        fabButton.addEventListener('click', () => {
-            bottomSheet.classList.toggle('active');
-        });
-    }
-    
-    // Close bottom sheet when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!bottomSheet.contains(e.target)) {
-            const fabButton = document.querySelector('.fab-button');
-            if (!fabButton || !fabButton.contains(e.target)) {
-                bottomSheet.classList.remove('active');
-            }
-        }
-    });
-    
-    // Close on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            bottomSheet.classList.remove('active');
-        }
-    });
-}
+
 
 // Initialize skeleton loading
 function initializeSkeletonLoading() {
@@ -2263,60 +2199,4 @@ function addHapticFeedback() {
     }
 }
 
-// Initialize voice navigation support
-function initializeVoiceNavigation() {
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-        
-        // Add voice command button
-        const voiceButton = document.createElement('button');
-        voiceButton.className = 'voice-nav-btn';
-        voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
-        voiceButton.style.cssText = `
-            position: fixed;
-            bottom: 180px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #8B4513, #FFD700);
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
-            z-index: 1000;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        `;
-        
-        document.body.appendChild(voiceButton);
-        
-        voiceButton.addEventListener('click', () => {
-            recognition.start();
-            voiceButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        });
-        
-        recognition.onresult = (event) => {
-            const command = event.results[0][0].transcript.toLowerCase();
-            voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
-            
-            // Handle voice commands
-            if (command.includes('home') || command.includes('go home')) {
-                document.querySelector('#hero').scrollIntoView({ behavior: 'smooth' });
-            } else if (command.includes('events') || command.includes('show events')) {
-                document.querySelector('#events').scrollIntoView({ behavior: 'smooth' });
-            } else if (command.includes('contact') || command.includes('contact us')) {
-                document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
-            }
-        };
-        
-        recognition.onerror = () => {
-            voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
-        };
-    }
-} 
+ 
