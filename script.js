@@ -1446,7 +1446,7 @@ function initializeMobileUX() {
 // Enhanced mobile navigation
 function initializeMobileNavigation() {
     // Smooth scroll to sections with mobile offset
-    document.querySelectorAll('.nav-link, .bottom-nav-link').forEach(link => {
+    document.querySelectorAll('.bottom-nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
