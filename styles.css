@@ -328,13 +328,159 @@ body {
 /* Events Section */
 .events {
     padding: 80px 0;
-    background: #fff;
-    display: block !important;
-    visibility: visible !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow: visible !important;
-    position: relative !important;
+    background: #f9f9f9;
+}
+
+.events .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.events-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 40px;
+}
+
+.event-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-left: 3px solid #8B4513;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 0;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.event-card:hover {
+    transform: translateX(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #8B4513;
+    border-left-color: #FFD700;
+    border-left-width: 5px;
+}
+
+.event-icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #8B4513, #FFD700);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.event-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.event-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.event-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.event-date {
+    background: #8B4513;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.event-description {
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.event-details {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.contact-persons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.contact-persons span {
+    background: #f0f0f0;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.contact-persons span:hover {
+    background: #8B4513;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.contact-persons span i {
+    font-size: 0.8rem;
+}
+
+.event-registration {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.register-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #8B4513, #FFD700);
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+    border: 2px solid transparent;
+    white-space: nowrap;
+}
+
+.register-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+    background: linear-gradient(135deg, #FFD700, #8B4513);
+    color: #8B4513;
+    border-color: #8B4513;
 }
 
 /* Force mobile-first layout - Events ALWAYS visible */
@@ -1097,4 +1243,171 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #654321;
+} 
+
+/* Events Timeline Layout */
+.events-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-top: 40px;
+}
+
+.date-section {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.date-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.date-header {
+    background: linear-gradient(135deg, #8B4513, #FFD700);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.date-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.date-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.date-subtitle {
+    font-size: 1.1rem;
+    margin: 0;
+    opacity: 0.9;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+}
+
+.date-section .events-grid {
+    padding: 2rem;
+    gap: 1.5rem;
+}
+
+/* Update event cards for timeline layout */
+.date-section .event-card {
+    border-left: 4px solid #8B4513;
+    margin-bottom: 0;
+}
+
+.date-section .event-card:hover {
+    border-left-color: #FFD700;
+    border-left-width: 6px;
+}
+
+.date-section .event-date {
+    background: #FFD700;
+    color: #8B4513;
+    font-weight: 600;
+}
+
+.date-section .event-date i {
+    color: #8B4513;
+}
+
+/* Mobile responsive for timeline */
+@media (max-width: 768px) {
+    .events-timeline {
+        gap: 2rem;
+    }
+    
+    .date-header {
+        padding: 1.5rem;
+    }
+    
+    .date-title {
+        font-size: 1.5rem;
+    }
+    
+    .date-subtitle {
+        font-size: 1rem;
+    }
+    
+    .date-section .events-grid {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+    
+    .date-section .event-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 1.5rem;
+    }
+    
+    .date-section .event-header {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    
+    .date-section .event-details {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .date-section .contact-persons {
+        width: 100%;
+        gap: 8px;
+    }
+    
+    .date-section .event-registration {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .date-section .register-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .date-header {
+        padding: 1rem;
+    }
+    
+    .date-title {
+        font-size: 1.3rem;
+    }
+    
+    .date-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .date-section .events-grid {
+        padding: 1rem;
+    }
+    
+    .date-section .event-card {
+        padding: 1rem;
+    }
 } 

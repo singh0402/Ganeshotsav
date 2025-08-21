@@ -348,71 +348,6 @@ style.textContent = `
             justify-content: center;
         }
     }
-    
-    /* CRITICAL: Ensure countdown timer is always visible */
-    .countdown-timer {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 10 !important;
-        background: rgba(255, 255, 255, 0.9) !important;
-        padding: 20px !important;
-        border-radius: 15px !important;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
-        margin: 20px 0 !important;
-    }
-    
-    .countdown-item {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        margin: 0 15px !important;
-        min-width: 80px !important;
-    }
-    
-    .countdown-number {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        font-size: 2.5rem !important;
-        font-weight: bold !important;
-        color: #8B4513 !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1) !important;
-    }
-    
-    .countdown-label {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        font-size: 0.9rem !important;
-        color: #666 !important;
-        margin-top: 5px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1px !important;
-    }
-    
-    /* Mobile responsive countdown */
-    @media (max-width: 768px) {
-        .countdown-timer {
-            flex-direction: column !important;
-            gap: 15px !important;
-            padding: 15px !important;
-        }
-        
-        .countdown-item {
-            margin: 5px 0 !important;
-            min-width: auto !important;
-        }
-        
-        .countdown-number {
-            font-size: 2rem !important;
-        }
-    }
 `;
 document.head.appendChild(style);
 
@@ -489,11 +424,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
     eventCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-15px) scale(1.02)';
+            this.style.transform = 'translateX(10px)';
+            this.style.boxShadow = '0 8px 25px rgba(139, 69, 19, 0.15)';
+            this.style.borderLeftColor = '#8B4513';
+            this.style.borderLeftWidth = '4px';
         });
         
         card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
+            this.style.transform = 'translateX(0)';
+            this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
+            this.style.borderLeftColor = '#e0e0e0';
+            this.style.borderLeftWidth = '1px';
         });
     });
 });
@@ -525,14 +466,6 @@ function updateCountdown() {
     const now = new Date().getTime();
     const distance = festivalStart - now;
     
-    // Debug: Log the countdown calculation
-    console.log('Countdown calculation:', {
-        festivalStart: new Date(festivalStart),
-        now: new Date(now),
-        distance: distance,
-        days: Math.floor(distance / (1000 * 60 * 60 * 24))
-    });
-    
     if (distance > 0) {
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -548,14 +481,7 @@ function updateCountdown() {
                 countdownNumbers[1].textContent = hours;
                 countdownNumbers[2].textContent = minutes;
                 countdownNumbers[3].textContent = seconds;
-                
-                // Debug: Log the update
-                console.log('Countdown updated:', { days, hours, minutes, seconds });
-            } else {
-                console.log('Countdown numbers not found. Found:', countdownNumbers.length);
             }
-        } else {
-            console.log('Countdown element not found');
         }
     } else {
         // Festival has started
@@ -569,55 +495,9 @@ function updateCountdown() {
 // Update countdown every second
 setInterval(updateCountdown, 1000);
 
-// Initial call with delay to ensure DOM is ready
+// Initial call when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing countdown...');
-    setTimeout(() => {
-        updateCountdown();
-        console.log('Initial countdown call completed');
-    }, 100);
-    
-    // Also initialize countdown after a longer delay to ensure everything is loaded
-    setTimeout(() => {
-        updateCountdown();
-        console.log('Delayed countdown call completed');
-    }, 1000);
-});
-
-// Manual counter initialization function
-function initializeCountdown() {
-    console.log('Manually initializing countdown...');
-    
-    // Check if countdown elements exist
-    const countdownElement = document.querySelector('.countdown-timer');
-    const countdownNumbers = document.querySelectorAll('.countdown-number');
-    
-    console.log('Countdown element found:', !!countdownElement);
-    console.log('Countdown numbers found:', countdownNumbers.length);
-    
-    if (countdownElement && countdownNumbers.length >= 4) {
-        // Force update the countdown
-        updateCountdown();
-        console.log('Countdown manually initialized successfully');
-        
-        // Add a visual indicator that counter is working
-        countdownElement.style.border = '3px solid #4CAF50';
-        countdownElement.style.background = 'rgba(76, 175, 80, 0.1)';
-        
-        // Remove the indicator after 3 seconds
-        setTimeout(() => {
-            countdownElement.style.border = '';
-            countdownElement.style.background = '';
-        }, 3000);
-    } else {
-        console.error('Countdown elements not found properly');
-    }
-}
-
-// Call manual initialization after page load
-window.addEventListener('load', () => {
-    console.log('Window loaded, calling manual countdown initialization...');
-    setTimeout(initializeCountdown, 500);
+    updateCountdown();
 });
 
 // Add smooth reveal animation for sections
