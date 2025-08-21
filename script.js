@@ -61,16 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
     
-    // Ensure events are visible on all devices
-    const eventCards = document.querySelectorAll('.event-card');
-    
-    // Force events to be visible on all devices
-    eventCards.forEach(card => {
-        card.style.display = 'block';
-        card.style.visibility = 'visible';
-        card.style.opacity = '1';
-    });
-    
     // Force flexbox layout on mobile
     if (window.innerWidth <= 768) {
         const eventsGrid = document.querySelector('.events-grid');
@@ -82,15 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Force show events after a short delay to override any CSS conflicts
-    setTimeout(() => {
-        forceShowEvents();
-    }, 100);
-    
-    // Also force show events after a longer delay to ensure they're visible
-    setTimeout(() => {
-        forceShowEvents();
-    }, 500);
+    // Events are now visible and properly laid out
 });
 
 // Handle window resize for mobile responsiveness
@@ -123,81 +105,44 @@ window.addEventListener('resize', () => {
 });
 
 // Form validation and submission
-const registrationForm = document.getElementById('registrationForm');
-const contactForm = document.getElementById('contactForm');
+// Note: Registration form was removed, so we only handle contact form
+let contactForm = null;
 
-// Registration form handling
-registrationForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+// Wait for DOM to load before accessing forms
+document.addEventListener('DOMContentLoaded', () => {
+    contactForm = document.getElementById('contactForm');
     
-    // Get form data
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
-    
-    // Validate required fields
-    if (!data.name || !data.email || !data.phone) {
-        showNotification('Please fill in all required fields.', 'error');
-        return;
+    if (contactForm) {
+        // Contact form handling
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Validate required fields
+            if (!data.contactName || !data.contactEmail || !data.contactSubject || !data.contactMessage) {
+                showNotification('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.contactEmail)) {
+                showNotification('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            // Simulate form submission
+            showNotification('Message sent successfully! We will get back to you soon.', 'success');
+            
+            // Reset form
+            this.reset();
+            
+            // Contact data would be sent to server in real app
+        });
     }
-    
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
-        showNotification('Please enter a valid email address.', 'error');
-        return;
-    }
-    
-    // Validate phone format (Indian phone numbers)
-    const phoneRegex = /^[6-9]\d{9}$/;
-    if (!phoneRegex.test(data.phone.replace(/\s/g, ''))) {
-        showNotification('Please enter a valid 10-digit phone number.', 'error');
-        return;
-    }
-    
-    // Check if at least one event is selected
-    const selectedEvents = formData.getAll('events');
-    if (selectedEvents.length === 0) {
-        showNotification('Please select at least one event to register for.', 'error');
-        return;
-    }
-    
-    // Simulate form submission
-    showNotification('Registration submitted successfully! We will contact you soon.', 'success');
-    
-    // Reset form
-    this.reset();
-    
-    // Registration data would be sent to server in real app
-});
-
-// Contact form handling
-contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
-    
-    // Validate required fields
-    if (!data.contactName || !data.contactEmail || !data.contactSubject || !data.contactMessage) {
-        showNotification('Please fill in all required fields.', 'error');
-        return;
-    }
-    
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.contactEmail)) {
-        showNotification('Please enter a valid email address.', 'error');
-        return;
-    }
-    
-    // Simulate form submission
-    showNotification('Message sent successfully! We will get back to you soon.', 'success');
-    
-    // Reset form
-    this.reset();
-    
-    // Contact data would be sent to server in real app
 });
 
 // Notification system
@@ -403,6 +348,71 @@ style.textContent = `
             justify-content: center;
         }
     }
+    
+    /* CRITICAL: Ensure countdown timer is always visible */
+    .countdown-timer {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        z-index: 10 !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        padding: 20px !important;
+        border-radius: 15px !important;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
+        margin: 20px 0 !important;
+    }
+    
+    .countdown-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 15px !important;
+        min-width: 80px !important;
+    }
+    
+    .countdown-number {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 2.5rem !important;
+        font-weight: bold !important;
+        color: #8B4513 !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .countdown-label {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 0.9rem !important;
+        color: #666 !important;
+        margin-top: 5px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+    }
+    
+    /* Mobile responsive countdown */
+    @media (max-width: 768px) {
+        .countdown-timer {
+            flex-direction: column !important;
+            gap: 15px !important;
+            padding: 15px !important;
+        }
+        
+        .countdown-item {
+            margin: 5px 0 !important;
+            min-width: auto !important;
+        }
+        
+        .countdown-number {
+            font-size: 2rem !important;
+        }
+    }
 `;
 document.head.appendChild(style);
 
@@ -470,15 +480,8 @@ function addLoadingState(form, button) {
 }
 
 // Add loading states to forms
-registrationForm.addEventListener('submit', function(e) {
-    const submitBtn = this.querySelector('button[type="submit"]');
-    addLoadingState(this, submitBtn);
-});
-
-contactForm.addEventListener('submit', function(e) {
-    const submitBtn = this.querySelector('button[type="submit"]');
-    addLoadingState(this, submitBtn);
-});
+// Registration form handling
+// The registration form was removed, so this block is now effectively empty.
 
 // Add hover effects for event cards
 document.addEventListener('DOMContentLoaded', () => {
@@ -522,6 +525,14 @@ function updateCountdown() {
     const now = new Date().getTime();
     const distance = festivalStart - now;
     
+    // Debug: Log the countdown calculation
+    console.log('Countdown calculation:', {
+        festivalStart: new Date(festivalStart),
+        now: new Date(now),
+        distance: distance,
+        days: Math.floor(distance / (1000 * 60 * 60 * 24))
+    });
+    
     if (distance > 0) {
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -537,7 +548,14 @@ function updateCountdown() {
                 countdownNumbers[1].textContent = hours;
                 countdownNumbers[2].textContent = minutes;
                 countdownNumbers[3].textContent = seconds;
+                
+                // Debug: Log the update
+                console.log('Countdown updated:', { days, hours, minutes, seconds });
+            } else {
+                console.log('Countdown numbers not found. Found:', countdownNumbers.length);
             }
+        } else {
+            console.log('Countdown element not found');
         }
     } else {
         // Festival has started
@@ -550,7 +568,57 @@ function updateCountdown() {
 
 // Update countdown every second
 setInterval(updateCountdown, 1000);
-updateCountdown(); // Initial call
+
+// Initial call with delay to ensure DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing countdown...');
+    setTimeout(() => {
+        updateCountdown();
+        console.log('Initial countdown call completed');
+    }, 100);
+    
+    // Also initialize countdown after a longer delay to ensure everything is loaded
+    setTimeout(() => {
+        updateCountdown();
+        console.log('Delayed countdown call completed');
+    }, 1000);
+});
+
+// Manual counter initialization function
+function initializeCountdown() {
+    console.log('Manually initializing countdown...');
+    
+    // Check if countdown elements exist
+    const countdownElement = document.querySelector('.countdown-timer');
+    const countdownNumbers = document.querySelectorAll('.countdown-number');
+    
+    console.log('Countdown element found:', !!countdownElement);
+    console.log('Countdown numbers found:', countdownNumbers.length);
+    
+    if (countdownElement && countdownNumbers.length >= 4) {
+        // Force update the countdown
+        updateCountdown();
+        console.log('Countdown manually initialized successfully');
+        
+        // Add a visual indicator that counter is working
+        countdownElement.style.border = '3px solid #4CAF50';
+        countdownElement.style.background = 'rgba(76, 175, 80, 0.1)';
+        
+        // Remove the indicator after 3 seconds
+        setTimeout(() => {
+            countdownElement.style.border = '';
+            countdownElement.style.background = '';
+        }, 3000);
+    } else {
+        console.error('Countdown elements not found properly');
+    }
+}
+
+// Call manual initialization after page load
+window.addEventListener('load', () => {
+    console.log('Window loaded, calling manual countdown initialization...');
+    setTimeout(initializeCountdown, 500);
+});
 
 // Add smooth reveal animation for sections
 const revealObserver = new IntersectionObserver((entries) => {
