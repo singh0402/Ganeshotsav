@@ -3496,4 +3496,58 @@ body {
     }
 } 
 
+/* Mobile-First Design */
+@media (max-width: 768px) {
+    /* Completely hide top navigation on mobile */
+    .navbar {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+        z-index: -9999 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Hide all navigation-related elements */
+    .navbar *,
+    .nav-container,
+    .nav-logo,
+    .nav-menu,
+    .nav-item,
+    .nav-link {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Adjust hero section padding for mobile */
+    .hero {
+        padding-top: 20px;
+        min-height: calc(100vh - 40px);
+    }
+} 
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .navbar,
+    .navbar *,
+    .nav-container,
+    .nav-logo,
+    .nav-menu,
+    .nav-item,
+    .nav-link {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+        z-index: -9999 !important;
+        pointer-events: none !important;
+    }
+} 
+
  
