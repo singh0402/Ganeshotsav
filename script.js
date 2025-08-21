@@ -359,6 +359,50 @@ style.textContent = `
             padding: 1.5rem !important;
         }
     }
+    
+    /* Event registration button styles */
+    .event-registration {
+        margin-top: 1rem;
+        text-align: center;
+    }
+    
+    .register-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #8B4513, #FFD700);
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        border: 2px solid transparent;
+    }
+    
+    .register-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        background: linear-gradient(135deg, #FFD700, #8B4513);
+        color: #8B4513;
+        border-color: #8B4513;
+    }
+    
+    .register-btn i {
+        font-size: 1rem;
+    }
+    
+    /* Mobile responsive registration button */
+    @media (max-width: 768px) {
+        .register-btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            width: 100%;
+            justify-content: center;
+        }
+    }
 `;
 document.head.appendChild(style);
 
