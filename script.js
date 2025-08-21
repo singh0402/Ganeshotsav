@@ -579,8 +579,7 @@ function initializeMobileFeatures() {
     // Mobile performance optimizations
     initializeMobilePerformance();
     
-    // Mobile search functionality
-    initializeMobileSearch();
+
 }
 
 // Floating Action Button (FAB) Functionality
@@ -1421,170 +1420,15 @@ function copyLink() {
     });
 } 
 
-// Mobile Search Functionality
-function initializeMobileSearch() {
-    const searchInput = document.getElementById('eventSearch');
-    const searchClear = document.getElementById('searchClear');
-    const filterChips = document.querySelectorAll('.filter-chip');
-    
-    if (!searchInput) return;
-    
-    // Search input functionality
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
-        const hasQuery = query.length > 0;
-        
-        // Show/hide clear button
-        searchClear.style.display = hasQuery ? 'block' : 'none';
-        
-        // Filter events
-        filterEvents(query);
-    });
-    
-    // Clear search
-    searchClear.addEventListener('click', function() {
-        searchInput.value = '';
-        searchInput.focus();
-        this.style.display = 'none';
-        filterEvents('');
-    });
-    
-    // Filter chips functionality
-    filterChips.forEach(chip => {
-        chip.addEventListener('click', function() {
-            // Update active state
-            filterChips.forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Apply filter
-            const filter = this.dataset.filter;
-            applyDateFilter(filter);
-        });
-    });
-    
-    // Initialize search
-    filterEvents('');
-}
 
-// Filter events by search query
-function filterEvents(query) {
-    const eventCards = document.querySelectorAll('.event-card');
-    const dateSections = document.querySelectorAll('.date-section');
-    
-    let hasVisibleEvents = false;
-    
-    eventCards.forEach(card => {
-        const title = card.querySelector('.event-title')?.textContent.toLowerCase() || '';
-        const description = card.querySelector('.event-description')?.textContent.toLowerCase() || '';
-        const date = card.querySelector('.event-date')?.textContent.toLowerCase() || '';
-        
-        const matches = title.includes(query) || description.includes(query) || date.includes(query);
-        
-        if (matches) {
-            card.style.display = 'block';
-            card.style.opacity = '1';
-            hasVisibleEvents = true;
-        } else {
-            card.style.display = 'none';
-            card.style.opacity = '0';
-        }
-    });
-    
-    // Show/hide date sections based on visible events
-    dateSections.forEach(section => {
-        const visibleEvents = section.querySelectorAll('.event-card[style*="display: block"]');
-        section.style.display = visibleEvents.length > 0 ? 'block' : 'none';
-    });
-    
-    // Show no results message if needed
-    showNoResultsMessage(query, hasVisibleEvents);
-}
 
-// Apply date-based filtering
-function applyDateFilter(filter) {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const weekEnd = new Date(today);
-    weekEnd.setDate(weekEnd.getDate() + 7);
-    
-    const eventCards = document.querySelectorAll('.event-card');
-    const dateSections = document.querySelectorAll('.date-section');
-    
-    eventCards.forEach(card => {
-        const dateElement = card.querySelector('.event-date');
-        if (!dateElement) return;
-        
-        const eventDate = parseEventDate(dateElement.textContent);
-        if (!eventDate) return;
-        
-        let shouldShow = false;
-        
-        switch (filter) {
-            case 'today':
-                shouldShow = isSameDay(eventDate, today);
-                break;
-            case 'tomorrow':
-                shouldShow = isSameDay(eventDate, tomorrow);
-                break;
-            case 'week':
-                shouldShow = eventDate >= today && eventDate <= weekEnd;
-                break;
-            case 'all':
-            default:
-                shouldShow = true;
-                break;
-        }
-        
-        card.style.display = shouldShow ? 'block' : 'none';
-        card.style.opacity = shouldShow ? '1' : '0';
-    });
-    
-    // Show/hide date sections
-    dateSections.forEach(section => {
-        const visibleEvents = section.querySelectorAll('.event-card[style*="display: block"]');
-        section.style.display = visibleEvents.length > 0 ? 'block' : 'none';
-    });
-}
 
-// Helper function to check if two dates are the same day
-function isSameDay(date1, date2) {
-    return date1.getDate() === date2.getDate() &&
-           date1.getMonth() === date2.getMonth() &&
-           date1.getFullYear() === date2.getFullYear();
-}
 
-// Show no results message
-function showNoResultsMessage(query, hasVisibleEvents) {
-    let noResults = document.querySelector('.no-results-message');
-    
-    if (!hasVisibleEvents && query.length > 0) {
-        if (!noResults) {
-            noResults = document.createElement('div');
-            noResults.className = 'no-results-message';
-            noResults.innerHTML = `
-                <div class="no-results-content">
-                    <i class="fas fa-search"></i>
-                    <h3>No events found</h3>
-                    <p>Try adjusting your search terms or use the date filters above.</p>
-                </div>
-            `;
-            
-            noResults.style.cssText = `
-                text-align: center;
-                padding: 3rem 1rem;
-                color: #666;
-            `;
-            
-            const eventsTimeline = document.querySelector('.events-timeline');
-            if (eventsTimeline) {
-                eventsTimeline.parentNode.insertBefore(noResults, eventsTimeline);
-            }
-        }
-    } else if (noResults) {
-        noResults.remove();
-    }
-}
+
+
+
+
+
 
 // Mobile performance optimizations
 function initializeMobilePerformance() {
