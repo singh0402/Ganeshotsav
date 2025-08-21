@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#8B4513">
+    <meta name="msapplication-TileColor" content="#8B4513">
     <title>Windows Society Ganeshotsav 2025</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -104,61 +109,20 @@
         <div class="container">
             <h2 class="section-title">Festival Events</h2>
             
-            <!-- Mobile Event Filter -->
-            <div class="event-filter">
-                <div class="filter-header">
-                    <h3>Quick Filter</h3>
-                    <p>Tap to view events for specific dates</p>
+            <!-- Mobile Search Bar -->
+            <div class="mobile-search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="eventSearch" placeholder="Search events..." class="search-input">
+                    <button class="search-clear" id="searchClear" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-date="all">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>All Events</span>
-                    </button>
-                    <button class="filter-btn" data-date="aug27">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Aug 27</span>
-                    </button>
-                    <button class="filter-btn" data-date="aug28">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Aug 28</span>
-                    </button>
-                    <button class="filter-btn" data-date="aug29">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Aug 29</span>
-                    </button>
-                    <button class="filter-btn" data-date="aug30">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Aug 30</span>
-                    </button>
-                    <button class="filter-btn" data-date="aug31">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Aug 31</span>
-                    </button>
-                    <button class="filter-btn" data-date="sep1">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Sep 1</span>
-                    </button>
-                    <button class="filter-btn" data-date="sep2">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Sep 2</span>
-                    </button>
-                    <button class="filter-btn" data-date="sep3">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Sep 3</span>
-                    </button>
-                    <button class="filter-btn" data-date="sep4">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Sep 4</span>
-                    </button>
-                    <button class="filter-btn" data-date="sep5">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Sep 5</span>
-                    </button>
-                    <button class="filter-btn" data-date="sep6">
-                        <i class="fas fa-calendar-day"></i>
-                        <span>Sep 6</span>
-                    </button>
+                <div class="search-filters">
+                    <button class="filter-chip active" data-filter="all">All</button>
+                    <button class="filter-chip" data-filter="today">Today</button>
+                    <button class="filter-chip" data-filter="tomorrow">Tomorrow</button>
+                    <button class="filter-chip" data-filter="week">This Week</button>
                 </div>
             </div>
             

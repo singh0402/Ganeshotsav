@@ -548,112 +548,40 @@ function forceShowEvents() {
     // Events are now visible
 }
 
-// Add event filtering functionality
-function filterEvents(category) {
-    const eventCards = document.querySelectorAll('.event-card');
-    
-    eventCards.forEach(card => {
-        if (category === 'all') {
-            card.style.display = 'block';
-        } else {
-            // You can add category logic here based on event types
-            card.style.display = 'block';
-        }
-    });
-}
 
-// Add search functionality for events
-function searchEvents(query) {
-    const eventCards = document.querySelectorAll('.event-card');
-    const searchTerm = query.toLowerCase();
-    
-    eventCards.forEach(card => {
-        const eventName = card.querySelector('h3').textContent.toLowerCase();
-        const eventDesc = card.querySelector('p').textContent.toLowerCase();
-        
-        if (eventName.includes(searchTerm) || eventDesc.includes(searchTerm)) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-}
 
-// Enhanced Event Filtering System with past event handling
-function initializeEventFilter() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const dateSections = document.querySelectorAll('.date-section');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const selectedDate = this.getAttribute('data-date');
-            
-            // Update active button
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Filter date sections
-            dateSections.forEach(section => {
-                if (selectedDate === 'all') {
-                    // Show all sections, but past events remain hidden
-                    section.style.display = 'block';
-                    section.style.opacity = '1';
-                    section.style.transform = 'translateY(0)';
-                } else {
-                    const sectionDate = getSectionDate(section);
-                    if (sectionDate === selectedDate) {
-                        section.style.display = 'block';
-                        section.style.opacity = '1';
-                        section.style.transform = 'translateY(0)';
-                    } else {
-                        section.style.display = 'none';
-                        section.style.opacity = '0';
-                        section.style.transform = 'translateY(20px)';
-                    }
-                }
-            });
-            
-            // Smooth scroll to events section
-            const eventsSection = document.querySelector('#events');
-            if (eventsSection) {
-                eventsSection.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
-            }
-        });
-    });
-}
-
-// Helper function to get date from section
-function getSectionDate(section) {
-    const dateTitle = section.querySelector('.date-title');
-    if (dateTitle) {
-        const dateText = dateTitle.textContent.toLowerCase();
-        if (dateText.includes('august 27')) return 'aug27';
-        if (dateText.includes('august 28')) return 'aug28';
-        if (dateText.includes('august 29')) return 'aug29';
-        if (dateText.includes('august 30')) return 'aug30';
-        if (dateText.includes('august 31')) return 'aug31';
-        if (dateText.includes('september 1')) return 'sep1';
-        if (dateText.includes('september 2')) return 'sep2';
-        if (dateText.includes('september 3')) return 'sep3';
-        if (dateText.includes('september 4')) return 'sep4';
-        if (dateText.includes('september 5')) return 'sep5';
-        if (dateText.includes('september 6')) return 'sep6';
-    }
-    return '';
-}
-
-// Initialize event filter when DOM is ready
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    initializeEventFilter();
     initializeFAB();
     hidePastEvents(); // Hide events with passed dates
     
     // Set up daily check for past events
     setupDailyPastEventCheck();
+    
+    // Initialize mobile-specific features
+    initializeMobileFeatures();
 });
+
+// Initialize mobile-specific features
+function initializeMobileFeatures() {
+    // Touch gesture handling
+    initializeTouchGestures();
+    
+    // Pull to refresh functionality
+    initializePullToRefresh();
+    
+    // Mobile-optimized scrolling
+    initializeMobileScrolling();
+    
+    // Touch-friendly interactions
+    initializeTouchInteractions();
+    
+    // Mobile performance optimizations
+    initializeMobilePerformance();
+    
+    // Mobile search functionality
+    initializeMobileSearch();
+}
 
 // Floating Action Button (FAB) Functionality
 function initializeFAB() {
@@ -960,9 +888,6 @@ function hidePastEvents() {
         }
     });
     
-    // Update the filter to show/hide past events
-    updateFilterButtonsForPastEvents();
-    
     // Show notification about past events if there are any
     if (pastEventCount > 0) {
         showPastEventsNotification(pastEventCount);
@@ -981,7 +906,7 @@ function showPastEventsNotification(pastEventCount) {
         notification.innerHTML = `
             <div class="notification-content">
                 <i class="fas fa-info-circle"></i>
-                <span>${pastEventCount} event(s) have passed. Use the "Past Events" filter to view them.</span>
+                <span>${pastEventCount} event(s) have passed. Past events are marked with indicators.</span>
                 <button class="notification-close">&times;</button>
             </div>
         `;
@@ -1022,59 +947,7 @@ function showPastEventsNotification(pastEventCount) {
     }
 }
 
-// Function to update filter buttons to show past events option
-function updateFilterButtonsForPastEvents() {
-    const filterButtons = document.querySelector('.filter-buttons');
-    const pastEventsButton = document.querySelector('.filter-btn[data-date="past"]');
-    
-    // Only add past events button if it doesn't exist
-    if (!pastEventsButton) {
-        const pastButton = document.createElement('button');
-        pastButton.className = 'filter-btn';
-        pastButton.setAttribute('data-date', 'past');
-        pastButton.innerHTML = `
-            <i class="fas fa-history"></i>
-            <span>Past Events</span>
-        `;
-        
-        // Insert before the last button (or wherever you prefer)
-        filterButtons.appendChild(pastButton);
-        
-        // Add event listener for the new button
-        pastButton.addEventListener('click', function() {
-            showPastEvents();
-        });
-    }
-}
-
-// Function to show past events
-function showPastEvents() {
-    const eventCards = document.querySelectorAll('.event-card');
-    const dateSections = document.querySelectorAll('.date-section');
-    
-    // Show all sections
-    dateSections.forEach(section => {
-        section.style.display = 'block';
-        section.style.opacity = '1';
-        section.style.transform = 'translateY(0)';
-    });
-    
-    // Show only past events
-    eventCards.forEach(card => {
-        if (card.classList.contains('past-event')) {
-            card.style.display = 'block';
-            card.style.opacity = '1';
-        } else {
-            card.style.display = 'none';
-            card.style.opacity = '0';
-        }
-    });
-    
-    // Update active button
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    document.querySelector('.filter-btn[data-date="past"]').classList.add('active');
-} 
+ 
 
 // Function to set up daily check for past events
 function setupDailyPastEventCheck() {
@@ -1096,4 +969,787 @@ function setupDailyPastEventCheck() {
             localStorage.setItem('lastPastEventCheck', currentDate);
         }
     }, 60 * 60 * 1000); // Check every hour
+} 
+
+// Touch gesture handling for mobile
+function initializeTouchGestures() {
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    let isScrolling = false;
+    
+    // Touch start
+    document.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        startTime = Date.now();
+        isScrolling = false;
+    }, { passive: true });
+    
+    // Touch move
+    document.addEventListener('touchmove', function(e) {
+        if (!startX || !startY) return;
+        
+        const deltaX = e.touches[0].clientX - startX;
+        const deltaY = e.touches[0].clientY - startY;
+        
+        // Determine if user is scrolling or swiping
+        if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
+            isScrolling = true;
+        }
+    }, { passive: true });
+    
+    // Touch end - handle gestures
+    document.addEventListener('touchend', function(e) {
+        if (!startX || !startY || isScrolling) return;
+        
+        const deltaX = e.changedTouches[0].clientX - startX;
+        const deltaY = e.changedTouches[0].clientY - startY;
+        const deltaTime = Date.now() - startTime;
+        
+        // Minimum swipe distance and maximum time
+        const minSwipeDistance = 50;
+        const maxSwipeTime = 300;
+        
+        if (deltaTime < maxSwipeTime) {
+            // Horizontal swipe
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0) {
+                    // Swipe right - go to previous section
+                    handleSwipeRight();
+                } else {
+                    // Swipe left - go to next section
+                    handleSwipeLeft();
+                }
+            }
+            
+            // Vertical swipe
+            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > minSwipeDistance) {
+                if (deltaY > 0) {
+                    // Swipe down - scroll to top
+                    handleSwipeDown();
+                } else {
+                    // Swipe up - scroll to bottom
+                    handleSwipeUp();
+                }
+            }
+        }
+        
+        // Reset values
+        startX = 0;
+        startY = 0;
+        startTime = 0;
+    }, { passive: true });
+}
+
+// Handle swipe right gesture
+function handleSwipeRight() {
+    const currentSection = getCurrentSection();
+    const prevSection = getPreviousSection(currentSection);
+    if (prevSection) {
+        prevSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showNotification('Previous section', 'info');
+    }
+}
+
+// Handle swipe left gesture
+function handleSwipeLeft() {
+    const currentSection = getCurrentSection();
+    const nextSection = getNextSection(currentSection);
+    if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showNotification('Next section', 'info');
+    }
+}
+
+// Handle swipe down gesture
+function handleSwipeDown() {
+    scrollToTop();
+    showNotification('Scrolled to top', 'info');
+}
+
+// Handle swipe up gesture
+function handleSwipeUp() {
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+    });
+    showNotification('Scrolled to bottom', 'info');
+}
+
+// Get current visible section
+function getCurrentSection() {
+    const sections = document.querySelectorAll('section');
+    const scrollPosition = window.pageYOffset + window.innerHeight / 2;
+    
+    for (let section of sections) {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+            return section;
+        }
+    }
+    return sections[0];
+}
+
+// Get previous section
+function getPreviousSection(currentSection) {
+    const sections = Array.from(document.querySelectorAll('section'));
+    const currentIndex = sections.indexOf(currentSection);
+    return currentIndex > 0 ? sections[currentIndex - 1] : null;
+}
+
+// Get next section
+function getNextSection(currentSection) {
+    const sections = Array.from(document.querySelectorAll('section'));
+    const currentIndex = sections.indexOf(currentSection);
+    return currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
+}
+
+// Pull to refresh functionality
+function initializePullToRefresh() {
+    let startY = 0;
+    let currentY = 0;
+    let pullDistance = 0;
+    let isPulling = false;
+    let refreshIndicator = null;
+    
+    // Create refresh indicator
+    function createRefreshIndicator() {
+        if (refreshIndicator) return refreshIndicator;
+        
+        refreshIndicator = document.createElement('div');
+        refreshIndicator.className = 'pull-refresh-indicator';
+        refreshIndicator.innerHTML = `
+            <div class="refresh-content">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Pull to refresh</span>
+            </div>
+        `;
+        refreshIndicator.style.cssText = `
+            position: fixed;
+            top: -60px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(135deg, #8B4513, #FFD700);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: top 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        `;
+        
+        document.body.appendChild(refreshIndicator);
+        return refreshIndicator;
+    }
+    
+    // Touch start
+    document.addEventListener('touchstart', function(e) {
+        if (window.pageYOffset === 0) {
+            startY = e.touches[0].clientY;
+            isPulling = true;
+        }
+    }, { passive: true });
+    
+    // Touch move
+    document.addEventListener('touchmove', function(e) {
+        if (!isPulling) return;
+        
+        currentY = e.touches[0].clientY;
+        pullDistance = currentY - startY;
+        
+        if (pullDistance > 0 && window.pageYOffset === 0) {
+            e.preventDefault();
+            
+            const indicator = createRefreshIndicator();
+            const progress = Math.min(pullDistance / 100, 1);
+            
+            indicator.style.top = `${Math.min(pullDistance - 60, 0)}px`;
+            
+            if (pullDistance > 100) {
+                indicator.querySelector('.refresh-content span').textContent = 'Release to refresh';
+                indicator.querySelector('.refresh-content i').className = 'fas fa-arrow-down';
+            } else {
+                indicator.querySelector('.refresh-content span').textContent = 'Pull to refresh';
+                indicator.querySelector('.refresh-content i').className = 'fas fa-arrow-down';
+            }
+        }
+    }, { passive: false });
+    
+    // Touch end
+    document.addEventListener('touchend', function(e) {
+        if (!isPulling) return;
+        
+        if (pullDistance > 100) {
+            // Trigger refresh
+            const indicator = createRefreshIndicator();
+            indicator.querySelector('.refresh-content span').textContent = 'Refreshing...';
+            indicator.querySelector('.refresh-content i').className = 'fas fa-spinner fa-spin';
+            
+            // Simulate refresh (in real app, this would refresh data)
+            setTimeout(() => {
+                indicator.style.top = '-60px';
+                showNotification('Page refreshed!', 'success');
+                
+                // Refresh past events
+                hidePastEvents();
+                
+                setTimeout(() => {
+                    if (indicator.parentNode) {
+                        indicator.remove();
+                    }
+                }, 300);
+            }, 1500);
+        } else {
+            // Reset indicator
+            const indicator = createRefreshIndicator();
+            indicator.style.top = '-60px';
+        }
+        
+        // Reset values
+        isPulling = false;
+        pullDistance = 0;
+    }, { passive: true });
+} 
+
+// Mobile-optimized scrolling
+function initializeMobileScrolling() {
+    // Smooth scrolling for mobile
+    let isScrolling = false;
+    let scrollTimeout;
+    
+    // Optimize scroll performance
+    window.addEventListener('scroll', function() {
+        if (!isScrolling) {
+            isScrolling = true;
+            document.body.classList.add('is-scrolling');
+        }
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            isScrolling = false;
+            document.body.classList.remove('is-scrolling');
+        }, 150);
+    }, { passive: true });
+    
+    // Add momentum scrolling for iOS
+    if (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
+        document.body.style.webkitOverflowScrolling = 'touch';
+    }
+    
+    // Optimize scroll events for mobile
+    let ticking = false;
+    function updateScroll() {
+        // Update scroll-based animations here
+        ticking = false;
+    }
+    
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateScroll);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestTick, { passive: true });
+}
+
+// Touch-friendly interactions
+function initializeTouchInteractions() {
+    // Add touch feedback to interactive elements
+    const touchElements = document.querySelectorAll('.event-card, .btn, .register-btn, .contact-item, .stat-item');
+    
+    touchElements.forEach(element => {
+        element.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.98)';
+            this.style.transition = 'transform 0.1s ease';
+        }, { passive: true });
+        
+        element.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+        }, { passive: true });
+        
+        element.addEventListener('touchcancel', function() {
+            this.style.transform = 'scale(1)';
+        }, { passive: true });
+    });
+    
+    // Long press functionality for context menus
+    let longPressTimer;
+    let longPressTarget;
+    
+    touchElements.forEach(element => {
+        element.addEventListener('touchstart', function(e) {
+            longPressTarget = this;
+            longPressTimer = setTimeout(() => {
+                showContextMenu(this, e);
+            }, 800);
+        }, { passive: true });
+        
+        element.addEventListener('touchend', function() {
+            clearTimeout(longPressTimer);
+        }, { passive: true });
+        
+        element.addEventListener('touchmove', function() {
+            clearTimeout(longPressTimer);
+        }, { passive: true });
+    });
+}
+
+// Show context menu on long press
+function showContextMenu(element, event) {
+    // Remove existing context menu
+    const existingMenu = document.querySelector('.context-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+    
+    // Create context menu
+    const contextMenu = document.createElement('div');
+    contextMenu.className = 'context-menu';
+    
+    let menuItems = [];
+    
+    // Different menu items based on element type
+    if (element.classList.contains('event-card')) {
+        menuItems = [
+            { icon: 'fas fa-share-alt', text: 'Share Event', action: () => shareEvent(element) },
+            { icon: 'fas fa-calendar-plus', text: 'Add to Calendar', action: () => addToCalendar(element) },
+            { icon: 'fas fa-bookmark', text: 'Bookmark', action: () => bookmarkEvent(element) }
+        ];
+    } else if (element.classList.contains('btn') || element.classList.contains('register-btn')) {
+        menuItems = [
+            { icon: 'fas fa-share-alt', text: 'Share', action: () => shareWebsite() },
+            { icon: 'fas fa-copy', text: 'Copy Link', action: () => copyLink() }
+        ];
+    }
+    
+    contextMenu.innerHTML = menuItems.map(item => `
+        <div class="context-menu-item" onclick="this.parentElement.remove(); ${item.action.toString().split('(')[0]}()">
+            <i class="${item.icon}"></i>
+            <span>${item.text}</span>
+        </div>
+    `).join('');
+    
+    // Position menu
+    const rect = element.getBoundingClientRect();
+    contextMenu.style.cssText = `
+        position: fixed;
+        top: ${rect.bottom + 10}px;
+        left: ${rect.left}px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        z-index: 10000;
+        min-width: 200px;
+        overflow: hidden;
+    `;
+    
+    document.body.appendChild(contextMenu);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (contextMenu.parentNode) {
+            contextMenu.remove();
+        }
+    }, 5000);
+    
+    // Remove on outside click
+    document.addEventListener('click', function removeMenu() {
+        if (contextMenu.parentNode) {
+            contextMenu.remove();
+        }
+        document.removeEventListener('click', removeMenu);
+    });
+}
+
+// Share event functionality
+function shareEvent(element) {
+    const eventTitle = element.querySelector('.event-title')?.textContent || 'Event';
+    const eventDate = element.querySelector('.event-date')?.textContent || '';
+    
+    if (navigator.share) {
+        navigator.share({
+            title: `Ganeshotsav 2025 - ${eventTitle}`,
+            text: `Join us for ${eventTitle} on ${eventDate}`,
+            url: window.location.href
+        });
+    } else {
+        const shareText = `Ganeshotsav 2025 - ${eventTitle} on ${eventDate}`;
+        navigator.clipboard.writeText(shareText).then(() => {
+            showNotification('Event details copied to clipboard!', 'success');
+        });
+    }
+}
+
+// Add to calendar functionality
+function addToCalendar(element) {
+    const eventTitle = element.querySelector('.event-title')?.textContent || 'Event';
+    const eventDate = element.querySelector('.event-date')?.textContent || '';
+    
+    // Create calendar event URL (Google Calendar)
+    const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=20250827/20250906&details=${encodeURIComponent(`Join us for ${eventTitle} at Windows Society Ganeshotsav 2025`)}`;
+    
+    window.open(calendarUrl, '_blank');
+    showNotification('Calendar event created!', 'success');
+}
+
+// Bookmark event functionality
+function bookmarkEvent(element) {
+    const eventTitle = element.querySelector('.event-title')?.textContent || 'Event';
+    
+    // Store in localStorage
+    const bookmarks = JSON.parse(localStorage.getItem('eventBookmarks') || '[]');
+    if (!bookmarks.includes(eventTitle)) {
+        bookmarks.push(eventTitle);
+        localStorage.setItem('eventBookmarks', JSON.stringify(bookmarks));
+        showNotification('Event bookmarked!', 'success');
+    } else {
+        showNotification('Event already bookmarked!', 'info');
+    }
+}
+
+// Copy link functionality
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        showNotification('Link copied to clipboard!', 'success');
+    });
+} 
+
+// Mobile Search Functionality
+function initializeMobileSearch() {
+    const searchInput = document.getElementById('eventSearch');
+    const searchClear = document.getElementById('searchClear');
+    const filterChips = document.querySelectorAll('.filter-chip');
+    
+    if (!searchInput) return;
+    
+    // Search input functionality
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        const hasQuery = query.length > 0;
+        
+        // Show/hide clear button
+        searchClear.style.display = hasQuery ? 'block' : 'none';
+        
+        // Filter events
+        filterEvents(query);
+    });
+    
+    // Clear search
+    searchClear.addEventListener('click', function() {
+        searchInput.value = '';
+        searchInput.focus();
+        this.style.display = 'none';
+        filterEvents('');
+    });
+    
+    // Filter chips functionality
+    filterChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+            // Update active state
+            filterChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply filter
+            const filter = this.dataset.filter;
+            applyDateFilter(filter);
+        });
+    });
+    
+    // Initialize search
+    filterEvents('');
+}
+
+// Filter events by search query
+function filterEvents(query) {
+    const eventCards = document.querySelectorAll('.event-card');
+    const dateSections = document.querySelectorAll('.date-section');
+    
+    let hasVisibleEvents = false;
+    
+    eventCards.forEach(card => {
+        const title = card.querySelector('.event-title')?.textContent.toLowerCase() || '';
+        const description = card.querySelector('.event-description')?.textContent.toLowerCase() || '';
+        const date = card.querySelector('.event-date')?.textContent.toLowerCase() || '';
+        
+        const matches = title.includes(query) || description.includes(query) || date.includes(query);
+        
+        if (matches) {
+            card.style.display = 'block';
+            card.style.opacity = '1';
+            hasVisibleEvents = true;
+        } else {
+            card.style.display = 'none';
+            card.style.opacity = '0';
+        }
+    });
+    
+    // Show/hide date sections based on visible events
+    dateSections.forEach(section => {
+        const visibleEvents = section.querySelectorAll('.event-card[style*="display: block"]');
+        section.style.display = visibleEvents.length > 0 ? 'block' : 'none';
+    });
+    
+    // Show no results message if needed
+    showNoResultsMessage(query, hasVisibleEvents);
+}
+
+// Apply date-based filtering
+function applyDateFilter(filter) {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const weekEnd = new Date(today);
+    weekEnd.setDate(weekEnd.getDate() + 7);
+    
+    const eventCards = document.querySelectorAll('.event-card');
+    const dateSections = document.querySelectorAll('.date-section');
+    
+    eventCards.forEach(card => {
+        const dateElement = card.querySelector('.event-date');
+        if (!dateElement) return;
+        
+        const eventDate = parseEventDate(dateElement.textContent);
+        if (!eventDate) return;
+        
+        let shouldShow = false;
+        
+        switch (filter) {
+            case 'today':
+                shouldShow = isSameDay(eventDate, today);
+                break;
+            case 'tomorrow':
+                shouldShow = isSameDay(eventDate, tomorrow);
+                break;
+            case 'week':
+                shouldShow = eventDate >= today && eventDate <= weekEnd;
+                break;
+            case 'all':
+            default:
+                shouldShow = true;
+                break;
+        }
+        
+        card.style.display = shouldShow ? 'block' : 'none';
+        card.style.opacity = shouldShow ? '1' : '0';
+    });
+    
+    // Show/hide date sections
+    dateSections.forEach(section => {
+        const visibleEvents = section.querySelectorAll('.event-card[style*="display: block"]');
+        section.style.display = visibleEvents.length > 0 ? 'block' : 'none';
+    });
+}
+
+// Helper function to check if two dates are the same day
+function isSameDay(date1, date2) {
+    return date1.getDate() === date2.getDate() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getFullYear() === date2.getFullYear();
+}
+
+// Show no results message
+function showNoResultsMessage(query, hasVisibleEvents) {
+    let noResults = document.querySelector('.no-results-message');
+    
+    if (!hasVisibleEvents && query.length > 0) {
+        if (!noResults) {
+            noResults = document.createElement('div');
+            noResults.className = 'no-results-message';
+            noResults.innerHTML = `
+                <div class="no-results-content">
+                    <i class="fas fa-search"></i>
+                    <h3>No events found</h3>
+                    <p>Try adjusting your search terms or use the date filters above.</p>
+                </div>
+            `;
+            
+            noResults.style.cssText = `
+                text-align: center;
+                padding: 3rem 1rem;
+                color: #666;
+            `;
+            
+            const eventsTimeline = document.querySelector('.events-timeline');
+            if (eventsTimeline) {
+                eventsTimeline.parentNode.insertBefore(noResults, eventsTimeline);
+            }
+        }
+    } else if (noResults) {
+        noResults.remove();
+    }
+}
+
+// Mobile performance optimizations
+function initializeMobilePerformance() {
+    // Lazy loading for images
+    initializeLazyLoading();
+    
+    // Optimize viewport for mobile
+    optimizeViewport();
+    
+    // Add mobile-specific CSS classes
+    addMobileClasses();
+    
+    // Optimize animations for mobile
+    optimizeMobileAnimations();
+    
+    // Add mobile gesture hints
+    addGestureHints();
+}
+
+// Initialize lazy loading for images
+function initializeLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                observer.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// Optimize viewport for mobile
+function optimizeViewport() {
+    // Add viewport meta tag if not present
+    if (!document.querySelector('meta[name="viewport"]')) {
+        const viewport = document.createElement('meta');
+        viewport.name = 'viewport';
+        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover';
+        document.head.appendChild(viewport);
+    }
+    
+    // Add mobile-specific meta tags
+    const mobileMeta = [
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+        { name: 'theme-color', content: '#8B4513' }
+    ];
+    
+    mobileMeta.forEach(meta => {
+        if (!document.querySelector(`meta[name="${meta.name}"]`)) {
+            const metaTag = document.createElement('meta');
+            metaTag.name = meta.name;
+            metaTag.content = meta.content;
+            document.head.appendChild(metaTag);
+        }
+    });
+}
+
+// Add mobile-specific CSS classes
+function addMobileClasses() {
+    const body = document.body;
+    
+    // Detect mobile device
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        body.classList.add('mobile-device');
+    }
+    
+    // Detect iOS
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        body.classList.add('ios-device');
+    }
+    
+    // Detect Android
+    if (/Android/.test(navigator.userAgent)) {
+        body.classList.add('android-device');
+    }
+    
+    // Detect touch capability
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        body.classList.add('touch-device');
+    }
+    
+    // Detect screen size
+    if (window.innerWidth <= 768) {
+        body.classList.add('mobile-view');
+    }
+    
+    // Update on resize
+    window.addEventListener('resize', () => {
+        body.classList.toggle('mobile-view', window.innerWidth <= 768);
+    });
+}
+
+// Optimize animations for mobile
+function initializeMobileAnimations() {
+    // Reduce animation complexity on mobile
+    if (window.innerWidth <= 768) {
+        document.documentElement.style.setProperty('--animation-duration', '0.2s');
+        document.documentElement.style.setProperty('--animation-timing', 'ease-out');
+    }
+    
+    // Pause animations when scrolling for performance
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        document.body.classList.add('scrolling');
+        clearTimeout(scrollTimeout);
+        
+        scrollTimeout = setTimeout(() => {
+            document.body.classList.remove('scrolling');
+        }, 100);
+    }, { passive: true });
+}
+
+// Add gesture hints for mobile users
+function addGestureHints() {
+    // Only show on first visit
+    if (localStorage.getItem('gestureHintsShown')) return;
+    
+    setTimeout(() => {
+        const hint = document.createElement('div');
+        hint.className = 'gesture-hint';
+        hint.innerHTML = `
+            <div class="hint-content">
+                <i class="fas fa-hand-pointer"></i>
+                <span>Swipe left/right to navigate sections</span>
+                <button class="hint-close">&times;</button>
+            </div>
+        `;
+        
+        hint.style.cssText = `
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            right: 20px;
+            background: rgba(139, 69, 19, 0.95);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px;
+            z-index: 10000;
+            animation: slideUpIn 0.5s ease;
+        `;
+        
+        document.body.appendChild(hint);
+        
+        // Close button functionality
+        const closeBtn = hint.querySelector('.hint-close');
+        closeBtn.addEventListener('click', () => {
+            hint.remove();
+            localStorage.setItem('gestureHintsShown', 'true');
+        });
+        
+        // Auto-remove after 8 seconds
+        setTimeout(() => {
+            if (hint.parentNode) {
+                hint.style.animation = 'slideUpOut 0.5s ease';
+                setTimeout(() => hint.remove(), 500);
+                localStorage.setItem('gestureHintsShown', 'true');
+            }
+        }, 8000);
+    }, 2000);
 } 
