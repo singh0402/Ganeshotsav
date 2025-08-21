@@ -579,63 +579,156 @@ function searchEvents(query) {
     });
 }
 
-
-
-// Add window load event to ensure events are visible
-window.addEventListener('load', () => {
-    forceShowEvents();
+// Enhanced Event Filtering System with past event handling
+function initializeEventFilter() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const dateSections = document.querySelectorAll('.date-section');
     
-    // Additional check after images and resources are loaded
-    setTimeout(() => {
-        forceShowEvents();
-    }, 1000);
-});
-
-// Add mutation observer to watch for changes that might hide events
-const eventsObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && 
-            (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
-            // Check if events are hidden and force them visible
-            const eventCards = document.querySelectorAll('.event-card');
-            eventCards.forEach(card => {
-                if (card.style.display === 'none' || 
-                    card.style.visibility === 'hidden' || 
-                    card.style.opacity === '0') {
-                    card.style.display = 'block';
-                    card.style.visibility = 'visible';
-                    card.style.opacity = '1';
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const selectedDate = this.getAttribute('data-date');
+            
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter date sections
+            dateSections.forEach(section => {
+                if (selectedDate === 'all') {
+                    // Show all sections, but past events remain hidden
+                    section.style.display = 'block';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                } else {
+                    const sectionDate = getSectionDate(section);
+                    if (sectionDate === selectedDate) {
+                        section.style.display = 'block';
+                        section.style.opacity = '1';
+                        section.style.transform = 'translateY(0)';
+                    } else {
+                        section.style.display = 'none';
+                        section.style.opacity = '0';
+                        section.style.transform = 'translateY(20px)';
+                    }
                 }
             });
-        }
-    });
-});
-
-// Start observing the events section for changes
-document.addEventListener('DOMContentLoaded', () => {
-    const eventsSection = document.querySelector('#events');
-    if (eventsSection) {
-        eventsObserver.observe(eventsSection, {
-            attributes: true,
-            attributeFilter: ['style', 'class'],
-            subtree: true
-        });
-    }
-    
-    // Periodic check to ensure events stay visible
-    setInterval(() => {
-        const eventCards = document.querySelectorAll('.event-card');
-        eventCards.forEach(card => {
-            const computedStyle = window.getComputedStyle(card);
-            if (computedStyle.display === 'none' || 
-                computedStyle.visibility === 'hidden' || 
-                parseFloat(computedStyle.opacity) === 0) {
-                card.style.display = 'block';
-                card.style.visibility = 'visible';
-                card.style.opacity = '1';
+            
+            // Smooth scroll to events section
+            const eventsSection = document.querySelector('#events');
+            if (eventsSection) {
+                eventsSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
             }
         });
-    }, 2000); // Check every 2 seconds
+    });
+}
+
+// Helper function to get date from section
+function getSectionDate(section) {
+    const dateTitle = section.querySelector('.date-title');
+    if (dateTitle) {
+        const dateText = dateTitle.textContent.toLowerCase();
+        if (dateText.includes('august 27')) return 'aug27';
+        if (dateText.includes('august 28')) return 'aug28';
+        if (dateText.includes('august 29')) return 'aug29';
+        if (dateText.includes('august 30')) return 'aug30';
+        if (dateText.includes('august 31')) return 'aug31';
+        if (dateText.includes('september 1')) return 'sep1';
+        if (dateText.includes('september 2')) return 'sep2';
+        if (dateText.includes('september 3')) return 'sep3';
+        if (dateText.includes('september 4')) return 'sep4';
+        if (dateText.includes('september 5')) return 'sep5';
+        if (dateText.includes('september 6')) return 'sep6';
+    }
+    return '';
+}
+
+// Initialize event filter when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initializeEventFilter();
+    initializeFAB();
+    hidePastEvents(); // Hide events with passed dates
+    
+    // Set up daily check for past events
+    setupDailyPastEventCheck();
+});
+
+// Floating Action Button (FAB) Functionality
+function initializeFAB() {
+    const fabButton = document.getElementById('fabButton');
+    const fabMenu = document.getElementById('fabMenu');
+    
+    if (fabButton && fabMenu) {
+        fabButton.addEventListener('click', function() {
+            fabMenu.classList.toggle('active');
+            
+            // Change icon based on state
+            const icon = this.querySelector('i');
+            if (fabMenu.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-plus';
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!fabButton.contains(event.target) && !fabMenu.contains(event.target)) {
+                fabMenu.classList.remove('active');
+                const icon = fabButton.querySelector('i');
+                icon.className = 'fas fa-plus';
+            }
+        });
+    }
+}
+
+// Share website functionality
+function shareWebsite() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Windows Society Ganeshotsav 2025',
+            text: 'Join us for the grand celebration of Lord Ganesha from August 27 to September 6, 2025!',
+            url: window.location.href
+        }).then(() => {
+            showNotification('Website shared successfully!', 'success');
+        }).catch(() => {
+            showNotification('Failed to share website', 'error');
+        });
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        const shareText = 'Windows Society Ganeshotsav 2025 - Join us for the grand celebration!';
+        navigator.clipboard.writeText(shareText + ' ' + window.location.href).then(() => {
+            showNotification('Website link copied to clipboard!', 'success');
+        }).catch(() => {
+            showNotification('Failed to copy link', 'error');
+        });
+    }
+}
+
+// Dark mode toggle functionality
+function toggleDarkMode() {
+    const body = document.body;
+    const isDark = body.classList.contains('dark-mode');
+    
+    if (isDark) {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'false');
+        showNotification('Light mode enabled', 'success');
+    } else {
+        body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'true');
+        showNotification('Dark mode enabled', 'success');
+    }
+}
+
+// Check for saved dark mode preference
+document.addEventListener('DOMContentLoaded', () => {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === 'true') {
+        document.body.classList.add('dark-mode');
+    }
 });
 
 // Add event reminder functionality
@@ -837,3 +930,170 @@ document.addEventListener('DOMContentLoaded', () => {
 // Background music removed
 
 // Music system removed 
+
+// Function to hide events with passed dates
+function hidePastEvents() {
+    const eventCards = document.querySelectorAll('.event-card');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
+    
+    let pastEventCount = 0;
+    
+    eventCards.forEach(card => {
+        const dateElement = card.querySelector('.event-date');
+        if (dateElement) {
+            const dateText = dateElement.textContent;
+            const eventDate = parseEventDate(dateText);
+            
+            if (eventDate && eventDate < today) {
+                // Add past-event class for styling
+                card.classList.add('past-event');
+                
+                // Add a "Past Event" indicator
+                addPastEventIndicator(card);
+                
+                pastEventCount++;
+                
+                // Optionally hide the card completely (uncomment the next line if you want to hide past events)
+                // card.style.display = 'none';
+            }
+        }
+    });
+    
+    // Update the filter to show/hide past events
+    updateFilterButtonsForPastEvents();
+    
+    // Show notification about past events if there are any
+    if (pastEventCount > 0) {
+        showPastEventsNotification(pastEventCount);
+    }
+}
+
+// Function to show notification about past events
+function showPastEventsNotification(pastEventCount) {
+    // Check if we've already shown this notification today
+    const lastNotification = localStorage.getItem('lastPastEventNotification');
+    const today = new Date().toDateString();
+    
+    if (lastNotification !== today) {
+        const notification = document.createElement('div');
+        notification.className = 'past-events-notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-info-circle"></i>
+                <span>${pastEventCount} event(s) have passed. Use the "Past Events" filter to view them.</span>
+                <button class="notification-close">&times;</button>
+            </div>
+        `;
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: #2196F3;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            max-width: 400px;
+            animation: slideInLeft 0.3s ease;
+        `;
+        
+        // Add close button functionality
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', () => {
+            notification.remove();
+        });
+        
+        // Auto-remove after 10 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.animation = 'slideOutLeft 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 10000);
+        
+        // Add to page
+        document.body.appendChild(notification);
+        
+        // Mark as shown today
+        localStorage.setItem('lastPastEventNotification', today);
+    }
+}
+
+// Function to update filter buttons to show past events option
+function updateFilterButtonsForPastEvents() {
+    const filterButtons = document.querySelector('.filter-buttons');
+    const pastEventsButton = document.querySelector('.filter-btn[data-date="past"]');
+    
+    // Only add past events button if it doesn't exist
+    if (!pastEventsButton) {
+        const pastButton = document.createElement('button');
+        pastButton.className = 'filter-btn';
+        pastButton.setAttribute('data-date', 'past');
+        pastButton.innerHTML = `
+            <i class="fas fa-history"></i>
+            <span>Past Events</span>
+        `;
+        
+        // Insert before the last button (or wherever you prefer)
+        filterButtons.appendChild(pastButton);
+        
+        // Add event listener for the new button
+        pastButton.addEventListener('click', function() {
+            showPastEvents();
+        });
+    }
+}
+
+// Function to show past events
+function showPastEvents() {
+    const eventCards = document.querySelectorAll('.event-card');
+    const dateSections = document.querySelectorAll('.date-section');
+    
+    // Show all sections
+    dateSections.forEach(section => {
+        section.style.display = 'block';
+        section.style.opacity = '1';
+        section.style.transform = 'translateY(0)';
+    });
+    
+    // Show only past events
+    eventCards.forEach(card => {
+        if (card.classList.contains('past-event')) {
+            card.style.display = 'block';
+            card.style.opacity = '1';
+        } else {
+            card.style.display = 'none';
+            card.style.opacity = '0';
+        }
+    });
+    
+    // Update active button
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.filter-btn[data-date="past"]').classList.add('active');
+} 
+
+// Function to set up daily check for past events
+function setupDailyPastEventCheck() {
+    // Check if we need to refresh past events (once per day)
+    const lastCheck = localStorage.getItem('lastPastEventCheck');
+    const today = new Date().toDateString();
+    
+    if (lastCheck !== today) {
+        // Update past events
+        hidePastEvents();
+        localStorage.setItem('lastPastEventCheck', today);
+    }
+    
+    // Set up interval to check every hour (in case user keeps page open)
+    setInterval(() => {
+        const currentDate = new Date().toDateString();
+        if (currentDate !== lastCheck) {
+            hidePastEvents();
+            localStorage.setItem('lastPastEventCheck', currentDate);
+        }
+    }, 60 * 60 * 1000); // Check every hour
+} 
