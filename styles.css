@@ -59,38 +59,7 @@ body {
     color: #FFD700;
 }
 
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
 
-.nav-link {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: #8B4513;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background-color: #8B4513;
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
 
 
 
@@ -1168,26 +1137,7 @@ html {
         margin-top: 2rem;
     }
     
-    .hamburger {
-        display: flex;
-    }
 
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background-color: #fff;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-        padding: 2rem 0;
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
 
     .hero {
         flex-direction: column;
@@ -1900,13 +1850,7 @@ body {
     border-bottom: 1px solid #333;
 }
 
-.dark-mode .nav-link {
-    color: #e0e0e0;
-}
 
-.dark-mode .nav-link:hover {
-    color: #FFD700;
-}
 
 .dark-mode .hero {
     background: linear-gradient(135deg, #2d1810 0%, #4a2c0a 50%, #1a1a1a 100%);
@@ -2584,7 +2528,6 @@ body {
 /* Enhanced Touch Targets */
 @media (max-width: 768px) {
     /* Ensure all interactive elements meet minimum touch target size */
-    .nav-link,
     .btn,
     .register-btn,
     .filter-chip,
@@ -3026,9 +2969,7 @@ body {
         border-width: 0.5px !important;
     }
     
-    .nav-menu {
-        border-top-width: 0.5px !important;
-    }
+
     
     .mobile-bottom-nav {
         border-top-width: 0.5px !important;
@@ -3042,10 +2983,7 @@ body {
         color: white !important;
     }
     
-    .nav-menu {
-        background: rgba(0, 0, 0, 0.95) !important;
-        color: white !important;
-    }
+
     
     .mobile-bottom-nav {
         background: rgba(0, 0, 0, 0.95) !important;
@@ -3060,7 +2998,6 @@ body {
 /* Mobile accessibility improvements */
 @media (max-width: 768px) {
     /* Focus indicators for keyboard navigation */
-    .nav-link:focus,
     .btn:focus,
     .register-btn:focus,
     .fab-button:focus {
@@ -3274,7 +3211,6 @@ body {
     }
     
     /* Smooth mobile transitions */
-    .nav-menu,
     .mobile-bottom-nav,
     .fab-menu {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -3304,15 +3240,7 @@ body {
         transition: transform 0.1s ease !important;
     }
     
-    /* Mobile navigation animations */
-    .nav-link {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-    
-    .nav-link:hover {
-        transform: translateX(10px) !important;
-        background: rgba(139, 69, 19, 0.1) !important;
-    }
+
     
     /* Mobile bottom navigation animations */
     .bottom-nav-link {
@@ -3520,7 +3448,6 @@ body {
     .event-card,
     .btn,
     .register-btn,
-    .nav-link,
     .bottom-nav-link,
     .fab-button,
     .form-group,
@@ -3551,7 +3478,6 @@ body {
     }
     
     .navbar,
-    .nav-menu,
     .mobile-bottom-nav {
         transition: background-color 0.3s ease, color 0.3s ease !important;
     }
