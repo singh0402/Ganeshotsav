@@ -233,21 +233,7 @@
             </div>
         </div>
         <div class="hero-image">
-            <!-- Optimized image loading with multiple formats and lazy loading -->
-            <picture>
-                <!-- WebP format for modern browsers (smaller file size) -->
-                <source srcset="ganpati.webp" type="image/webp">
-                <!-- Fallback to optimized JPEG -->
-                <source srcset="ganpati-optimized.jpg" type="image/jpeg">
-                <!-- Original as final fallback -->
-                <img src="ganpati-optimized.jpg" 
-                     alt="Lord Ganesha" 
-                     class="ganesha-image" 
-                     loading="lazy"
-                     width="400" 
-                     height="300"
-                     onerror="this.src='ganpati.jpg'">
-            </picture>
+            <img src="ganpati.jpg" alt="Lord Ganesha" class="ganesha-image">
         </div>
     </section>
 
@@ -257,24 +243,21 @@
             <h2 class="section-title">About Ganeshotsav</h2>
             <div class="about-content">
                 <div class="about-text" style="font-size: 16px; line-height: 1.5; margin-bottom: 30px;">
-                    <ul style="padding-left: 20px; margin: 0;">
-                        <li style="margin-bottom: 12px;">Ganeshotsav is a sacred ten-day Hindu festival honoring Lord Ganesha, the God of wisdom and prosperity</li>
-                        <li style="margin-bottom: 12px;">The Windows Society proudly organizes this celebration to unite our community in devotion and cultural harmony</li>
-                        <li style="margin-bottom: 12px;">From August 27th to September 6th, 2025, we'll host cultural events, competitions, and spiritual activities</li>
-                    </ul>
+                    <p style="margin-bottom: 15px;">Ganeshotsav is a sacred ten-day Hindu festival honoring Lord Ganesha, the God of wisdom and prosperity. The Windows Society proudly organizes this celebration to unite our community in devotion and cultural harmony.</p>
+                    <p style="margin-bottom: 15px;">From August 27th to September 6th, 2025, we'll host cultural events, competitions, and spiritual activities that showcase our rich heritage and strengthen community bonds.</p>
                 </div>
-                <div class="about-stats" style="display: flex; overflow-x: auto; gap: 20px; padding: 10px 0; scrollbar-width: thin;">
-                    <div class="stat-item" style="min-width: 120px; text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <h3 style="margin: 0 0 8px 0; font-size: 28px; font-weight: bold;">11</h3>
-                        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Days of Celebration</p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <h3>11</h3>
+                        <p>Days of Celebration</p>
                     </div>
-                    <div class="stat-item" style="min-width: 120px; text-align: center; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 20px 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <h3 style="margin: 0 0 8px 0; font-size: 28px; font-weight: bold;">25+</h3>
-                        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Events & Activities</p>
+                    <div class="stat-item">
+                        <h3>25+</h3>
+                        <p>Events & Activities</p>
                     </div>
-                    <div class="stat-item" style="min-width: 120px; text-align: center; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 20px 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <h3 style="margin: 0; font-size: 28px; font-weight: bold;">500+</h3>
-                        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Expected Participants</p>
+                    <div class="stat-item">
+                        <h3>500+</h3>
+                        <p>Expected Participants</p>
                     </div>
                 </div>
             </div>
