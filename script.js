@@ -459,22 +459,21 @@ function updateCountdown() {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
-        // Update countdown display
+        // Update countdown display for compact format
         const countdownElement = document.querySelector('.countdown-timer');
         if (countdownElement) {
-            const countdownNumbers = countdownElement.querySelectorAll('.countdown-number');
-            if (countdownNumbers.length >= 4) {
-                countdownNumbers[0].textContent = days;
-                countdownNumbers[1].textContent = hours;
-                countdownNumbers[2].textContent = minutes;
-                countdownNumbers[3].textContent = seconds;
-            }
+            countdownElement.innerHTML = `
+                <span style="margin: 0 8px;"><strong>${days.toString().padStart(2, '0')}</strong> Days</span>
+                <span style="margin: 0 8px;"><strong>${hours.toString().padStart(2, '0')}</strong> Hours</span>
+                <span style="margin: 0 8px;"><strong>${minutes.toString().padStart(2, '0')}</strong> Minutes</span>
+                <span style="margin: 0 8px;"><strong>${seconds.toString().padStart(2, '0')}</strong> Seconds
+            `;
         }
     } else {
         // Festival has started
         const countdownElement = document.querySelector('.countdown-timer');
         if (countdownElement) {
-            countdownElement.innerHTML = '<div class="countdown-expired">🎉 Festival Started! 🎉</div>';
+            countdownElement.innerHTML = '<div style="font-size: 16px; color: #e74c3c; font-weight: bold;">🎉 Festival Started! 🎉</div>';
         }
     }
 }
