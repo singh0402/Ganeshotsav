@@ -459,21 +459,24 @@ function updateCountdown() {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
-        // Update countdown display for compact format
+        // Update countdown display for new horizontal layout
         const countdownElement = document.querySelector('.countdown-timer');
         if (countdownElement) {
-            countdownElement.innerHTML = `
-                <span style="margin: 0 8px;"><strong>${days.toString().padStart(2, '0')}</strong> Days</span>
-                <span style="margin: 0 8px;"><strong>${hours.toString().padStart(2, '0')}</strong> Hours</span>
-                <span style="margin: 0 8px;"><strong>${minutes.toString().padStart(2, '0')}</strong> Minutes</span>
-                <span style="margin: 0 8px;"><strong>${seconds.toString().padStart(2, '0')}</strong> Seconds
-            `;
+            const dayElement = countdownElement.querySelector('.timer-item:nth-child(1) .timer-number');
+            const hourElement = countdownElement.querySelector('.timer-item:nth-child(3) .timer-number');
+            const minuteElement = countdownElement.querySelector('.timer-item:nth-child(5) .timer-number');
+            const secondElement = countdownElement.querySelector('.timer-item:nth-child(7) .timer-number');
+            
+            if (dayElement) dayElement.textContent = days.toString().padStart(2, '0');
+            if (hourElement) hourElement.textContent = hours.toString().padStart(2, '0');
+            if (minuteElement) minuteElement.textContent = minutes.toString().padStart(2, '0');
+            if (secondElement) secondElement.textContent = seconds.toString().padStart(2, '0');
         }
     } else {
         // Festival has started
         const countdownElement = document.querySelector('.countdown-timer');
         if (countdownElement) {
-            countdownElement.innerHTML = '<div style="font-size: 16px; color: #e74c3c; font-weight: bold;">🎉 Festival Started! 🎉</div>';
+            countdownElement.innerHTML = '<div style="font-size: 18px; color: #e74c3c; font-weight: bold; text-align: center; padding: 20px;">🎉 Festival Started! 🎉</div>';
         }
     }
 }
