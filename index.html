@@ -84,25 +84,21 @@
             
                     /* Stats cards mobile optimization */
         .about-stats {
-            flex-direction: column !important;
             gap: 15px !important;
-            padding: 15px 20px !important;
+            padding: 15px 0 !important;
         }
         
         .stat-item {
-            margin: 0 15px !important;
+            min-width: 100px !important;
+            padding: 15px 12px !important;
         }
         
-        .stat-number {
-            font-size: 28px !important;
+        .stat-item h3 {
+            font-size: 24px !important;
         }
         
-        .stat-label {
-            font-size: 11px !important;
-        }
-        
-        .stat-separator {
-            display: none !important;
+        .stat-item p {
+            font-size: 12px !important;
         }
             
             /* Button optimization */
@@ -120,25 +116,25 @@
             
                     /* Countdown timer mobile optimization */
         .countdown-timer {
-            flex-direction: column !important;
-            padding: 12px 20px !important;
+            flex-direction: row !important;
+            gap: 10px !important;
+            padding: 15px 10px !important;
             margin: 15px 0 !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
         }
         
         .timer-item {
-            margin: 0 8px !important;
+            min-width: 70px !important;
+            padding: 15px 10px !important;
         }
         
         .timer-number {
-            font-size: 24px !important;
+            font-size: 28px !important;
         }
         
         .timer-label {
             font-size: 10px !important;
-        }
-        
-        .timer-separator {
-            display: none !important;
         }
             
             /* Navigation mobile optimization */
@@ -238,25 +234,22 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1 class="hero-title" style="font-weight: bold; text-align: center;">Windows Society Ganeshotsav 2025</h1>
-            <div class="countdown-timer" style="display: flex; justify-content: center; align-items: center; background: rgba(139, 69, 19, 0.1); border-radius: 25px; padding: 15px 25px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                <div class="timer-item" style="text-align: center; margin: 0 15px;">
-                    <div class="timer-number" style="font-size: 28px; font-weight: bold; color: #8B4513; line-height: 1;">00</div>
-                    <div class="timer-label" style="font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px;">Days</div>
+            <div class="countdown-timer" style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 20px 0;">
+                <div class="timer-item" style="text-align: center; background: rgba(255, 193, 7, 0.2); border-radius: 15px; padding: 20px 15px; min-width: 80px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3); backdrop-filter: blur(10px);">
+                    <div class="timer-number" style="font-size: 32px; font-weight: bold; color: white; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">00</div>
+                    <div class="timer-label" style="font-size: 12px; color: white; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Days</div>
                 </div>
-                <div class="timer-separator" style="font-size: 20px; color: #8B4513; margin: 0 5px;">•</div>
-                <div class="timer-item" style="text-align: center; margin: 0 15px;">
-                    <div class="timer-number" style="font-size: 28px; font-weight: bold; color: #8B4513; line-height: 1;">00</div>
-                    <div class="timer-label" style="font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px;">Hours</div>
+                <div class="timer-item" style="text-align: center; background: rgba(255, 193, 7, 0.2); border-radius: 15px; padding: 20px 15px; min-width: 80px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3); backdrop-filter: blur(10px);">
+                    <div class="timer-number" style="font-size: 32px; font-weight: bold; color: white; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">00</div>
+                    <div class="timer-label" style="font-size: 12px; color: white; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Hours</div>
                 </div>
-                <div class="timer-separator" style="font-size: 20px; color: #8B4513; margin: 0 5px;">•</div>
-                <div class="timer-item" style="text-align: center; margin: 0 15px;">
-                    <div class="timer-number" style="font-size: 28px; font-weight: bold; color: #8B4513; line-height: 1;">00</div>
-                    <div class="timer-label" style="font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px;">Minutes</div>
+                <div class="timer-item" style="text-align: center; background: rgba(255, 193, 7, 0.2); border-radius: 15px; padding: 20px 15px; min-width: 80px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3); backdrop-filter: blur(10px);">
+                    <div class="timer-number" style="font-size: 32px; font-weight: bold; color: white; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">00</div>
+                    <div class="timer-label" style="font-size: 12px; color: white; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Minutes</div>
                 </div>
-                <div class="timer-separator" style="font-size: 20px; color: #8B4513; margin: 0 5px;">•</div>
-                <div class="timer-item" style="text-align: center; margin: 0 15px;">
-                    <div class="timer-number" style="font-size: 28px; font-weight: bold; color: #8B4513; line-height: 1;">00</div>
-                    <div class="timer-label" style="font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px;">Seconds</div>
+                <div class="timer-item" style="text-align: center; background: rgba(255, 193, 7, 0.2); border-radius: 15px; padding: 20px 15px; min-width: 80px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3); backdrop-filter: blur(10px);">
+                    <div class="timer-number" style="font-size: 32px; font-weight: bold; color: white; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">00</div>
+                    <div class="timer-label" style="font-size: 12px; color: white; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Seconds</div>
                 </div>
             </div>
             <p class="hero-subtitle">Celebrating the Festival of Lord Ganesha with Unity and Devotion</p>
@@ -278,20 +271,18 @@
                     <p style="margin-bottom: 15px;">Ganeshotsav is a sacred ten-day Hindu festival honoring Lord Ganesha, the God of wisdom and prosperity. The Windows Society proudly organizes this celebration to unite our community in devotion and cultural harmony.</p>
                     <p style="margin-bottom: 15px;">From August 27th to September 6th, 2025, we'll host cultural events, competitions, and spiritual activities that showcase our rich heritage and strengthen community bonds.</p>
                 </div>
-                <div class="about-stats" style="display: flex; justify-content: center; align-items: center; background: rgba(139, 69, 19, 0.1); border-radius: 25px; padding: 20px 30px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); gap: 0;">
-                    <div class="stat-item" style="text-align: center; margin: 0 25px;">
-                        <div class="stat-number" style="font-size: 32px; font-weight: bold; color: #8B4513; line-height: 1;">11</div>
-                        <div class="stat-label" style="font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;">Days of Celebration</div>
+                <div class="about-stats" style="display: flex; flex-direction: column; gap: 15px; padding: 10px 0;">
+                    <div class="stat-item" style="text-align: center; background: #f8f9fa; padding: 20px 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+                        <h3 style="margin: 0 0 8px 0; font-size: 28px; font-weight: bold; color: #333;">11</h3>
+                        <p style="margin: 0; font-size: 14px; color: #666;">Days of Celebration</p>
                     </div>
-                    <div class="stat-separator" style="font-size: 24px; color: #8B4513; margin: 0 10px;">•</div>
-                    <div class="stat-item" style="text-align: center; margin: 0 25px;">
-                        <div class="stat-number" style="font-size: 32px; font-weight: bold; color: #8B4513; line-height: 1;">25+</div>
-                        <div class="stat-label" style="font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;">Events & Activities</div>
+                    <div class="stat-item" style="text-align: center; background: #f8f9fa; padding: 20px 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+                        <h3 style="margin: 0 0 8px 0; font-size: 28px; font-weight: bold; color: #333;">25+</h3>
+                        <p style="margin: 0; font-size: 14px; color: #666;">Events & Activities</p>
                     </div>
-                    <div class="stat-separator" style="font-size: 24px; color: #8B4513; margin: 0 10px;">•</div>
-                    <div class="stat-item" style="text-align: center; margin: 0 25px;">
-                        <div class="stat-number" style="font-size: 32px; font-weight: bold; color: #8B4513; line-height: 1;">500+</div>
-                        <div class="stat-label" style="font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;">Expected Participants</div>
+                    <div class="stat-item" style="text-align: center; background: #f8f9fa; padding: 20px 15px; border-radius: 8px; border: 1px solid #e9ecef;">
+                        <h3 style="margin: 0; font-size: 28px; font-weight: bold; color: #333;">500+</h3>
+                        <p style="margin: 0; font-size: 14px; color: #666;">Expected Participants</p>
                     </div>
                 </div>
             </div>

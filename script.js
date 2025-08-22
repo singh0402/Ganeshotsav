@@ -459,24 +459,28 @@ function updateCountdown() {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
-        // Update countdown display for new horizontal layout
+        // Update countdown display for new card-based layout
         const countdownElement = document.querySelector('.countdown-timer');
         if (countdownElement) {
-            const dayElement = countdownElement.querySelector('.timer-item:nth-child(1) .timer-number');
-            const hourElement = countdownElement.querySelector('.timer-item:nth-child(3) .timer-number');
-            const minuteElement = countdownElement.querySelector('.timer-item:nth-child(5) .timer-number');
-            const secondElement = countdownElement.querySelector('.timer-item:nth-child(7) .timer-number');
+            const timerItems = countdownElement.querySelectorAll('.timer-item');
             
-            if (dayElement) dayElement.textContent = days.toString().padStart(2, '0');
-            if (hourElement) hourElement.textContent = hours.toString().padStart(2, '0');
-            if (minuteElement) minuteElement.textContent = minutes.toString().padStart(2, '0');
-            if (secondElement) secondElement.textContent = seconds.toString().padStart(2, '0');
+            if (timerItems.length >= 4) {
+                const dayElement = timerItems[0].querySelector('.timer-number');
+                const hourElement = timerItems[1].querySelector('.timer-number');
+                const minuteElement = timerItems[2].querySelector('.timer-number');
+                const secondElement = timerItems[3].querySelector('.timer-number');
+                
+                if (dayElement) dayElement.textContent = days.toString().padStart(2, '0');
+                if (hourElement) hourElement.textContent = hours.toString().padStart(2, '0');
+                if (minuteElement) minuteElement.textContent = minutes.toString().padStart(2, '0');
+                if (secondElement) secondElement.textContent = seconds.toString().padStart(2, '0');
+            }
         }
     } else {
         // Festival has started
         const countdownElement = document.querySelector('.countdown-timer');
         if (countdownElement) {
-            countdownElement.innerHTML = '<div style="font-size: 18px; color: #e74c3c; font-weight: bold; text-align: center; padding: 20px;">🎉 Festival Started! 🎉</div>';
+            countdownElement.innerHTML = '<div style="font-size: 18px; color: #e74c3c; font-weight: bold; text-align: center; padding: 20px; background: rgba(255, 193, 7, 0.2); border-radius: 15px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);">🎉 Festival Started! 🎉</div>';
         }
     }
 }
