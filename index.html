@@ -232,6 +232,18 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <!-- Background Video -->
+        <div class="hero-video-container">
+            <!-- Note: Video file is large (>25MB). For GitHub, consider compressing or using a smaller file -->
+            <video autoplay muted loop playsinline class="hero-background-video">
+                <source src="lezim-performance.MP4" type="video/mp4">
+                <!-- Fallback: If video fails to load, this image will be shown -->
+                <img src="ganpati.jpg" alt="Lord Ganesha" class="hero-fallback-image">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-video-overlay"></div>
+        </div>
+        
         <div class="hero-content">
             <h1 class="hero-title" style="font-weight: bold; text-align: center;">Windows Society Ganeshotsav 2025</h1>
             <div class="countdown-timer" style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 20px 0;">

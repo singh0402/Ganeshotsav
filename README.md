@@ -14,6 +14,7 @@ A modern, responsive website for the Windows Society Ganeshotsav festival with c
 
 ### 🏠 **Homepage**
 - Hero section with countdown timer to registration deadline
+- **Video Background**: Lezim performance video with semi-transparent overlay
 - Beautiful gradient design with floating Ganesha icon
 - Call-to-action buttons for events and registration
 
@@ -204,6 +205,27 @@ To modify event details, contact information, or dates:
 - Database integration
 - Admin panel
 - Analytics dashboard
+
+## 🎥 Video Background Setup
+
+### **Important Note**
+The website includes a Lezim performance video background in the hero section. However, the original video file (`lezim-performance.MP4`) exceeds GitHub's 25MB file size limit.
+
+### **Solutions**
+1. **Compress the video** using FFmpeg or online tools
+2. **Use a smaller video** (under 25MB)
+3. **Fallback to image** (currently implemented)
+
+### **Current Implementation**
+- Video background with semi-transparent overlay
+- Fallback to `ganpati.jpg` when video fails to load
+- Mobile-optimized with responsive overlay opacity
+- Graceful degradation for better user experience
+
+### **For GitHub Deployment**
+- See `VIDEO_SETUP.md` for detailed compression instructions
+- The `.gitignore` file excludes large video files
+- Use compressed versions for repository commits
 
 ## 🤝 Contributing
 

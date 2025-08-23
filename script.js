@@ -48,6 +48,57 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
     
+    // Handle video background
+    const heroVideo = document.querySelector('.hero-background-video');
+    const videoContainer = document.querySelector('.hero-video-container');
+    
+    if (heroVideo && videoContainer) {
+        // Add loading state
+        videoContainer.classList.add('loading');
+        
+        // Ensure video plays on mobile devices
+        heroVideo.addEventListener('loadeddata', () => {
+            videoContainer.classList.remove('loading');
+            videoContainer.classList.add('loaded');
+            
+            heroVideo.play().catch(error => {
+                console.log('Video autoplay failed:', error);
+                // Fallback: show fallback background
+                document.querySelector('.hero').style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #8B4513 100%)';
+                videoContainer.classList.add('error');
+            });
+        });
+        
+        // Handle video errors
+        heroVideo.addEventListener('error', () => {
+            console.log('Video failed to load, showing fallback image');
+            videoContainer.classList.add('fallback');
+            videoContainer.classList.add('error');
+        });
+        
+        // Pause video when not in viewport to save resources
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    heroVideo.play().catch(() => {});
+                } else {
+                    heroVideo.pause();
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        videoObserver.observe(heroVideo);
+        
+        // Add video loading timeout
+        setTimeout(() => {
+            if (videoContainer.classList.contains('loading')) {
+                console.log('Video loading timeout, showing fallback image');
+                videoContainer.classList.add('fallback');
+                videoContainer.classList.add('error');
+            }
+        }, 5000); // 5 second timeout
+    }
+    
     // Force flexbox layout on mobile
     if (window.innerWidth <= 768) {
         const eventsGrid = document.querySelector('.events-grid');
@@ -470,11 +521,31 @@ function updateCountdown() {
                 const minuteElement = timerItems[2].querySelector('.timer-number');
                 const secondElement = timerItems[3].querySelector('.timer-number');
                 
-                if (dayElement) dayElement.textContent = days.toString().padStart(2, '0');
-                if (hourElement) hourElement.textContent = hours.toString().padStart(2, '0');
-                if (minuteElement) minuteElement.textContent = minutes.toString().padStart(2, '0');
-                if (secondElement) secondElement.textContent = seconds.toString().padStart(2, '0');
+                // Debug logging
+                console.log('Countdown values:', { days, hours, minutes, seconds });
+                console.log('Timer items found:', timerItems.length);
+                
+                if (dayElement) {
+                    dayElement.textContent = days.toString().padStart(2, '0');
+                    console.log('Updated days:', dayElement.textContent);
+                }
+                if (hourElement) {
+                    hourElement.textContent = hours.toString().padStart(2, '0');
+                    console.log('Updated hours:', hourElement.textContent);
+                }
+                if (minuteElement) {
+                    minuteElement.textContent = minutes.toString().padStart(2, '0');
+                    console.log('Updated minutes:', minuteElement.textContent);
+                }
+                if (secondElement) {
+                    secondElement.textContent = seconds.toString().padStart(2, '0');
+                    console.log('Updated seconds:', secondElement.textContent);
+                }
+            } else {
+                console.log('Not enough timer items found:', timerItems.length);
             }
+        } else {
+            console.log('Countdown element not found');
         }
     } else {
         // Festival has started
@@ -490,8 +561,18 @@ setInterval(updateCountdown, 1000);
 
 // Initial call when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    updateCountdown();
+    // Wait a bit for all elements to be fully rendered
+    setTimeout(() => {
+        updateCountdown();
+    }, 100);
 });
+
+// Also call immediately if DOM is already loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateCountdown);
+} else {
+    updateCountdown();
+}
 
 // Add smooth reveal animation for sections
 const revealObserver = new IntersectionObserver((entries) => {
@@ -545,6 +626,9 @@ function forceShowEvents() {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize countdown first
+    updateCountdown();
+    
     initializeFAB();
     hidePastEvents(); // Hide events with passed dates
     

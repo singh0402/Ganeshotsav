@@ -1,0 +1,33 @@
+# Large video files (exceed GitHub's 25MB limit)
+lezim-performance.MP4
+
+# Compressed video files (these can be committed)
+# lezim-performance-compressed.mp4
+
+# Other large media files
+*.MP4
+*.mp4
+*.avi
+*.mov
+*.wmv
+
+# Keep the compressed version
+!lezim-performance-compressed.mp4
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log 
