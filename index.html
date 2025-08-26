@@ -445,7 +445,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="event-registration">
+                                <div class="event-registration" id="tableTennisRegistration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdI0lWgQvWCk86UDKnTocEJFj2RgvuV5-ayaWJLfZW6H9FWww/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
                             </div>
@@ -607,7 +607,7 @@
                                         <span><i class="fas fa-user"></i> Dilip Padhye - 9423135684</span>
                                     </div>
                                 </div>
-                                <div class="event-registration">
+                                <div class="event-registration" id="carromRegistration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdI0lWgQvWCk86UDKnTocEJFj2RgvuV5-ayaWJLfZW6H9FWww/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
                             </div>
@@ -731,7 +731,7 @@
                                         <span><i class="fas fa-user"></i> Dilip Padhye - 9423135684</span>
                                     </div>
                                 </div>
-                                <div class="event-registration">
+                                <div class="event-registration" id="chessRegistration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdI0lWgQvWCk86UDKnTocEJFj2RgvuV5-ayaWJLfZW6H9FWww/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
                             </div>
@@ -1257,6 +1257,46 @@
             </button>
         </div>
     </div>
+
+    <!-- Auto-Close Registration JavaScript -->
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to close registrations after 10 PM today
+            function checkAndCloseRegistrations() {
+                const now = new Date();
+                const today10PM = new Date();
+                today10PM.setHours(22, 0, 0, 0); // 10:00 PM today
+                
+                // If it's after 10 PM today, close the registrations
+                if (now >= today10PM) {
+                    // Close Table Tennis registration
+                    const tableTennisReg = document.getElementById('tableTennisRegistration');
+                    if (tableTennisReg) {
+                        tableTennisReg.innerHTML = '<button class="register-btn registration-closed">Registration Closed</button>';
+                    }
+                    
+                    // Close Carrom Competition registration
+                    const carromReg = document.getElementById('carromRegistration');
+                    if (carromReg) {
+                        carromReg.innerHTML = '<button class="register-btn registration-closed">Registration Closed</button>';
+                    }
+                    
+                    // Close Chess Competition registration
+                    const chessReg = document.getElementById('chessRegistration');
+                    if (chessReg) {
+                        chessReg.innerHTML = '<button class="register-btn registration-closed">Registration Closed</button>';
+                    }
+                }
+            }
+            
+            // Check immediately when page loads
+            checkAndCloseRegistrations();
+            
+            // Check every minute to ensure registrations close at the right time
+            setInterval(checkAndCloseRegistrations, 60000);
+        });
+    </script>
 
     <!-- Countdown Timer JavaScript -->
     <script>
