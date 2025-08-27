@@ -1258,6 +1258,536 @@
         </div>
     </div>
 
+
+
+    <!-- Fireworks removed -->
+    <!-- <script>
+        // Diwali Fireworks system removed
+        class Firework {
+            constructor(canvas, x, y, targetX, targetY, type = 'normal') {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.x = x;
+                this.y = y;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.type = type; // normal, anar, chakri, rocket
+                this.speed = 3 + Math.random() * 2;
+                this.angle = Math.atan2(targetY - y, targetX - x);
+                this.velocity = {
+                    x: Math.cos(this.angle) * this.speed,
+                    y: Math.sin(this.angle) * this.speed
+                };
+                this.particles = [];
+                this.hue = this.getDiwaliColor();
+                this.brightness = Math.random() * 50 + 50;
+                this.trail = [];
+                this.size = 3 + Math.random() * 2;
+                this.sparkle = Math.random() > 0.5;
+                this.anarAngle = 0; // For anar rotation
+                this.chakriSpins = 0; // For chakri spinning
+            }
+            
+            getDiwaliColor() {
+                // Traditional Diwali colors: gold, red, green, blue, purple, orange
+                const diwaliColors = [30, 0, 120, 240, 280, 15]; // HSL hue values
+                return diwaliColors[Math.floor(Math.random() * diwaliColors.length)];
+            }
+
+            update() {
+                // Add current position to trail
+                this.trail.push({ x: this.x, y: this.y, alpha: 1 });
+                
+                // Limit trail length
+                if (this.trail.length > 10) {
+                    this.trail.shift();
+                }
+                
+                // Handle different Diwali firework types
+                if (this.type === 'anar') {
+                    // Anar: Ground fountain effect
+                    this.anarAngle += 0.1;
+                    this.x += Math.cos(this.anarAngle) * 0.5;
+                    this.y += this.velocity.y * 0.3;
+                } else if (this.type === 'chakri') {
+                    // Chakri: Spinning wheel effect
+                    this.chakriSpins += 0.2;
+                    this.x += Math.cos(this.chakriSpins) * 2;
+                    this.y += this.velocity.y;
+                } else if (this.type === 'rocket') {
+                    // Rocket: Straight up with slight wobble
+                    this.x += (Math.random() - 0.5) * 0.5;
+                    this.y += this.velocity.y;
+                } else {
+                    // Normal firework
+                    this.x += this.velocity.x;
+                    this.y += this.velocity.y;
+                }
+
+                // Check if firework reached target
+                const distance = Math.hypot(this.targetX - this.x, this.targetY - this.y);
+                if (distance < 5) {
+                    this.explode();
+                    return false;
+                }
+                return true;
+            }
+
+            draw() {
+                // Draw trail with Diwali colors
+                this.trail.forEach((pos, index) => {
+                    const alpha = (index / this.trail.length) * 0.6;
+                    this.ctx.beginPath();
+                    this.ctx.arc(pos.x, pos.y, this.size * 0.5, 0, Math.PI * 2);
+                    
+                    // Diwali trail colors
+                    if (this.type === 'anar') {
+                        this.ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${alpha})`;
+                    } else if (this.type === 'chakri') {
+                        this.ctx.fillStyle = `hsla(${this.hue + 30}, 100%, 80%, ${alpha})`;
+                    } else {
+                        this.ctx.fillStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${alpha})`;
+                    }
+                    this.ctx.fill();
+                });
+                
+                // Draw main firework based on type
+                if (this.type === 'anar') {
+                    // Anar: Draw as a fountain
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `hsl(${this.hue}, 100%, 90%)`;
+                    this.ctx.fill();
+                    
+                    // Add fountain effect
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+                    this.ctx.strokeStyle = `hsl(${this.hue}, 100%, 70%)`;
+                    this.ctx.lineWidth = 1;
+                    this.ctx.stroke();
+                } else if (this.type === 'chakri') {
+                    // Chakri: Draw as spinning wheel
+                    this.ctx.save();
+                    this.ctx.translate(this.x, this.y);
+                    this.ctx.rotate(this.chakriSpins);
+                    
+                    for (let i = 0; i < 8; i++) {
+                        const angle = (i * Math.PI * 2) / 8;
+                        const x = Math.cos(angle) * this.size;
+                        const y = Math.sin(angle) * this.size;
+                        this.ctx.beginPath();
+                        this.ctx.arc(x, y, 1, 0, Math.PI * 2);
+                        this.ctx.fillStyle = `hsl(${this.hue + i * 30}, 100%, 70%)`;
+                        this.ctx.fill();
+                    }
+                    this.ctx.restore();
+                } else {
+                    // Normal firework with gradient
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    
+                    const gradient = this.ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                    gradient.addColorStop(0, `hsl(${this.hue}, 100%, 80%)`);
+                    gradient.addColorStop(0.5, `hsl(${this.hue}, 100%, ${this.brightness}%)`);
+                    gradient.addColorStop(1, `hsl(${this.hue}, 100%, 40%)`);
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fill();
+                }
+                
+                // Add Diwali sparkle effects
+                if (this.sparkle && Math.random() > 0.7) {
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.x + (Math.random() - 0.5) * 15, this.y + (Math.random() - 0.5) * 15, 1, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `hsl(${this.hue + 30}, 100%, 90%)`;
+                    this.ctx.fill();
+                }
+            }
+
+            explode() {
+                const particleCount = 150 + Math.random() * 50; // Variable particle count
+                const explosionType = Math.random();
+                
+                // Diwali-specific explosion patterns
+                if (this.type === 'anar') {
+                    // Anar: Ground fountain explosion
+                    for (let i = 0; i < particleCount; i++) {
+                        const angle = (Math.PI * 2 * i) / particleCount;
+                        const velocity = Math.random() * 4 + 2;
+                        this.particles.push(new Particle(
+                            this.x,
+                            this.y,
+                            Math.cos(angle) * velocity,
+                            Math.sin(angle) * velocity,
+                            this.hue + Math.random() * 60 - 30,
+                            'anar'
+                        ));
+                    }
+                } else if (this.type === 'chakri') {
+                    // Chakri: Spinning wheel explosion
+                    for (let i = 0; i < particleCount; i++) {
+                        const angle = (Math.PI * 2 * i) / particleCount;
+                        const velocity = Math.random() * 6 + 3;
+                        this.particles.push(new Particle(
+                            this.x,
+                            this.y,
+                            Math.cos(angle) * velocity,
+                            Math.sin(angle) * velocity,
+                            this.hue + Math.random() * 60 - 30,
+                            'chakri'
+                        ));
+                    }
+                } else if (this.type === 'rocket') {
+                    // Rocket: High altitude burst
+                    for (let i = 0; i < particleCount; i++) {
+                        const angle = (Math.PI * 2 * i) / particleCount;
+                        const velocity = Math.random() * 8 + 4;
+                        this.particles.push(new Particle(
+                            this.x,
+                            this.y,
+                            Math.cos(angle) * velocity,
+                            Math.sin(angle) * velocity,
+                            this.hue + Math.random() * 60 - 30,
+                            'rocket'
+                        ));
+                    }
+                } else {
+                    // Normal firework with different patterns
+                    for (let i = 0; i < particleCount; i++) {
+                        let angle, velocity;
+                        
+                        if (explosionType < 0.3) {
+                            // Circle explosion
+                            angle = (Math.PI * 2 * i) / particleCount;
+                            velocity = Math.random() * 8 + 3;
+                        } else if (explosionType < 0.6) {
+                            // Spiral explosion
+                            angle = (Math.PI * 2 * i) / particleCount + (i * 0.1);
+                            velocity = Math.random() * 6 + 4;
+                        } else {
+                            // Random explosion
+                            angle = Math.random() * Math.PI * 2;
+                            velocity = Math.random() * 10 + 2;
+                        }
+                        
+                        this.particles.push(new Particle(
+                            this.x,
+                            this.y,
+                            Math.cos(angle) * velocity,
+                            Math.sin(angle) * velocity,
+                            this.hue + Math.random() * 60 - 30,
+                            'normal'
+                        ));
+                    }
+                }
+            }
+        }
+
+        class Particle {
+            constructor(x, y, vx, vy, hue, explosionType) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.hue = hue;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.01 + 0.01; // Slower decay
+                this.size = Math.random() * 2 + 0.5; // Variable size
+                this.explosionType = explosionType;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.2;
+                this.gravity = 0.08 + Math.random() * 0.04; // Variable gravity
+                this.trail = []; // Particle trail
+                this.diwaliType = explosionType; // Store Diwali type
+            }
+
+            update() {
+                // Add trail effect
+                this.trail.push({ x: this.x, y: this.y, alpha: this.alpha });
+                if (this.trail.length > 5) {
+                    this.trail.shift();
+                }
+                
+                // Diwali-specific particle behavior
+                if (this.diwaliType === 'anar') {
+                    // Anar: Ground fountain particles
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.vy += this.gravity * 0.5; // Less gravity for ground effect
+                    this.vx *= 0.98; // More air resistance
+                } else if (this.diwaliType === 'chakri') {
+                    // Chakri: Spinning particles
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.vy += this.gravity;
+                    this.vx += Math.cos(this.rotation) * 0.1; // Spinning effect
+                    this.rotation += 0.1;
+                } else if (this.diwaliType === 'rocket') {
+                    // Rocket: High altitude particles
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.vy += this.gravity * 1.2; // More gravity for high altitude
+                    this.vx *= 0.99;
+                } else {
+                    // Normal particles
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.vy += this.gravity;
+                    this.vx *= 0.99;
+                    this.vy *= 0.99;
+                }
+                
+                this.alpha -= this.decay;
+                this.rotation += this.rotationSpeed;
+                
+                return this.alpha > 0;
+            }
+
+            draw(ctx) {
+                ctx.save();
+                
+                // Draw trail with Diwali colors
+                this.trail.forEach((pos, index) => {
+                    const trailAlpha = (index / this.trail.length) * this.alpha * 0.6;
+                    ctx.globalAlpha = trailAlpha;
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, this.size * 0.3, 0, Math.PI * 2);
+                    
+                    // Diwali trail colors
+                    if (this.diwaliType === 'anar') {
+                        ctx.fillStyle = `hsl(${this.hue}, 100%, 60%)`;
+                    } else if (this.diwaliType === 'chakri') {
+                        ctx.fillStyle = `hsl(${this.hue + 45}, 100%, 70%)`;
+                    } else if (this.diwaliType === 'rocket') {
+                        ctx.fillStyle = `hsl(${this.hue + 15}, 100%, 80%)`;
+                    } else {
+                        ctx.fillStyle = `hsl(${this.hue}, 100%, 70%)`;
+                    }
+                    ctx.fill();
+                });
+                
+                // Draw main particle based on Diwali type
+                ctx.globalAlpha = this.alpha;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                
+                if (this.diwaliType === 'anar') {
+                    // Anar: Small bright dots
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsl(${this.hue}, 100%, 80%)`;
+                    ctx.fill();
+                    
+                    // Add glow effect
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size * 1.5, 0, Math.PI * 2);
+                    ctx.strokeStyle = `hsl(${this.hue}, 100%, 60%)`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                } else if (this.diwaliType === 'chakri') {
+                    // Chakri: Spinning stars
+                    ctx.beginPath();
+                    for (let i = 0; i < 6; i++) {
+                        const angle = (i * Math.PI * 2) / 6;
+                        const x = Math.cos(angle) * this.size;
+                        const y = Math.sin(angle) * this.size;
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.fillStyle = `hsl(${this.hue}, 100%, 70%)`;
+                    ctx.fill();
+                } else if (this.diwaliType === 'rocket') {
+                    // Rocket: Diamond shapes
+                    ctx.beginPath();
+                    ctx.moveTo(0, -this.size);
+                    ctx.lineTo(this.size, 0);
+                    ctx.lineTo(0, this.size);
+                    ctx.lineTo(-this.size, 0);
+                    ctx.closePath();
+                    ctx.fillStyle = `hsl(${this.hue}, 100%, 60%)`;
+                    ctx.fill();
+                } else {
+                    // Normal particles with different shapes
+                    const shapeType = Math.random();
+                    if (shapeType < 0.3) {
+                        // Circle particles
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                        const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+                        gradient.addColorStop(0, `hsl(${this.hue}, 100%, 90%)`);
+                        gradient.addColorStop(1, `hsl(${this.hue}, 100%, 50%)`);
+                        ctx.fillStyle = gradient;
+                        ctx.fill();
+                    } else if (shapeType < 0.6) {
+                        // Star particles
+                        ctx.beginPath();
+                        for (let i = 0; i < 5; i++) {
+                            const angle = (i * Math.PI * 2) / 5;
+                            const x = Math.cos(angle) * this.size;
+                            const y = Math.sin(angle) * this.size;
+                            if (i === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
+                        ctx.closePath();
+                        ctx.fillStyle = `hsl(${this.hue}, 100%, 70%)`;
+                        ctx.fill();
+                    } else {
+                        // Diamond particles
+                        ctx.beginPath();
+                        ctx.moveTo(0, -this.size);
+                        ctx.lineTo(this.size, 0);
+                        ctx.lineTo(0, this.size);
+                        ctx.lineTo(-this.size, 0);
+                        ctx.closePath();
+                        ctx.fillStyle = `hsl(${this.hue}, 100%, 60%)`;
+                        ctx.fill();
+                    }
+                }
+                
+                ctx.restore();
+            }
+        }
+
+        let fireworks = [];
+        let particles = [];
+        let animationId;
+
+        function startFireworks() {
+            console.log('🎆 Starting fireworks...');
+            const canvas = document.getElementById('fireworksCanvas');
+            if (!canvas) {
+                console.error('❌ Fireworks canvas not found!');
+                return;
+            }
+            console.log('✅ Canvas found, starting animation...');
+
+            canvas.style.display = 'block';
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const ctx = canvas.getContext('2d');
+            
+            // Clear any existing animation
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+
+            function animate() {
+                console.log('🎆 Animation frame running...');
+                
+                // Create beautiful fade effect
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add subtle background glow
+                const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, canvas.width/2);
+                gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0.02)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Update and draw fireworks
+                for (let i = fireworks.length - 1; i >= 0; i--) {
+                    const firework = fireworks[i];
+                    if (firework.update()) {
+                        firework.draw();
+                    } else {
+                        fireworks.splice(i, 1);
+                    }
+                }
+
+                // Update and draw particles
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const particle = particles[i];
+                    if (particle.update()) {
+                        particle.draw(ctx);
+                    } else {
+                        particles.splice(i, 1);
+                    }
+                }
+
+                // Add new fireworks randomly with different patterns
+                if (Math.random() < 0.08) { // Increased frequency
+                    const startX = Math.random() * canvas.width;
+                    const startY = canvas.height;
+                    let targetX, targetY;
+                    
+                    // Create different firework patterns
+                    const pattern = Math.random();
+                    if (pattern < 0.3) {
+                        // Single target
+                        targetX = Math.random() * canvas.width;
+                        targetY = Math.random() * canvas.height * 0.6;
+                    } else if (pattern < 0.6) {
+                        // Multiple targets in a line
+                        targetX = startX + (Math.random() - 0.5) * 200;
+                        targetY = Math.random() * canvas.height * 0.5;
+                    } else {
+                        // Circular pattern
+                        const angle = Math.random() * Math.PI * 2;
+                        const radius = Math.random() * 150 + 50;
+                        targetX = canvas.width/2 + Math.cos(angle) * radius;
+                        targetY = canvas.height/2 + Math.sin(angle) * radius;
+                    }
+                    
+                    fireworks.push(new Firework(canvas, startX, startY, targetX, targetY));
+                    console.log('🎆 New firework created! Total:', fireworks.length);
+                }
+
+                // Add particles from exploded fireworks
+                fireworks.forEach(firework => {
+                    particles.push(...firework.particles);
+                    firework.particles = [];
+                });
+
+                // Continue animation for 10 seconds
+                if (fireworks.length > 0 || particles.length > 0) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    // Stop fireworks after 10 seconds
+                    setTimeout(() => {
+                        canvas.style.display = 'none';
+                        fireworks = [];
+                        particles = [];
+                    }, 10000);
+                }
+            }
+
+            // Start with a spectacular opening display
+            const openingPatterns = [
+                // Center burst
+                { startX: canvas.width/2, startY: canvas.height, targetX: canvas.width/2, targetY: canvas.height/3 },
+                // Left side
+                { startX: canvas.width * 0.2, startY: canvas.height, targetX: canvas.width * 0.3, targetY: canvas.height/2 },
+                // Right side
+                { startX: canvas.width * 0.8, startY: canvas.height, targetX: canvas.width * 0.7, targetY: canvas.height/2 },
+                // Diagonal left
+                { startX: canvas.width * 0.1, startY: canvas.height, targetX: canvas.width * 0.4, targetY: canvas.height/4 },
+                // Diagonal right
+                { startX: canvas.width * 0.9, startY: canvas.height, targetX: canvas.width * 0.6, targetY: canvas.height/4 }
+            ];
+            
+            openingPatterns.forEach((pattern, index) => {
+                setTimeout(() => {
+                    fireworks.push(new Firework(canvas, pattern.startX, pattern.startY, pattern.targetX, pattern.targetY));
+                    console.log('🎆 Opening firework created!');
+                }, index * 200); // Stagger the opening
+            });
+            
+            animate();
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('fireworksCanvas');
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
+    </script> -->
+
     <!-- Auto-Close Registration JavaScript -->
     <script>
         // Wait for DOM to be fully loaded
@@ -1302,8 +1832,17 @@
     <script>
         // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
-            // Set the target date: August 27, 2025 at 3:00 PM
-            const targetDate = new Date('August 27, 2025 15:00:00').getTime();
+            // Set the target date: August 27, 2025 at 3:00 PM (using explicit format)
+            const targetDate = new Date(2025, 7, 27, 15, 0, 0).getTime(); // Month is 0-indexed, so 7 = August
+            
+            // Debug: Log the target date and current date
+            console.log('Target Date:', new Date(targetDate));
+            console.log('Current Date:', new Date());
+            console.log('Target Date String:', new Date(targetDate).toString());
+            console.log('Current Date String:', new Date().toString());
+            console.log('Target Date Timestamp:', targetDate);
+            console.log('Current Date Timestamp:', new Date().getTime());
+            console.log('Distance in milliseconds:', targetDate - new Date().getTime());
             
             // Update the countdown every second
             const countdown = setInterval(function() {
@@ -1320,12 +1859,20 @@
                 const countdownElement = document.getElementById('festivalCountdown');
                 if (countdownElement) {
                     const timerNumbers = countdownElement.querySelectorAll('.timer-number');
+                    console.log('Found countdown element:', countdownElement);
+                    console.log('Found timer numbers:', timerNumbers.length);
+                    
                     if (timerNumbers.length >= 4) {
                         timerNumbers[0].textContent = days.toString().padStart(2, '0');
                         timerNumbers[1].textContent = hours.toString().padStart(2, '0');
                         timerNumbers[2].textContent = minutes.toString().padStart(2, '0');
                         timerNumbers[3].textContent = seconds.toString().padStart(2, '0');
+                        console.log('Updated countdown display');
+                    } else {
+                        console.log('Not enough timer number elements found');
                     }
+                } else {
+                    console.log('Countdown element not found!');
                 }
                 
                 // If the countdown is finished
@@ -1333,7 +1880,13 @@
                     clearInterval(countdown);
                     if (countdownElement) {
                         countdownElement.innerHTML = '<div style="text-align: center; color: white; font-size: 24px; font-weight: bold; background: rgba(255, 193, 7, 0.2); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px);">🎉 Festival is Starting Now! 🎉</div>';
+                        
+                        // Fireworks removed
                     }
+                } else {
+                    // Debug: Log current countdown values
+                    console.log('Countdown running - Days:', days, 'Hours:', hours, 'Minutes:', minutes, 'Seconds:', seconds);
+                    console.log('Distance remaining:', distance);
                 }
             }, 1000);
         });

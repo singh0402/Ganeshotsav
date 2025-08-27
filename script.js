@@ -498,8 +498,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Countdown timer for festival start
-function updateCountdown() {
+// Countdown timer removed - now handled in HTML file
+// function updateCountdown() {
     const festivalStart = new Date('August 27, 2025 00:00:00').getTime();
     const now = new Date().getTime();
     const distance = festivalStart - now;
@@ -556,23 +556,23 @@ function updateCountdown() {
     }
 }
 
-// Update countdown every second
-setInterval(updateCountdown, 1000);
+// Countdown now handled in HTML file
+// setInterval(updateCountdown, 1000);
 
-// Initial call when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Wait a bit for all elements to be fully rendered
-    setTimeout(() => {
-        updateCountdown();
-    }, 100);
-});
+// Countdown now handled in HTML file
+// document.addEventListener('DOMContentLoaded', () => {
+//     // Wait a bit for all elements to be fully rendered
+//     setTimeout(() => {
+//         updateCountdown();
+//     }, 100);
+// });
 
-// Also call immediately if DOM is already loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', updateCountdown);
-} else {
-    updateCountdown();
-}
+// Countdown now handled in HTML file
+// if (document.readyState === 'loading') {
+//     document.addEventListener('DOMContentLoaded', updateCountdown);
+// } else {
+//     updateCountdown();
+// }
 
 // Add smooth reveal animation for sections
 const revealObserver = new IntersectionObserver((entries) => {
@@ -626,8 +626,7 @@ function forceShowEvents() {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize countdown first
-    updateCountdown();
+    // Countdown now handled in HTML file
     
     initializeFAB();
     hidePastEvents(); // Hide events with passed dates
