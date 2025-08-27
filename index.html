@@ -116,6 +116,220 @@
             
                     /* Countdown timer mobile optimization */
         .countdown-timer {
+        
+        /* Quick View Cards - Mobile Optimized */
+        .quick-view-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-view-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .quick-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .quick-view-title-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .quick-view-title-section .event-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        
+        .event-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .event-status.open {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .event-status.closed {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .quick-view-time {
+            text-align: right;
+            min-width: 140px;
+        }
+        
+        .quick-view-time .event-date {
+            display: block;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .quick-view-time .event-time {
+            display: block;
+            font-size: 1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .quick-view-location {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-view-location span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #555;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 8px;
+            min-height: 44px;
+        }
+        
+        .quick-view-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .show-more-btn {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            color: #495057;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .show-more-btn:hover {
+            background: #e9ecef;
+            border-color: #dee2e6;
+            transform: translateY(-1px);
+        }
+        
+        .show-more-btn i {
+            transition: transform 0.3s ease;
+        }
+        
+        /* Progressive Disclosure - Expanded Details */
+        .event-details-expanded {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+            border-top: 1px solid #e9ecef;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+        
+        .event-details-expanded h4 {
+            color: #2c3e50;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .event-details-expanded p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .event-additional-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            min-height: 48px;
+        }
+        
+        .info-item i {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+        
+        .info-item span {
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        /* Mobile Responsiveness for Quick View */
+        @media (max-width: 768px) {
+            .quick-view-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .quick-view-time {
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .quick-view-location {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .quick-view-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .show-more-btn, .register-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .event-additional-info {
+                grid-template-columns: 1fr;
+            }
+        }
             flex-direction: row !important;
             gap: 10px !important;
             padding: 15px 10px !important;
@@ -420,33 +634,66 @@
                         </div>
                         
                         <div class="event-card">
-                            <div class="event-icon">
-                                <i class="fas fa-table-tennis"></i>
-                            </div>
-                            <div class="event-content">
-                                <div class="event-header">
-                                    <h3 class="event-title">Table Tennis</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 9:00 PM</span>
-                                </div>
-                                <p class="event-description">Table tennis competition for all ages</p>
-                                <div class="event-details" style="font-size: 14px;">
-                                    <div class="contact-persons" style="margin-top: 12px;">
-                                        <a href="tel:9552503799" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Ravi Sidharth - 9552503799</span>
-                                        </a>
-                                        <a href="tel:9868724809" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Pramod Bhagwat - 9868724809</span>
-                                        </a>
-                                        <a href="tel:9974035374" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Mrugesh Wagh - 9974035374</span>
-                                        </a>
+                            <!-- Quick View Card - Always Visible -->
+                            <div class="quick-view-card">
+                                <div class="quick-view-header">
+                                    <div class="quick-view-title-section">
+                                        <h3 class="event-title">Table Tennis</h3>
+                                        <span class="event-status closed">🔴 Closed</span>
+                                    </div>
+                                    <div class="quick-view-time">
+                                        <span class="event-date">Aug 27, 2025</span>
+                                        <span class="event-time"><i class="fas fa-clock"></i> 9:00 PM</span>
                                     </div>
                                 </div>
-                                <div class="event-registration" id="tableTennisRegistration">
+                                <div class="quick-view-location">
+                                    <span><i class="fas fa-map-marker-alt"></i> Sports Area</span>
+                                    <span><i class="fas fa-users"></i> All Ages</span>
+                                </div>
+                                <div class="quick-view-actions">
+                                    <button class="show-more-btn" onclick="toggleEventDetails(this)">
+                                        <span class="show-text">Show More</span>
+                                        <span class="hide-text" style="display: none;">Show Less</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
                                     <button class="register-btn registration-closed">Registration Closed</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Detailed Information - Hidden by Default -->
+                            <div class="event-details-expanded" style="display: none;">
+                                <div class="event-description">
+                                    <h4><i class="fas fa-info-circle"></i> Event Description</h4>
+                                    <p>Table tennis competition for all ages. Show your skills and compete with other players in this exciting tournament.</p>
+                                </div>
+                                <div class="event-additional-info">
+                                    <div class="info-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>Duration: 2-3 hours</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-trophy"></i>
+                                        <span>Prizes for Winners</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-table-tennis"></i>
+                                        <span>Equipment Provided</span>
+                                    </div>
+                                </div>
+                                <div class="contact-persons" style="margin-top: 16px;">
+                                    <h4><i class="fas fa-phone"></i> Contact Persons</h4>
+                                    <a href="tel:9552503799" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
+                                        <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
+                                        <span>Ravi Sidharth - 9552503799</span>
+                                    </a>
+                                    <a href="tel:9868724809" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
+                                        <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
+                                        <span>Pramod Bhagwat - 9868724809</span>
+                                    </a>
+                                    <a href="tel:9974035374" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
+                                        <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
+                                        <span>Mrugesh Wagh - 9974035374</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -1890,6 +2137,43 @@
                 }
             }, 1000);
         });
+    </script>
+
+    <!-- Event Toggle JavaScript -->
+    <script>
+        function toggleEventDetails(button) {
+            const eventCard = button.closest('.event-card');
+            const expandedSection = eventCard.querySelector('.event-details-expanded');
+            const showText = button.querySelector('.show-text');
+            const hideText = button.querySelector('.hide-text');
+            const icon = button.querySelector('i');
+            
+            if (expandedSection.style.display === 'none') {
+                // Show details
+                expandedSection.style.display = 'block';
+                showText.style.display = 'none';
+                hideText.style.display = 'inline';
+                icon.className = 'fas fa-chevron-up';
+                
+                // Smooth animation
+                expandedSection.style.opacity = '0';
+                expandedSection.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    expandedSection.style.opacity = '1';
+                    expandedSection.style.transform = 'translateY(0)';
+                }, 10);
+            } else {
+                // Hide details
+                expandedSection.style.opacity = '0';
+                expandedSection.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    expandedSection.style.display = 'none';
+                    showText.style.display = 'inline';
+                    hideText.style.display = 'none';
+                    icon.className = 'fas fa-chevron-down';
+                }, 200);
+            }
+        }
     </script>
 
     <!-- Optimized JavaScript loading -->
