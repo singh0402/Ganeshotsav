@@ -542,52 +542,7 @@
             
             <div class="events-timeline">
                 
-                <!-- August 27, 2025 -->
-                <div class="date-section">
-                    <div class="date-header">
-                        <h3 class="date-title">August 27, 2025</h3>
-                        <p class="date-subtitle">Festival Opening Day</p>
-                    </div>
-                    <div class="events-grid">
 
-                        
-
-                        
-
-                        
-                                                <div class="event-card">
-                            <div class="event-icon">
-                                <i class="fas fa-table-tennis"></i>
-                            </div>
-                            <div class="event-content">
-                                <div class="event-header">
-                                    <h3 class="event-title">Table Tennis</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 9:00 PM</span>
-                                </div>
-                                <p class="event-description">Table tennis competition for all ages</p>
-                                <div class="event-details" style="font-size: 14px;">
-                                    <div class="contact-persons" style="margin-top: 12px;">
-                                        <a href="tel:9552503799" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Ravi Sidharth - 9552503799</span>
-                                        </a>
-                                        <a href="tel:9868724809" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Pramod Bhagwat - 9868724809</span>
-                                        </a>
-                                        <a href="tel:9974035374" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Mrugesh Wagh - 9974035374</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="event-registration" id="tableTennisRegistration">
-                                    <button class="register-btn registration-closed">Registration Closed</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
                 <!-- August 28, 2025 -->
                 <div class="date-section">
@@ -655,7 +610,7 @@
                                     </div>
                                 </div>
                                 <div class="event-registration">
-                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPYKSmaFx1WjRw5syv80paCCouu5icr0sThmvYqvFsBlWrpg/viewform" target="_blank" class="register-btn">Register Now</a>
+                                    <button class="register-btn registration-closed">Registration Closed</button>
                                 </div>
                             </div>
                         </div>
@@ -2063,6 +2018,82 @@
                 }, 200);
             }
         }
+    </script>
+
+    <!-- Auto-Remove Past Events JavaScript -->
+    <script>
+        // Function to automatically remove events whose date and time have passed
+        function removePastEvents() {
+            const currentDate = new Date();
+            const eventCards = document.querySelectorAll('.event-card');
+            
+            eventCards.forEach(eventCard => {
+                const timeElement = eventCard.querySelector('.event-date');
+                if (timeElement) {
+                    const timeText = timeElement.textContent;
+                    const timeMatch = timeText.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+                    
+                    if (timeMatch) {
+                        let hour = parseInt(timeMatch[1]);
+                        const minute = parseInt(timeMatch[2]);
+                        const period = timeMatch[3].toUpperCase();
+                        
+                        // Convert to 24-hour format
+                        if (period === 'PM' && hour !== 12) {
+                            hour += 12;
+                        } else if (period === 'AM' && hour === 12) {
+                            hour = 0;
+                        }
+                        
+                        // Get the date from the parent date section
+                        const dateSection = eventCard.closest('.date-section');
+                        const dateTitle = dateSection.querySelector('.date-title');
+                        if (dateTitle) {
+                            const dateText = dateTitle.textContent;
+                            const dateMatch = dateText.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
+                            
+                            if (dateMatch) {
+                                const month = dateMatch[1];
+                                const day = parseInt(dateMatch[2]);
+                                const year = parseInt(dateMatch[3]);
+                                
+                                // Convert month name to number (0-11)
+                                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                                                   'July', 'August', 'September', 'October', 'November', 'December'];
+                                const monthIndex = monthNames.indexOf(month);
+                                
+                                if (monthIndex !== -1) {
+                                    const eventDate = new Date(year, monthIndex, day, hour, minute, 0);
+                                    
+                                    // If event time has passed, remove the event card
+                                    if (currentDate > eventDate) {
+                                        console.log(`Removing past event: ${eventCard.querySelector('.event-title').textContent} on ${dateText} at ${timeText}`);
+                                        eventCard.remove();
+                                        
+                                        // Check if this was the last event in the date section
+                                        const remainingEvents = dateSection.querySelectorAll('.event-card');
+                                        if (remainingEvents.length === 0) {
+                                            // Remove the entire date section if no events remain
+                                            console.log(`Removing empty date section: ${dateText}`);
+                                            dateSection.remove();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Run when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Remove past events immediately
+            removePastEvents();
+            
+            // Check every 5 minutes for new past events
+            setInterval(removePastEvents, 5 * 60 * 1000);
+        });
     </script>
 
     <!-- Optimized JavaScript loading -->
