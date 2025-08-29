@@ -722,7 +722,7 @@
                                     </div>
                                 </div>
                                 <div class="event-registration">
-                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeytcCbFAio8T_55gK7O32piFPTpy8usLaPSJK1bv6HdDhJMA/viewform" target="_blank" class="register-btn">Register Now</a>
+                                    <button class="register-btn registration-closed">Registration Closed</button>
                                 </div>
                             </div>
                         </div>
@@ -1970,9 +1970,8 @@
                 if (distance < 0) {
                     clearInterval(countdown);
                     if (countdownElement) {
-                                                         countdownElement.innerHTML = '<div style="text-align: center; color: white; font-size: 24px; font-weight: bold; background: rgba(255, 193, 7, 0.2); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px);">🎉 Festival Started 🎉</div>';
-                        
-                        // Fireworks removed
+                        // Countdown finished - no message displayed
+                        countdownElement.style.display = 'none';
                     }
                 } else {
                     // Debug: Log current countdown values
