@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -502,8 +502,8 @@
                 <strong>Event registrations are filling up fast!</strong><br>
                 <span style="font-size: 16px; opacity: 0.9;">Secure your spot in your favorite events before they close. Don't wait until the last minute!</span>
             </p>
-            <div style="margin-top: 15px;">
-                <a href="#events" class="btn" style="background: white; color: #ff9800; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block; transition: all 0.3s ease;">Register Now →</a>
+            <div style="margin-top: 15px; position: relative;">
+                <a href="#events" id="hurry-register-btn" style="background: white; color: #ff9800; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block; transition: all 0.3s ease; position: relative; z-index: 10;">Register Now →</a>
             </div>
         </div>
     </div>
@@ -554,23 +554,23 @@
                         <div>
                             <h4 style="margin: 0; color: #333; font-size: 20px;">Lemon & Spoon Competition</h4>
                             <p style="margin: 5px 0 0 0; color: #666; font-size: 14px;">August 28, 2025 - 7:15 PM</p>
-                        </div>
                     </div>
+                            </div>
                     
                     <!-- Winners Content -->
                     <div class="winners-content">
-                        <!-- Men's Group -->
+                        <!-- Men's -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Men's Group</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Men's</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Sachin Darekar C901</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Rohit Mate D311</span>
                             </div>
                         </div>
                         
-                        <!-- Women's Round -->
+                        <!-- Women's -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Women's Round</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Women's</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Sneha Singh B503</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Dipali Upadhayay C701</span>
@@ -578,17 +578,17 @@
                             </div>
                         </div>
                         
-                        <!-- Senior Citizen Men's Round -->
+                        <!-- Senior Citizen Men's -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Senior Citizen Men's Round</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Senior Citizen Men's</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Shankar lal Kewlani C402</span>
                             </div>
                         </div>
                         
-                        <!-- Senior Citizen Women's Round -->
+                        <!-- Senior Citizen Women's -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Senior Citizen Women's Round</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Senior Citizen Women's</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Mathura Darekar C901</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Kiran Mahajan C403</span>
@@ -596,18 +596,18 @@
                             </div>
                         </div>
                         
-                        <!-- Boys Groups -->
+                        <!-- Boys 11-15 years -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Boys Groups</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Boys 11-15 years</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Adhrit</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Dyaan</span>
                             </div>
                         </div>
                         
-                        <!-- Boys Group 8-10 years -->
+                        <!-- Boys 8-10 years -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Boys Group 8-10 years</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Boys 8-10 years</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Stavya</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Aarav</span>
@@ -615,18 +615,18 @@
                             </div>
                         </div>
                         
-                        <!-- Boys Group 5-7 years -->
+                        <!-- Boys 5-7 years -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Boys Group 5-7 years</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Boys 5-7 years</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Riyanshu Wawage D512</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Riyansh Mundada</span>
                             </div>
                         </div>
                         
-                        <!-- Boys Group 1-5 years -->
+                        <!-- Mix 1-5 years -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Boys Group 1-5 years</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Mix 1-5 years</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Darsh Kevlani</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Rine</span>
@@ -634,9 +634,9 @@
                             </div>
                         </div>
                         
-                        <!-- Girls Groups -->
+                        <!-- Girls 11-15 years -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Girls Group 11-15 years</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Girls 11-15 years</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Trisha C903</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Divisha A203</span>
@@ -644,9 +644,9 @@
                             </div>
                         </div>
                         
-                        <!-- Girls Group 7-10 years -->
+                        <!-- Girls 7-10 years -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Girls Group 7-10 years</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Girls 7-10 years</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Sara B706</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Tanvisha B1106</span>
@@ -654,9 +654,9 @@
                             </div>
                         </div>
                         
-                        <!-- Girls Group 1-5 years -->
+                        <!-- Girls 1-5 years -->
                         <div class="winner-category" style="margin-bottom: 16px;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Girls Group 1-5 years</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Girls 1-5 years</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Ishika D903</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Saee D311</span>
@@ -664,9 +664,9 @@
                             </div>
                         </div>
                         
-                        <!-- Supporting Staff -->
+                        <!-- Support Staff -->
                         <div class="winner-category" style="margin-bottom: 0;">
-                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Supporting Staff</h5>
+                            <h5 style="margin: 0 0 10px 0; color: #495057; font-size: 16px; font-weight: 600; border-bottom: 2px solid #ffc107; padding-bottom: 5px;">Support Staff</h5>
                             <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥇 1st: Pandey</span>
                                 <span style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); padding: 8px 16px; border-radius: 20px; font-size: 14px; color: #856404; border: 2px solid #ffc107; font-weight: 500;">🥈 2nd: Amit</span>
@@ -675,7 +675,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             
             <div class="events-timeline">
                 
@@ -700,157 +699,22 @@
                                 <p class="event-description">Fun race with lemon balanced on spoon</p>
                                 <div class="event-details" style="font-size: 14px;">
                                     <div class="contact-persons" style="margin-top: 12px;">
-                                        <a href="tel:9974035374" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
+                                        <a href="tel:9974035374" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
                                             <span>Mrugesh Wagh - 9974035374</span>
                                         </a>
-                                        <a href="tel:9028095675" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Shraddha Kulkarni - 9028095675</span>
+                                        <a href="tel:9028095675" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Shubhangi - 9028095675</span>
                                         </a>
-                                        <a href="tel:9321584742" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
+                                        <a href="tel:9321584742" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
                                             <span>Shailendra - 9321584742</span>
                                         </a>
-                                    </div>
-                                    
-                                    <!-- Winners Section -->
-                                    <div class="winners-section" style="margin-top: 16px; padding: 16px; background: linear-gradient(135deg, #fff3cd, #ffeaa7); border-radius: 12px; border: 2px solid #ffc107;">
-                                        <h4 style="margin: 0 0 12px 0; color: #856404; font-size: 16px; display: flex; align-items: center; gap: 8px;">
-                                            <i class="fas fa-trophy" style="color: #ffc107;"></i>
-                                            🏆 Winners of Lemon & Spoon Competition
-                                        </h4>
-                                        
-                                        <!-- Men's Group -->
-                                        <div class="winner-category" style="margin-bottom: 12px;">
-                                            <h5 style="margin: 0 0 8px 0; color: #856404; font-size: 14px; font-weight: 600;">Men's Group</h5>
-                                            <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥇 1st: Sachin Darekar C901</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥈 2nd: Rohit Mate D311</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Women's Round -->
-                                        <div class="winner-category" style="margin-bottom: 12px;">
-                                            <h5 style="margin: 0 0 8px 0; color: #856404; font-size: 14px; font-weight: 600;">Women's Round</h5>
-                                            <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥇 1st: Sneha Singh B503</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥈 2nd: Dipali Upadhayay C701</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥉 3rd: Nisha Chate D312</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Senior Citizen Men's Round -->
-                                        <div class="winner-category" style="margin-bottom: 12px;">
-                                            <h5 style="margin: 0 0 8px 0; color: #856404; font-size: 14px; font-weight: 600;">Senior Citizen Men's Round</h5>
-                                            <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥇 1st: Shankar lal Kewlani C402</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Senior Citizen Women's Round -->
-                                        <div class="winner-category" style="margin-bottom: 12px;">
-                                            <h5 style="margin: 0 0 8px 0; color: #856404; font-size: 14px; font-weight: 600;">Senior Citizen Women's Round</h5>
-                                            <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥇 1st: Mathura Darekar C901</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥈 2nd: Kiran Mahajan C403</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">🥉 3rd: Mirabai Wagh A603</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Boys Groups -->
-                                        <div class="winner-category" style="margin-bottom: 12px;">
-                                            <h5 style="margin: 0 0 8px 0; color: #856404; font-size: 14px; font-weight: 600;">Boys Groups</h5>
-                                            <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">11-15 years: Adhrit, Dyaan</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">8-10 years: Stavya, Aarav, Anmol</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">5-7 years: Riyanshu Wawage D512, Riyansh Mundada</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">1-5 years: Darsh Kevlani, Rine, Tezal Upadhyay</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Girls Groups -->
-                                        <div class="winner-category" style="margin-bottom: 12px;">
-                                            <h5 style="margin: 0 0 8px 0; color: #856404; font-size: 14px; font-weight: 600;">Girls Groups</h5>
-                                            <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">11-15 years: Trisha C903, Divisha A203, Ananya B1103/Sanvi D705</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">7-10 years: Sara B706, Tanvisha B1106, Khanak B405</span>
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">1-5 years: Ishika D903, Saee D311, Ovi B204</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Supporting Staff -->
-                                        <div class="winner-category" style="margin-bottom: 0;">
-                                            <h5 style="margin: 0 0 8px 0; color: #856404; font-size: 14px; font-weight: 600;">Supporting Staff</h5>
-                                            <div class="winners-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                                                <span style="background: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #333; border: 1px solid #ffc107;">Pandey, Amit, Prakash</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="event-registration">
-                                    <button class="register-btn registration-closed">Registration Closed</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="event-card">
-                            <div class="event-icon">
-                                <i class="fas fa-home"></i>
-                            </div>
-                            <div class="event-content">
-                                <div class="event-header">
-                                    <h3 class="event-title">Har Ghar Ganpati (Visit)</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
-                                </div>
-                                <p class="event-description">Visit to homes with Ganpati decorations</p>
-                                <div class="event-details" style="font-size: 14px;">
-                                    <div class="contact-persons" style="margin-top: 12px;">
-                                        <a href="tel:9860159057" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Vaishnavi Chepe - 9860159057</span>
+                                        <a href="tel:8007004744" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Anuja Kulkarni - 8007004744</span>
                                         </a>
-                                        <a href="tel:8329661154" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Manisha Patel - 8329661154</span>
-                                        </a>
-                                        <a href="tel:9322533644" style="display: inline-flex; align-items: center; margin: 8px 12px 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; text-decoration: none; color: #333; min-height: 44px; min-width: 44px; box-sizing: border-box;">
-                                            <i class="fas fa-phone" style="margin-right: 8px; color: #28a745;"></i>
-                                            <span>Reshma Bonde - 9322533644</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="event-registration">
-                                    <button class="register-btn registration-closed">Registration Closed</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- August 29, 2025 -->
-                <div class="date-section">
-                    <div class="date-header">
-                        <h3 class="date-title">August 29, 2025</h3>
-                        <p class="date-subtitle">Festival Day</p>
-                    </div>
-                    <div class="events-grid">
-                        <div class="event-card">
-                            <div class="event-icon">
-                                <i class="fas fa-microphone"></i>
-                            </div>
-                            <div class="event-content">
-                                <div class="event-header">
-                                    <h3 class="event-title">Antakshari Night</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
-                                </div>
-                                <p class="event-description">Musical game night with songs and fun</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Manisha Patel - 8329661154</span>
-                                        <span><i class="fas fa-user"></i> Shubhangi - 9028095675</span>
-                                        <span><i class="fas fa-user"></i> Shashwati - 9975320852</span>
-                                        <span><i class="fas fa-user"></i> Anuja Kulkarni - 8007004744</span>
                                     </div>
                                 </div>
                                 <div class="event-registration">
@@ -874,17 +738,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Kids Mela</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                                                                    <h3 class="event-title">Kids Mela</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                            </div>
+                            <p class="event-description">Fun fair and activities for children</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9321584742" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Shailendra - 9321584742</span>
+                                        </a>
+                                        <a href="tel:9974035374" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Mrugesh Wagh - 9974035374</span>
+                                        </a>
+                                        <a href="tel:9717349977" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Antriksh Modi - 9717349977</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Fun fair and activities for children</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Shailendra - 9321584742</span>
-                                        <span><i class="fas fa-user"></i> Mrugesh Wagh - 9974035374</span>
-                                        <span><i class="fas fa-user"></i> Antriksh Modi - 9717349977</span>
-                                    </div>
-                                </div>
+                            </div>
                                                                    <div class="event-registration">
                                        <button class="register-btn registration-closed">Registration Closed</button>
                                    </div>
@@ -897,18 +770,30 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Carrom Competition</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 2:00 PM</span>
+                                                                    <h3 class="event-title">Carrom Competition</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 2:00 PM</span>
+                            </div>
+                            <p class="event-description">Carrom board tournament</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9552503799" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Ravi Sidharth - 9552503799</span>
+                                        </a>
+                                        <a href="tel:9960039844" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Ajit Hingmire - 9960039844</span>
+                                        </a>
+                                        <a href="tel:9974035374" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Mrugesh Wagh - 9974035374</span>
+                                        </a>
+                                        <a href="tel:9423135684" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Dilip Padhye - 9423135684</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Carrom board tournament</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Ravi Sidharth - 9552503799</span>
-                                        <span><i class="fas fa-user"></i> Ajit Hingmire - 9960039844</span>
-                                        <span><i class="fas fa-user"></i> Mrugesh Wagh - 9974035374</span>
-                                        <span><i class="fas fa-user"></i> Dilip Padhye - 9423135684</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration" id="carromRegistration">
                                     <button class="register-btn registration-closed">Registration Closed</button>
                                 </div>
@@ -921,17 +806,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Cultural Night</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                                                                    <h3 class="event-title">Cultural Night</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                            </div>
+                            <p class="event-description">Variety of cultural performances and entertainment</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:8329661154" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Manisha Patel - 8329661154</span>
+                                        </a>
+                                        <a href="tel:9975320852" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Shashwati - 9975320852</span>
+                                        </a>
+                                        <a href="tel:9922229631" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Kavita Garuku - 9922229631</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Variety of cultural performances and entertainment</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Manisha Patel - 8329661154</span>
-                                        <span><i class="fas fa-user"></i> Shashwati - 9975320852</span>
-                                        <span><i class="fas fa-user"></i> Kavita Garuku - 9922229631</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn registration-closed">Registration Closed</button>
                                 </div>
@@ -953,16 +847,22 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Drawing Competition</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                                                                    <h3 class="event-title">Drawing Competition</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                            </div>
+                            <p class="event-description">Art competition for all age groups</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9322533644" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Reshma Bonde - 9322533644</span>
+                                        </a>
+                                        <a href="tel:9765993392" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Chaitali Darekar - 9765993392</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Art competition for all age groups</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Reshma Bonde - 9322533644</span>
-                                        <span><i class="fas fa-user"></i> Chaitali Darekar - 9765993392</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn registration-closed">Registration Closed</button>
                                 </div>
@@ -975,17 +875,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Rangoli Competition</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                                                                    <h3 class="event-title">Rangoli Competition</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                            </div>
+                            <p class="event-description">Traditional rangoli design competition</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                    <a href="tel:9860159057" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Vaishnavi Chepe - 9860159057</span>
+                                    </a>
+                                    <a href="tel:9021951142" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Gunjan Kulshreshta - 9021951142</span>
+                                    </a>
+                                    <a href="tel:7038325269" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Deepali Shrivastav - 7038325269</span>
+                                    </a>
                                 </div>
-                                <p class="event-description">Traditional rangoli design competition</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Vaishnavi Chepe - 9860159057</span>
-                                        <span><i class="fas fa-user"></i> Gunjan Kulshreshta - 9021951142</span>
-                                        <span><i class="fas fa-user"></i> Deepali Shrivastav - 7038325269</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLScO2IhppkqhLePr-Y6Y2AlQLLY9OpOFwdJlzELz65NcjM5nig/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
@@ -998,17 +907,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Thali Decoration</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                                                                    <h3 class="event-title">Thali Decoration</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                            </div>
+                            <p class="event-description">Beautiful plate decoration contest</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                    <a href="tel:9860159057" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Vaishnavi Chepe - 9860159057</span>
+                                    </a>
+                                    <a href="tel:9021951142" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Gunjan Kulshreshta - 9021951142</span>
+                                    </a>
+                                    <a href="tel:7038325269" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Deepali Shrivastav - 7038325269</span>
+                                    </a>
                                 </div>
-                                <p class="event-description">Beautiful plate decoration contest</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Vaishnavi Chepe - 9860159057</span>
-                                        <span><i class="fas fa-user"></i> Gunjan Kulshreshta - 9021951142</span>
-                                        <span><i class="fas fa-user"></i> Deepali Shrivastav - 7038325269</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSehqgFm9hy3fBpxVpnY-gOQUNqXe1yfk4R6_YOdHANoPl2ZZA/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
@@ -1021,18 +939,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Chess Competition</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 2:00 PM</span>
+                                                                    <h3 class="event-title">Chess Competition</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 2:00 PM</span>
+                            </div>
+                            <p class="event-description">Strategic chess tournament</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                    <a href="tel:9552503799" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Ravi Sidharth - 9552503799</span>
+                                    </a>
+                                    <a href="tel:9974035374" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Ajit Hingmire - 9974035374</span>
+                                    </a>
+                                    <a href="tel:9423135684" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                        <i class="fas fa-phone" style="color: #28a745;"></i>
+                                        <span>Dilip Padhye - 9423135684</span>
+                                    </a>
                                 </div>
-                                <p class="event-description">Strategic chess tournament</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Ravi Sidharth - 9552503799</span>
-                                        <span><i class="fas fa-user"></i> Ajit Hingmire - 9960039844</span>
-                                        <span><i class="fas fa-user"></i> Mrugesh Wagh - 9974035374</span>
-                                        <span><i class="fas fa-user"></i> Dilip Padhye - 9423135684</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration" id="chessRegistration">
                                     <button class="register-btn registration-closed">Registration Closed</button>
                                 </div>
@@ -1045,18 +971,30 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Fancy Dress Competition</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                                                                    <h3 class="event-title">Fancy Dress Competition</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                            </div>
+                            <p class="event-description">Creative costume competition for kids</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9922229631" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Kavita Garuku - 9922229631</span>
+                                        </a>
+                                        <a href="tel:9021951142" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Gunjan Kulshreshta - 9021951142</span>
+                                        </a>
+                                        <a href="tel:7666779656" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Sayali Gangwal - 7666779656</span>
+                                        </a>
+                                        <a href="tel:7038325269" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Deepali Shrivastav - 7038325269</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Creative costume competition for kids</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Kavita Garuku - 9922229631</span>
-                                        <span><i class="fas fa-user"></i> Gunjan Kulshreshta - 9021951142</span>
-                                        <span><i class="fas fa-user"></i> Sayali Gangwal - 7666779656</span>
-                                        <span><i class="fas fa-user"></i> Deepali Shrivastav - 7038325269</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSe2XDLysTgp0ErwbupnpAefax-qW1lE5RcsJZ9-mQwMgLt2ow/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
@@ -1078,18 +1016,30 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Slow Cycling</h3>
-                                    <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                                                                    <h3 class="event-title">Slow Cycling</h3>
+                                <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                            </div>
+                            <p class="event-description">Slow cycling race competition</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9975320852" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Shashwati - 9975320852</span>
+                                        </a>
+                                        <a href="tel:9765993392" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Chaitali Darekar - 9765993392</span>
+                                        </a>
+                                        <a href="tel:9960858996" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Sachin Darekar - 9960858996</span>
+                                        </a>
+                                        <a href="tel:9850836365" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Atul Patel - 9850836365</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Slow cycling race competition</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Shashwati - 9975320852</span>
-                                        <span><i class="fas fa-user"></i> Chaitali Darekar - 9765993392</span>
-                                        <span><i class="fas fa-user"></i> Sachin Darekar - 9960858996</span>
-                                        <span><i class="fas fa-user"></i> Atul Patel - 9850836365</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeATclDYMgNihB9VfWTZSkJO12VAYk79dJJcCvHdcGbK3nv5A/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
@@ -1102,17 +1052,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Har Ghar Mahalakshmi (Visit)</h3>
+                                                                        <h3 class="event-title">Har Ghar Mahalakshmi (Visit)</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 7:00 PM</span>
+                            </div>
+                            <p class="event-description">Visit to homes with Mahalakshmi decorations</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9021951142" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Gunjan Kulshreshta - 9021951142</span>
+                                        </a>
+                                        <a href="tel:7038325269" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Deepali Shrivastav - 7038325269</span>
+                                        </a>
+                                        <a href="tel:7007663857" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Ishika Agarwal - 7007663857</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Visit to homes with Mahalakshmi decorations</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Gunjan Kulshreshta - 9021951142</span>
-                                        <span><i class="fas fa-user"></i> Deepali Shrivastav - 7038325269</span>
-                                        <span><i class="fas fa-user"></i> Ishika Agarwal - 7007663857</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLScxLgnprxmp4wW03E7v250ulWnx37jgRimdqesJmGOxVKD23g/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
@@ -1134,16 +1093,22 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Tambola</h3>
+                                                                        <h3 class="event-title">Tambola</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                            </div>
+                            <p class="event-description">Traditional number game (Housie)</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9321584742" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Shailendra - 9321584742</span>
+                                        </a>
+                                        <a href="tel:7666779656" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Sayali Gangwal - 7666779656</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Traditional number game (Housie)</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Shailendra - 9321584742</span>
-                                        <span><i class="fas fa-user"></i> Sayali Gangwal - 7666779656</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn come-as-you-are">Come As You Are</button>
                                 </div>
@@ -1165,15 +1130,18 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Bhajan Sandhya</h3>
+                                                                        <h3 class="event-title">Bhajan Sandhya</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 2:00 PM</span>
+                            </div>
+                            <p class="event-description">Afternoon devotional songs and prayers</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:8796768076" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Savita Bhote - 8796768076</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Afternoon devotional songs and prayers</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Savita Bhote - 8796768076</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn come-as-you-are">Come As You Are</button>
                                 </div>
@@ -1186,17 +1154,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Musical Chair</h3>
+                                                                        <h3 class="event-title">Musical Chair</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                            </div>
+                            <p class="event-description">Classic musical chair game</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9974035374" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Mrugesh Wagh - 9974035374</span>
+                                        </a>
+                                        <a href="tel:9960858996" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Sachin Darekar - 9960858996</span>
+                                        </a>
+                                        <a href="tel:9321584742" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Shailendra - 9321584742</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Classic musical chair game</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Mrugesh Wagh - 9974035374</span>
-                                        <span><i class="fas fa-user"></i> Sachin Darekar - 9960858996</span>
-                                        <span><i class="fas fa-user"></i> Shailendra - 9321584742</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSef6M1_uZWo1eIxQLjnFi36k-2MRS811szYWKrbDuLToAcGMg/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
@@ -1218,18 +1195,30 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Anand Mela</h3>
+                                                                        <h3 class="event-title">Anand Mela</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 7:15 PM</span>
+                            </div>
+                            <p class="event-description">Joyful fair with games and activities</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9028095675" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Shraddha - 9028095675</span>
+                                        </a>
+                                        <a href="tel:8605546204" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Renu Sharma - 8605546204</span>
+                                        </a>
+                                        <a href="tel:9321584742" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Shailendra - 9321584742</span>
+                                        </a>
+                                        <a href="tel:9717349977" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Antriksh Modi - 9717349977</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Joyful fair with games and activities</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Shraddha - 9028095675</span>
-                                        <span><i class="fas fa-user"></i> Renu Sharma - 8605546204</span>
-                                        <span><i class="fas fa-user"></i> Shailendra - 9321584742</span>
-                                        <span><i class="fas fa-user"></i> Antriksh Modi - 9717349977</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdTvLVE1zZ0B5HFETIebzcR4xXFKn-7_EgDBmptb_zEVBVteg/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
@@ -1251,16 +1240,22 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Best out of Waste</h3>
+                                                                        <h3 class="event-title">Best out of Waste</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 10:00 AM</span>
+                            </div>
+                            <p class="event-description">Creative competition using recycled materials</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:8605546204" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Renu Sharma - 8605546204</span>
+                                        </a>
+                                        <a href="tel:7000160385" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Ritu Patidar - 7000160385</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Creative competition using recycled materials</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Renu Sharma - 8605546204</span>
-                                        <span><i class="fas fa-user"></i> Ritu Patidar - 7000160385</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSciBaqaBtfoiFZQdYfL7KryWWivDHcDbnq1VYTel6fHzuA3xA/viewform" target="_blank" class="register-btn">Register Now</a>
                                 </div>
@@ -1273,15 +1268,18 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Satyanarayan Puja</h3>
+                                                                        <h3 class="event-title">Satyanarayan Puja</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 2:00 PM</span>
+                            </div>
+                            <p class="event-description">Sacred Satyanarayan worship ceremony</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9322533644" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Reshma Bonde - 9322533644</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Sacred Satyanarayan worship ceremony</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Reshma Bonde - 9322533644</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn come-as-you-are">Come As You Are</button>
                                 </div>
@@ -1294,17 +1292,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Mahaprasad</h3>
+                                                                        <h3 class="event-title">Mahaprasad</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 7:30 PM</span>
+                            </div>
+                            <p class="event-description">Sacred food offering and distribution</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:7020045552" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Atul Bonde - 7020045552</span>
+                                        </a>
+                                        <a href="tel:9850836365" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Atul Patel - 9850836365</span>
+                                        </a>
+                                        <a href="tel:8087989186" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Rohit Mate - 8087989186</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Sacred food offering and distribution</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Atul Bonde - 7020045552</span>
-                                        <span><i class="fas fa-user"></i> Atul Patel - 9850836365</span>
-                                        <span><i class="fas fa-user"></i> Rohit Mate - 8087989186</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn come-as-you-are">Come As You Are</button>
                                 </div>
@@ -1326,16 +1333,22 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Prize Distribution</h3>
+                                                                        <h3 class="event-title">Prize Distribution</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 4:00 PM</span>
+                            </div>
+                            <p class="event-description">Award ceremony for competition winners</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:8329661154" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Manisha Patel - 8329661154</span>
+                                        </a>
+                                        <a href="tel:9322533644" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Reshma Bonde - 9322533644</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Award ceremony for competition winners</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Manisha Patel - 8329661154</span>
-                                        <span><i class="fas fa-user"></i> Reshma Bonde - 9322533644</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn come-as-you-are">Come As You Are</button>
                                 </div>
@@ -1348,17 +1361,26 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Lezim Performance</h3>
+                                                                        <h3 class="event-title">Lezim Performance</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 4:30 PM</span>
+                            </div>
+                            <p class="event-description">Final Lezim performance of the festival</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:9021360373" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Varsha Sawai - 9021360373</span>
+                                        </a>
+                                        <a href="tel:7485850505" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Prachi Ankatwar - 7485850505</span>
+                                        </a>
+                                        <a href="tel:7020393084" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Pradnya Gandhi - 7020393084</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Final Lezim performance of the festival</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Varsha Sawai - 9021360373</span>
-                                        <span><i class="fas fa-user"></i> Prachi Ankatwar - 7485850505</span>
-                                        <span><i class="fas fa-user"></i> Pradnya Gandhi - 7020393084</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn registration-closed">Registration Closed</button>
                                 </div>
@@ -1371,16 +1393,22 @@
                             </div>
                             <div class="event-content">
                                 <div class="event-header">
-                                    <h3 class="event-title">Ganpati Visarjan</h3>
+                                                                        <h3 class="event-title">Ganpati Visarjan</h3>
                                     <span class="event-date"><i class="fas fa-clock"></i> 5:00 PM</span>
+                            </div>
+                            <p class="event-description">Immersion ceremony to bid farewell to Lord Ganesha</p>
+                            <div class="event-details">
+                                <div class="contact-persons">
+                                        <a href="tel:8329661154" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Manisha Patel - 8329661154</span>
+                                        </a>
+                                        <a href="tel:9322533644" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #555; margin-bottom: 8px;">
+                                            <i class="fas fa-phone" style="color: #28a745;"></i>
+                                            <span>Reshma Bonde - 9322533644</span>
+                                        </a>
                                 </div>
-                                <p class="event-description">Immersion ceremony to bid farewell to Lord Ganesha</p>
-                                <div class="event-details">
-                                    <div class="contact-persons">
-                                        <span><i class="fas fa-user"></i> Manisha Patel - 8329661154</span>
-                                        <span><i class="fas fa-user"></i> Reshma Bonde - 9322533644</span>
-                                    </div>
-                                </div>
+                            </div>
                                 <div class="event-registration">
                                     <button class="register-btn come-as-you-are">Come As You Are</button>
                                 </div>
@@ -2301,3 +2329,6 @@
     <link rel="preload" href="ganpati.webp" as="image">
 </body>
 </html> 
+
+
+
