@@ -2021,62 +2021,50 @@
 
     <!-- Auto-Remove Past Events JavaScript -->
     <script>
-        // Function to automatically remove events whose date and time have passed
+        // Function to automatically remove events only when the entire day has passed
         function removePastEvents() {
             const currentDate = new Date();
             const eventCards = document.querySelectorAll('.event-card');
             
             eventCards.forEach(eventCard => {
-                const timeElement = eventCard.querySelector('.event-date');
-                if (timeElement) {
-                    const timeText = timeElement.textContent;
-                    const timeMatch = timeText.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+                // Get the date from the parent date section
+                const dateSection = eventCard.closest('.date-section');
+                const dateTitle = dateSection.querySelector('.date-title');
+                
+                if (dateTitle) {
+                    const dateText = dateTitle.textContent;
+                    const dateMatch = dateText.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
                     
-                    if (timeMatch) {
-                        let hour = parseInt(timeMatch[1]);
-                        const minute = parseInt(timeMatch[2]);
-                        const period = timeMatch[3].toUpperCase();
+                    if (dateMatch) {
+                        const month = dateMatch[1];
+                        const day = parseInt(dateMatch[2]);
+                        const year = parseInt(dateMatch[3]);
                         
-                        // Convert to 24-hour format
-                        if (period === 'PM' && hour !== 12) {
-                            hour += 12;
-                        } else if (period === 'AM' && hour === 12) {
-                            hour = 0;
-                        }
+                        // Convert month name to number (0-11)
+                        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                                           'July', 'August', 'September', 'October', 'November', 'December'];
+                        const monthIndex = monthNames.indexOf(month);
                         
-                        // Get the date from the parent date section
-                        const dateSection = eventCard.closest('.date-section');
-                        const dateTitle = dateSection.querySelector('.date-title');
-                        if (dateTitle) {
-                            const dateText = dateTitle.textContent;
-                            const dateMatch = dateText.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
+                        if (monthIndex !== -1) {
+                            // Create date for the event day (midnight of that day)
+                            const eventDay = new Date(year, monthIndex, day, 0, 0, 0);
                             
-                            if (dateMatch) {
-                                const month = dateMatch[1];
-                                const day = parseInt(dateMatch[2]);
-                                const year = parseInt(dateMatch[3]);
+                            // Get current day (midnight of current day)
+                            const currentDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0);
+                            
+                            // If the entire day has passed (current day > event day), remove the event card
+                            if (currentDay > eventDay) {
+                                const eventTitle = eventCard.querySelector('.event-title');
+                                const eventTitleText = eventTitle ? eventTitle.textContent : 'Unknown Event';
+                                console.log(`Removing past day event: ${eventTitleText} on ${dateText}`);
+                                eventCard.remove();
                                 
-                                // Convert month name to number (0-11)
-                                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
-                                                   'July', 'August', 'September', 'October', 'November', 'December'];
-                                const monthIndex = monthNames.indexOf(month);
-                                
-                                if (monthIndex !== -1) {
-                                    const eventDate = new Date(year, monthIndex, day, hour, minute, 0);
-                                    
-                                    // If event time has passed, remove the event card
-                                    if (currentDate > eventDate) {
-                                        console.log(`Removing past event: ${eventCard.querySelector('.event-title').textContent} on ${dateText} at ${timeText}`);
-                                        eventCard.remove();
-                                        
-                                        // Check if this was the last event in the date section
-                                        const remainingEvents = dateSection.querySelectorAll('.event-card');
-                                        if (remainingEvents.length === 0) {
-                                            // Remove the entire date section if no events remain
-                                            console.log(`Removing empty date section: ${dateText}`);
-                                            dateSection.remove();
-                                        }
-                                    }
+                                // Check if this was the last event in the date section
+                                const remainingEvents = dateSection.querySelectorAll('.event-card');
+                                if (remainingEvents.length === 0) {
+                                    // Remove the entire date section if no events remain
+                                    console.log(`Removing empty date section: ${dateText}`);
+                                    dateSection.remove();
                                 }
                             }
                         }
@@ -2090,8 +2078,8 @@
             // Remove past events immediately
             removePastEvents();
             
-            // Check every 5 minutes for new past events
-            setInterval(removePastEvents, 5 * 60 * 1000);
+            // Check every hour for new past events (since we only care about days now)
+            setInterval(removePastEvents, 60 * 60 * 1000);
         });
     </script>
 
