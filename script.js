@@ -1,796 +1,86 @@
+// Modern JavaScript for Windows Society Ganeshotsav 2025
+// Enhanced with smooth animations and modern interactions
 
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎉 Windows Society Ganeshotsav 2025 - Modern Website Loaded!');
+    
+    // Initialize all components
+    initializeAnimations();
+    initializeSmoothScrolling();
+    initializeEventRemoval();
+    initializeMobileOptimizations();
 });
 
-// Navbar background change on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.15)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    }
-});
+// Modern Animation System
+function initializeAnimations() {
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-// Intersection Observer for fade-in animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                
+                // Add staggered animation for child elements
+                const children = entry.target.querySelectorAll('.event-card, .stat-item, .winner-category');
+                children.forEach((child, index) => {
+                    setTimeout(() => {
+                        child.style.opacity = '1';
+                        child.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }
+        });
+    }, observerOptions);
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.event-card, .stat-item, .contact-item');
-    animateElements.forEach(el => {
-        el.classList.add('fade-in');
+    // Observe all fade-in elements
+    const fadeElements = document.querySelectorAll('.fade-in, .date-section, .about-content');
+    fadeElements.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
         observer.observe(el);
     });
     
-    // Handle video background
-    const heroVideo = document.querySelector('.hero-background-video');
-    const videoContainer = document.querySelector('.hero-video-container');
-    
-    if (heroVideo && videoContainer) {
-        // Add loading state
-        videoContainer.classList.add('loading');
-        
-        // Ensure video plays on mobile devices
-        heroVideo.addEventListener('loadeddata', () => {
-            videoContainer.classList.remove('loading');
-            videoContainer.classList.add('loaded');
-            
-            heroVideo.play().catch(error => {
-                console.log('Video autoplay failed:', error);
-                // Fallback: show fallback background
-                document.querySelector('.hero').style.background = 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #8B4513 100%)';
-                videoContainer.classList.add('error');
-            });
-        });
-        
-        // Handle video errors
-        heroVideo.addEventListener('error', () => {
-            console.log('Video failed to load, showing fallback image');
-            videoContainer.classList.add('fallback');
-            videoContainer.classList.add('error');
-        });
-        
-        // Pause video when not in viewport to save resources
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    heroVideo.play().catch(() => {});
-                } else {
-                    heroVideo.pause();
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        videoObserver.observe(heroVideo);
-        
-        // Add video loading timeout
-        setTimeout(() => {
-            if (videoContainer.classList.contains('loading')) {
-                console.log('Video loading timeout, showing fallback image');
-                videoContainer.classList.add('fallback');
-                videoContainer.classList.add('error');
-            }
-        }, 5000); // 5 second timeout
-    }
-    
-    // Force flexbox layout on mobile
-    if (window.innerWidth <= 768) {
-        const eventsGrid = document.querySelector('.events-grid');
-        if (eventsGrid) {
-            eventsGrid.style.display = 'flex';
-            eventsGrid.style.flexDirection = 'column';
-            eventsGrid.style.visibility = 'visible';
-            eventsGrid.style.opacity = '1';
-        }
-    }
-    
-    // Events are now visible and properly laid out
-});
-
-// Handle window resize for mobile responsiveness
-window.addEventListener('resize', () => {
-    const eventsGrid = document.querySelector('.events-grid');
+    // Add hover effects to event cards
     const eventCards = document.querySelectorAll('.event-card');
-    
-    // Always ensure events are visible
-    eventCards.forEach(card => {
-        card.style.display = 'block';
-        card.style.visibility = 'visible';
-        card.style.opacity = '1';
-    });
-    
-    if (window.innerWidth <= 768) {
-        if (eventsGrid) {
-            eventsGrid.style.display = 'flex';
-            eventsGrid.style.flexDirection = 'column';
-            eventsGrid.style.visibility = 'visible';
-            eventsGrid.style.opacity = '1';
-        }
-    } else {
-        if (eventsGrid) {
-            eventsGrid.style.display = 'grid';
-            eventsGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
-            eventsGrid.style.visibility = 'visible';
-            eventsGrid.style.opacity = '1';
-        }
-    }
-});
-
-// Form validation and submission
-// Note: Registration form was removed, so we only handle contact form
-let contactForm = null;
-
-// Wait for DOM to load before accessing forms
-document.addEventListener('DOMContentLoaded', () => {
-    contactForm = document.getElementById('contactForm');
-    
-    if (contactForm) {
-        // Contact form handling
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Validate required fields
-            if (!data.contactName || !data.contactEmail || !data.contactSubject || !data.contactMessage) {
-                showNotification('Please fill in all required fields.', 'error');
-                return;
-            }
-            
-            // Validate email format
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.contactEmail)) {
-                showNotification('Please enter a valid email address.', 'error');
-                return;
-            }
-            
-            // Simulate form submission
-            showNotification('Message sent successfully! We will get back to you soon.', 'success');
-            
-            // Reset form
-            this.reset();
-            
-            // Contact data would be sent to server in real app
-        });
-    }
-});
-
-// Notification system
-function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(notification => notification.remove());
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-message">${message}</span>
-            <button class="notification-close">&times;</button>
-        </div>
-    `;
-    
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        max-width: 400px;
-        animation: slideInRight 0.3s ease;
-    `;
-    
-    // Add close button functionality
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.addEventListener('click', () => {
-        notification.remove();
-    });
-    
-    // Auto-remove after 5 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }
-    }, 5000);
-    
-    // Add to page
-    document.body.appendChild(notification);
-}
-
-// Add CSS animations for notifications and critical event visibility overrides
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-    
-    .notification-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    .notification-close {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        padding: 0;
-        line-height: 1;
-    }
-    
-    .notification-close:hover {
-        opacity: 0.8;
-    }
-    
-    /* CRITICAL: Force events to be visible on all devices */
-    #events {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 1 !important;
-    }
-    
-    .events-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 1 !important;
-    }
-    
-    .event-card {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow: visible !important;
-        position: relative !important;
-        z-index: 1 !important;
-    }
-    
-    /* Mobile-specific overrides */
-    @media (max-width: 768px) {
-        #events {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            padding: 60px 0 !important;
-        }
-        
-        .events-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 1.5rem !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 2rem 0 !important;
-            padding: 0 !important;
-        }
-        
-        .event-card {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 0 1.5rem 0 !important;
-            padding: 1.5rem !important;
-        }
-    }
-    
-    /* Event registration button styles */
-    .event-registration {
-        margin-top: 1rem;
-        text-align: center;
-    }
-    
-    .register-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: linear-gradient(135deg, #8B4513, #FFD700);
-        color: white;
-        text-decoration: none;
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
-        border: 2px solid transparent;
-    }
-    
-    .register-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
-        background: linear-gradient(135deg, #FFD700, #8B4513);
-        color: #8B4513;
-        border-color: #8B4513;
-    }
-    
-    .register-btn i {
-        font-size: 1rem;
-    }
-    
-    /* Mobile responsive registration button */
-    @media (max-width: 768px) {
-        .register-btn {
-            padding: 12px 24px;
-            font-size: 1rem;
-            width: 100%;
-            justify-content: center;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Event counter animation
-function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
-    
-    function updateCounter() {
-        start += increment;
-        if (start < target) {
-            element.textContent = Math.floor(start);
-            requestAnimationFrame(updateCounter);
-        } else {
-            element.textContent = target;
-        }
-    }
-    
-    updateCounter();
-}
-
-// Animate counters when they come into view
-const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const counter = entry.target.querySelector('h3');
-            const target = parseInt(counter.textContent);
-            animateCounter(counter, target);
-            counterObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-// Observe stat items for counter animation
-document.addEventListener('DOMContentLoaded', () => {
-    const statItems = document.querySelectorAll('.stat-item');
-    statItems.forEach(item => counterObserver.observe(item));
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const ganeshaImage = document.querySelector('.ganesha-image');
-    
-    if (hero && ganeshaImage) {
-        const rate = scrolled * -0.3;
-        ganeshaImage.style.transform = `translateY(${rate}px) scale(1)`;
-    }
-});
-
-// Add loading animation for forms
-function addLoadingState(form, button) {
-    const originalText = button.textContent;
-    button.textContent = 'Processing...';
-    button.disabled = true;
-    button.style.opacity = '0.7';
-    
-    // Simulate processing time
-    setTimeout(() => {
-        button.textContent = originalText;
-        button.disabled = false;
-        button.style.opacity = '1';
-    }, 2000);
-}
-
-// Add loading states to forms
-// Registration form handling
-// The registration form was removed, so this block is now effectively empty.
-
-// Add hover effects for event cards
-document.addEventListener('DOMContentLoaded', () => {
-    const eventCards = document.querySelectorAll('.event-card');
-    
     eventCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(10px)';
-            this.style.boxShadow = '0 8px 25px rgba(139, 69, 19, 0.15)';
-            this.style.borderLeftColor = '#8B4513';
-            this.style.borderLeftWidth = '4px';
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+            this.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15)';
         });
         
         card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateX(0)';
-            this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
-            this.style.borderLeftColor = '#e0e0e0';
-            this.style.borderLeftWidth = '1px';
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
         });
     });
-});
+}
 
-// Add click-to-copy functionality for contact information
-document.addEventListener('DOMContentLoaded', () => {
-    const contactItems = document.querySelectorAll('.contact-item p');
-    
-    contactItems.forEach(item => {
-        if (item.textContent.includes('@') || item.textContent.includes('+')) {
-            item.style.cursor = 'pointer';
-            item.title = 'Click to copy';
-            
-            item.addEventListener('click', function() {
-                const text = this.textContent;
-                navigator.clipboard.writeText(text).then(() => {
-                    showNotification('Copied to clipboard!', 'success');
-                }).catch(() => {
-                    showNotification('Failed to copy to clipboard', 'error');
+// Smooth Scrolling with modern easing
+function initializeSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const targetPosition = target.offsetTop - 80; // Account for fixed navbar
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
                 });
-            });
-        }
-    });
-});
-
-// Countdown timer removed - now handled in HTML file
-// function updateCountdown() {
-    const festivalStart = new Date('August 27, 2025 00:00:00').getTime();
-    const now = new Date().getTime();
-    const distance = festivalStart - now;
-    
-    if (distance > 0) {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        // Update countdown display for new card-based layout
-        const countdownElement = document.querySelector('.countdown-timer');
-        if (countdownElement) {
-            const timerItems = countdownElement.querySelectorAll('.timer-item');
-            
-            if (timerItems.length >= 4) {
-                const dayElement = timerItems[0].querySelector('.timer-number');
-                const hourElement = timerItems[1].querySelector('.timer-number');
-                const minuteElement = timerItems[2].querySelector('.timer-number');
-                const secondElement = timerItems[3].querySelector('.timer-number');
                 
-                // Debug logging
-                console.log('Countdown values:', { days, hours, minutes, seconds });
-                console.log('Timer items found:', timerItems.length);
-                
-                if (dayElement) {
-                    dayElement.textContent = days.toString().padStart(2, '0');
-                    console.log('Updated days:', dayElement.textContent);
-                }
-                if (hourElement) {
-                    hourElement.textContent = hours.toString().padStart(2, '0');
-                    console.log('Updated hours:', hourElement.textContent);
-                }
-                if (minuteElement) {
-                    minuteElement.textContent = minutes.toString().padStart(2, '0');
-                    console.log('Updated minutes:', minuteElement.textContent);
-                }
-                if (secondElement) {
-                    secondElement.textContent = seconds.toString().padStart(2, '0');
-                    console.log('Updated seconds:', secondElement.textContent);
-                }
-            } else {
-                console.log('Not enough timer items found:', timerItems.length);
-            }
-        } else {
-            console.log('Countdown element not found');
-        }
-    } else {
-        // Festival has started
-        const countdownElement = document.querySelector('.countdown-timer');
-        if (countdownElement) {
-            countdownElement.innerHTML = '<div style="font-size: 18px; color: #e74c3c; font-weight: bold; text-align: center; padding: 20px; background: rgba(255, 193, 7, 0.2); border-radius: 15px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);">🎉 Festival Started! 🎉</div>';
-        }
-    }
-}
-
-// Countdown now handled in HTML file
-// setInterval(updateCountdown, 1000);
-
-// Countdown now handled in HTML file
-// document.addEventListener('DOMContentLoaded', () => {
-//     // Wait a bit for all elements to be fully rendered
-//     setTimeout(() => {
-//         updateCountdown();
-//     }, 100);
-// });
-
-// Countdown now handled in HTML file
-// if (document.readyState === 'loading') {
-//     document.addEventListener('DOMContentLoaded', updateCountdown);
-// } else {
-//     updateCountdown();
-// }
-
-// Add smooth reveal animation for sections
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, { threshold: 0.1 });
-
-// Apply reveal animation to sections
-document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(50px)';
-        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        revealObserver.observe(section);
-    });
-});
-
-// Force show all events function
-function forceShowEvents() {
-    const eventsGrid = document.querySelector('.events-grid');
-    const eventCards = document.querySelectorAll('.event-card');
-    
-    if (eventsGrid) {
-        eventsGrid.style.display = 'flex';
-        eventsGrid.style.flexDirection = 'column';
-        eventsGrid.style.visibility = 'visible';
-        eventsGrid.style.opacity = '1';
-        eventsGrid.style.width = '100%';
-        eventsGrid.style.maxWidth = '100%';
-        eventsGrid.style.overflow = 'visible';
-    }
-    
-    eventCards.forEach(card => {
-        card.style.display = 'block';
-        card.style.visibility = 'visible';
-        card.style.opacity = '1';
-        card.style.width = '100%';
-        card.style.maxWidth = '100%';
-        card.style.overflow = 'visible';
-    });
-    
-    // Events are now visible
-}
-
-
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Countdown now handled in HTML file
-    
-    initializeFAB();
-    hidePastEvents(); // Hide events with passed dates
-    
-    // Set up daily check for past events
-    setupDailyPastEventCheck();
-    
-    // Initialize mobile-specific features
-    initializeMobileFeatures();
-});
-
-// Initialize mobile-specific features
-function initializeMobileFeatures() {
-    // Touch gesture handling
-    initializeTouchGestures();
-    
-    // Pull to refresh functionality
-    initializePullToRefresh();
-    
-    // Mobile-optimized scrolling
-    initializeMobileScrolling();
-    
-    // Touch-friendly interactions
-    initializeTouchInteractions();
-    
-    // Mobile performance optimizations
-    initializeMobilePerformance();
-    
-
-}
-
-// Floating Action Button (FAB) Functionality
-function initializeFAB() {
-    const fabButton = document.getElementById('fabButton');
-    const fabMenu = document.getElementById('fabMenu');
-    
-    if (fabButton && fabMenu) {
-        fabButton.addEventListener('click', function() {
-            fabMenu.classList.toggle('active');
-            
-            // Change icon based on state
-            const icon = this.querySelector('i');
-            if (fabMenu.classList.contains('active')) {
-                icon.className = 'fas fa-times';
-            } else {
-                icon.className = 'fas fa-plus';
+                // Add active state to navigation
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
             }
         });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!fabButton.contains(event.target) && !fabMenu.contains(event.target)) {
-                fabMenu.classList.remove('active');
-                const icon = fabButton.querySelector('i');
-                icon.className = 'fas fa-plus';
-            }
-        });
-    }
-}
-
-// Share website functionality
-function shareWebsite() {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Windows Society Ganeshotsav 2025',
-            text: 'Join us for the grand celebration of Lord Ganesha from August 27 to September 6, 2025!',
-            url: window.location.href
-        }).then(() => {
-            showNotification('Website shared successfully!', 'success');
-        }).catch(() => {
-            showNotification('Failed to share website', 'error');
-        });
-    } else {
-        // Fallback for browsers that don't support Web Share API
-        const shareText = 'Windows Society Ganeshotsav 2025 - Join us for the grand celebration!';
-        navigator.clipboard.writeText(shareText + ' ' + window.location.href).then(() => {
-            showNotification('Website link copied to clipboard!', 'success');
-        }).catch(() => {
-            showNotification('Failed to copy link', 'error');
-        });
-    }
-}
-
-// Dark mode toggle functionality
-function toggleDarkMode() {
-    const body = document.body;
-    const isDark = body.classList.contains('dark-mode');
-    
-    if (isDark) {
-        body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'false');
-        showNotification('Light mode enabled', 'success');
-    } else {
-        body.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'true');
-        showNotification('Dark mode enabled', 'success');
-    }
-}
-
-// Check for saved dark mode preference
-document.addEventListener('DOMContentLoaded', () => {
-    const darkMode = localStorage.getItem('darkMode');
-    if (darkMode === 'true') {
-        document.body.classList.add('dark-mode');
-    }
-});
-
-// Add event reminder functionality
-function setEventReminder(eventName, eventTime, eventDate) {
-    if ('Notification' in window && Notification.permission === 'granted') {
-        const notification = new Notification(`Ganeshotsav 2025 - ${eventName}`, {
-            body: `Your event ${eventName} is scheduled for ${eventTime} on ${eventDate}`,
-            icon: '/favicon.ico',
-            badge: '/favicon.ico'
-        });
-    }
-}
-
-// Request notification permission
-document.addEventListener('DOMContentLoaded', () => {
-    if ('Notification' in window && Notification.permission === 'default') {
-        Notification.requestPermission();
-    }
-});
-
-// Add print functionality for schedule
-function printSchedule() {
-    window.print();
-}
-
-// Add share functionality
-function shareEvent(eventName, eventTime, eventDate) {
-    if (navigator.share) {
-        navigator.share({
-            title: `Ganeshotsav 2025 - ${eventName}`,
-            text: `Join us for ${eventName} on ${eventDate} at ${eventTime}`,
-            url: window.location.href
-        });
-    } else {
-        // Fallback for browsers that don't support Web Share API
-        const shareText = `Ganeshotsav 2025 - ${eventName} on ${eventDate} at ${eventTime}`;
-        navigator.clipboard.writeText(shareText).then(() => {
-            showNotification('Event details copied to clipboard!', 'success');
-        });
-    }
-}
-
-// Add keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        // Handle escape key functionality
-    }
-});
-
-// Add scroll to top functionality
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
     });
-}
-
-// Add scroll to top button
-document.addEventListener('DOMContentLoaded', () => {
+    
+    // Smooth scroll to top button
     const scrollToTopBtn = document.createElement('button');
     scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
     scrollToTopBtn.className = 'scroll-to-top';
@@ -800,698 +90,268 @@ document.addEventListener('DOMContentLoaded', () => {
         right: 30px;
         width: 50px;
         height: 50px;
-        background: #8B4513;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea, #764ba2);
         color: white;
         border: none;
-        border-radius: 50%;
         cursor: pointer;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        visibility: hidden;
         transition: all 0.3s ease;
         z-index: 1000;
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
     `;
-    
-    scrollToTopBtn.addEventListener('click', scrollToTop);
-    scrollToTopBtn.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-3px)';
-        this.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
-    });
-    
-    scrollToTopBtn.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
-    });
     
     document.body.appendChild(scrollToTopBtn);
     
     // Show/hide scroll to top button
     window.addEventListener('scroll', () => {
         if (window.pageYOffset > 300) {
-            scrollToTopBtn.style.display = 'flex';
+            scrollToTopBtn.style.opacity = '1';
+            scrollToTopBtn.style.visibility = 'visible';
         } else {
-            scrollToTopBtn.style.display = 'none';
+            scrollToTopBtn.style.opacity = '0';
+            scrollToTopBtn.style.visibility = 'hidden';
         }
     });
-});
-
-// Add form validation hints
-document.addEventListener('DOMContentLoaded', () => {
-    const formInputs = document.querySelectorAll('input, select, textarea');
     
-    formInputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            if (this.hasAttribute('required') && !this.value.trim()) {
-                this.style.borderColor = '#f44336';
-            } else {
-                this.style.borderColor = '#e0e0e0';
-            }
-        });
-        
-        input.addEventListener('input', function() {
-            if (this.style.borderColor === 'rgb(244, 67, 54)') {
-                this.style.borderColor = '#e0e0e0';
-            }
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
     });
-});
-
-// Add event countdown for individual events
-function addEventCountdown() {
-    const eventCards = document.querySelectorAll('.event-card');
-    
-    eventCards.forEach(card => {
-        // Find the date/time information in the event-details
-        const dateElement = card.querySelector('.event-details span:first-child');
-        
-        if (dateElement && dateElement.textContent) {
-            const eventDate = dateElement.textContent;
-            if (eventDate.includes('Aug') || eventDate.includes('Sep')) {
-                // Add countdown for upcoming events
-                const countdownElement = document.createElement('div');
-                countdownElement.className = 'event-countdown';
-                countdownElement.style.cssText = `
-                    margin-top: 1rem;
-                    padding: 0.5rem;
-                    background: #f9f9f9;
-                    border-radius: 8px;
-                    font-size: 0.9rem;
-                    color: #666;
-                    text-align: center;
-                `;
-                
-                // Calculate days until event (simple example)
-                const today = new Date();
-                const eventYear = 2025;
-                let eventMonth, eventDay;
-                
-                if (eventDate.includes('Aug')) {
-                    eventMonth = 7; // August is month 7 (0-indexed)
-                    eventDay = parseInt(eventDate.match(/(\d+)/)[1]);
-                } else if (eventDate.includes('Sep')) {
-                    eventMonth = 8; // September is month 8 (0-indexed)
-                    eventDay = parseInt(eventDate.match(/(\d+)/)[1]);
-                }
-                
-                if (eventMonth !== undefined && eventDay) {
-                    const eventDateObj = new Date(eventYear, eventMonth, eventDay);
-                    const timeDiff = eventDateObj.getTime() - today.getTime();
-                    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                    
-                    if (daysDiff > 0) {
-                        countdownElement.textContent = `${daysDiff} days until event`;
-                    } else if (daysDiff === 0) {
-                        countdownElement.textContent = 'Event is today!';
-                    } else {
-                        countdownElement.textContent = 'Event completed';
-                    }
-                } else {
-                    countdownElement.textContent = 'Event coming soon';
-                }
-                
-                card.appendChild(countdownElement);
-            }
-        }
-    });
 }
 
-// Initialize event countdown with error handling
-document.addEventListener('DOMContentLoaded', () => {
-    try {
-        addEventCountdown();
-    } catch (error) {
-        // Event countdown initialization skipped
-    }
-});
-
-// Website loaded successfully
-
-// Background music removed
-
-// Music system removed 
-
-// Function to hide events with passed dates
-function hidePastEvents() {
-    const eventCards = document.querySelectorAll('.event-card');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
-    
-    let pastEventCount = 0;
-    
-    eventCards.forEach(card => {
-        const dateElement = card.querySelector('.event-date');
-        if (dateElement) {
-            const dateText = dateElement.textContent;
-            const eventDate = parseEventDate(dateText);
-            
-            if (eventDate && eventDate < today) {
-                // Add past-event class for styling
-                card.classList.add('past-event');
-                
-                // Add a "Past Event" indicator
-                addPastEventIndicator(card);
-                
-                pastEventCount++;
-                
-                // Optionally hide the card completely (uncomment the next line if you want to hide past events)
-                // card.style.display = 'none';
-            }
-        }
-    });
-    
-    // Show notification about past events if there are any
-    if (pastEventCount > 0) {
-        showPastEventsNotification(pastEventCount);
-    }
-}
-
-// Function to show notification about past events
-function showPastEventsNotification(pastEventCount) {
-    // Check if we've already shown this notification today
-    const lastNotification = localStorage.getItem('lastPastEventNotification');
-    const today = new Date().toDateString();
-    
-    if (lastNotification !== today) {
-        const notification = document.createElement('div');
-        notification.className = 'past-events-notification';
-        notification.innerHTML = `
-            <div class="notification-content">
-                <i class="fas fa-info-circle"></i>
-                <span>${pastEventCount} event(s) have passed. Past events are marked with indicators.</span>
-                <button class="notification-close">&times;</button>
-            </div>
-        `;
+// Enhanced Event Removal System
+function initializeEventRemoval() {
+    function removePastEvents() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth(); // 0-11 (January = 0)
+        const currentDay = today.getDate();
         
-        notification.style.cssText = `
-            position: fixed;
-            top: 100px;
-            left: 20px;
-            background: #2196F3;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
-            max-width: 400px;
-            animation: slideInLeft 0.3s ease;
-        `;
+        console.log(`🔍 Checking for past events on ${currentDay}/${currentMonth + 1}/${currentYear}`);
         
-        // Add close button functionality
-        const closeBtn = notification.querySelector('.notification-close');
-        closeBtn.addEventListener('click', () => {
-            notification.remove();
+        const eventCards = document.querySelectorAll('.event-card');
+        console.log(`📅 Found ${eventCards.length} event cards to check`);
+        
+        // Ensure all event cards are visible first
+        eventCards.forEach(card => {
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+            card.style.display = 'block';
         });
         
-        // Auto-remove after 10 seconds
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.style.animation = 'slideOutLeft 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }
-        }, 10000);
-        
-        // Add to page
-        document.body.appendChild(notification);
-        
-        // Mark as shown today
-        localStorage.setItem('lastPastEventNotification', today);
-    }
-}
-
- 
-
-// Function to set up daily check for past events
-function setupDailyPastEventCheck() {
-    // Check if we need to refresh past events (once per day)
-    const lastCheck = localStorage.getItem('lastPastEventCheck');
-    const today = new Date().toDateString();
-    
-    if (lastCheck !== today) {
-        // Update past events
-        hidePastEvents();
-        localStorage.setItem('lastPastEventCheck', today);
-    }
-    
-    // Set up interval to check every hour (in case user keeps page open)
-    setInterval(() => {
-        const currentDate = new Date().toDateString();
-        if (currentDate !== lastCheck) {
-            hidePastEvents();
-            localStorage.setItem('lastPastEventCheck', currentDate);
-        }
-    }, 60 * 60 * 1000); // Check every hour
-} 
-
-// Touch gesture handling for mobile
-function initializeTouchGestures() {
-    let startX = 0;
-    let startY = 0;
-    let startTime = 0;
-    let isScrolling = false;
-    
-    // Touch start
-    document.addEventListener('touchstart', function(e) {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        startTime = Date.now();
-        isScrolling = false;
-    }, { passive: true });
-    
-    // Touch move
-    document.addEventListener('touchmove', function(e) {
-        if (!startX || !startY) return;
-        
-        const deltaX = e.touches[0].clientX - startX;
-        const deltaY = e.touches[0].clientY - startY;
-        
-        // Determine if user is scrolling or swiping
-        if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
-            isScrolling = true;
-        }
-    }, { passive: true });
-    
-    // Touch end - handle gestures
-    document.addEventListener('touchend', function(e) {
-        if (!startX || !startY || isScrolling) return;
-        
-        const deltaX = e.changedTouches[0].clientX - startX;
-        const deltaY = e.changedTouches[0].clientY - startY;
-        const deltaTime = Date.now() - startTime;
-        
-        // Minimum swipe distance and maximum time
-        const minSwipeDistance = 50;
-        const maxSwipeTime = 300;
-        
-        if (deltaTime < maxSwipeTime) {
-            // Horizontal swipe
-            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
-                if (deltaX > 0) {
-                    // Swipe right - go to previous section
-                    handleSwipeRight();
-                } else {
-                    // Swipe left - go to next section
-                    handleSwipeLeft();
-                }
+        eventCards.forEach((card, index) => {
+            const dateSection = card.closest('.date-section');
+            if (!dateSection) return;
+            
+            const dateTitle = dateSection.querySelector('.date-title');
+            if (!dateTitle) return;
+            
+            const dateText = dateTitle.textContent;
+            console.log(`📋 Checking event ${index + 1}: ${dateText}`);
+            
+            // Parse the date from the title (e.g., "August 30, 2025" or "September 1, 2025")
+            const dateMatch = dateText.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
+            if (!dateMatch) {
+                console.log(`❌ Could not parse date: ${dateText}`);
+                return;
             }
             
-            // Vertical swipe
-            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > minSwipeDistance) {
-                if (deltaY > 0) {
-                    // Swipe down - scroll to top
-                    handleSwipeDown();
-                } else {
-                    // Swipe up - scroll to bottom
-                    handleSwipeUp();
-                }
+            const monthName = dateMatch[1];
+            const day = parseInt(dateMatch[2]);
+            const year = parseInt(dateMatch[3]);
+            
+            // Convert month name to number
+            const months = {
+                'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5,
+                'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11
+            };
+            
+            const month = months[monthName];
+            if (month === undefined) {
+                console.log(`❌ Unknown month: ${monthName}`);
+                return;
             }
-        }
-        
-        // Reset values
-        startX = 0;
-        startY = 0;
-        startTime = 0;
-    }, { passive: true });
-}
-
-// Handle swipe right gesture
-function handleSwipeRight() {
-    const currentSection = getCurrentSection();
-    const prevSection = getPreviousSection(currentSection);
-    if (prevSection) {
-        prevSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        showNotification('Previous section', 'info');
-    }
-}
-
-// Handle swipe left gesture
-function handleSwipeLeft() {
-    const currentSection = getCurrentSection();
-    const nextSection = getNextSection(currentSection);
-    if (nextSection) {
-        nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        showNotification('Next section', 'info');
-    }
-}
-
-// Handle swipe down gesture
-function handleSwipeDown() {
-    scrollToTop();
-    showNotification('Scrolled to top', 'info');
-}
-
-// Handle swipe up gesture
-function handleSwipeUp() {
-    window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth'
-    });
-    showNotification('Scrolled to bottom', 'info');
-}
-
-// Get current visible section
-function getCurrentSection() {
-    const sections = document.querySelectorAll('section');
-    const scrollPosition = window.pageYOffset + window.innerHeight / 2;
-    
-    for (let section of sections) {
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
-        
-        if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
-            return section;
-        }
-    }
-    return sections[0];
-}
-
-// Get previous section
-function getPreviousSection(currentSection) {
-    const sections = Array.from(document.querySelectorAll('section'));
-    const currentIndex = sections.indexOf(currentSection);
-    return currentIndex > 0 ? sections[currentIndex - 1] : null;
-}
-
-// Get next section
-function getNextSection(currentSection) {
-    const sections = Array.from(document.querySelectorAll('section'));
-    const currentIndex = sections.indexOf(currentSection);
-    return currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
-}
-
-// Pull to refresh functionality
-function initializePullToRefresh() {
-    let startY = 0;
-    let currentY = 0;
-    let pullDistance = 0;
-    let isPulling = false;
-    let refreshIndicator = null;
-    
-    // Create refresh indicator
-    function createRefreshIndicator() {
-        if (refreshIndicator) return refreshIndicator;
-        
-        refreshIndicator = document.createElement('div');
-        refreshIndicator.className = 'pull-refresh-indicator';
-        refreshIndicator.innerHTML = `
-            <div class="refresh-content">
-                <i class="fas fa-spinner fa-spin"></i>
-                <span>Pull to refresh</span>
-            </div>
-        `;
-        refreshIndicator.style.cssText = `
-            position: fixed;
-            top: -60px;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: linear-gradient(135deg, #8B4513, #FFD700);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: top 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        `;
-        
-        document.body.appendChild(refreshIndicator);
-        return refreshIndicator;
-    }
-    
-    // Touch start
-    document.addEventListener('touchstart', function(e) {
-        if (window.pageYOffset === 0) {
-            startY = e.touches[0].clientY;
-            isPulling = true;
-        }
-    }, { passive: true });
-    
-    // Touch move
-    document.addEventListener('touchmove', function(e) {
-        if (!isPulling) return;
-        
-        currentY = e.touches[0].clientY;
-        pullDistance = currentY - startY;
-        
-        if (pullDistance > 0 && window.pageYOffset === 0) {
-            e.preventDefault();
             
-            const indicator = createRefreshIndicator();
-            const progress = Math.min(pullDistance / 100, 1);
+            // Create event date
+            const eventDate = new Date(year, month, day);
             
-            indicator.style.top = `${Math.min(pullDistance - 60, 0)}px`;
+            // Compare dates
+            const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             
-            if (pullDistance > 100) {
-                indicator.querySelector('.refresh-content span').textContent = 'Release to refresh';
-                indicator.querySelector('.refresh-content i').className = 'fas fa-arrow-down';
-            } else {
-                indicator.querySelector('.refresh-content span').textContent = 'Pull to refresh';
-                indicator.querySelector('.refresh-content i').className = 'fas fa-arrow-down';
-            }
-        }
-    }, { passive: false });
-    
-    // Touch end
-    document.addEventListener('touchend', function(e) {
-        if (!isPulling) return;
-        
-        if (pullDistance > 100) {
-            // Trigger refresh
-            const indicator = createRefreshIndicator();
-            indicator.querySelector('.refresh-content span').textContent = 'Refreshing...';
-            indicator.querySelector('.refresh-content i').className = 'fas fa-spinner fa-spin';
+            console.log(`📅 Event date: ${eventDate.toDateString()}, Today: ${todayDate.toDateString()}`);
             
-            // Simulate refresh (in real app, this would refresh data)
-            setTimeout(() => {
-                indicator.style.top = '-60px';
+            // Return true if event date is before today
+            if (eventDate < todayDate) {
+                console.log(`🗑️ Removing past event: ${dateText}`);
                 
-                // Refresh past events
-                hidePastEvents();
+                // Add fade-out animation before removing
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(-20px)';
                 
                 setTimeout(() => {
-                    if (indicator.parentNode) {
-                        indicator.remove();
+                    card.remove();
+                    console.log('✅ Removed past event card');
+                    
+                    // Check if the date section is now empty and remove it
+                    const remainingCards = dateSection.querySelectorAll('.event-card');
+                    if (remainingCards.length === 0) {
+                        console.log('🗑️ Removing empty date section');
+                        dateSection.style.transition = 'all 0.5s ease';
+                        dateSection.style.opacity = '0';
+                        dateSection.style.transform = 'translateY(-20px)';
+                        
+                        setTimeout(() => {
+                            dateSection.remove();
+                            console.log('✅ Removed empty date section');
+                        }, 500);
                     }
-                }, 300);
-            }, 1500);
-        } else {
-            // Reset indicator
-            const indicator = createRefreshIndicator();
-            indicator.style.top = '-60px';
+                }, 500);
+            } else {
+                console.log(`✅ Event is current or future: ${dateText}`);
+                // Ensure current/future events are visible
+                card.style.opacity = '1';
+                card.style.visibility = 'visible';
+                card.style.display = 'block';
+            }
+        });
+    }
+    
+    // Check for past events every hour and on page load
+    setInterval(removePastEvents, 3600000); // Every hour
+    removePastEvents(); // Initial check
+    
+    // Also check when the page becomes visible (user returns to tab)
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            removePastEvents();
         }
+    });
+    
+    // Force check after a short delay to ensure DOM is ready
+    setTimeout(removePastEvents, 1000);
+    
+    // Manual function to force remove August 30 events (for testing)
+    window.forceRemoveAugust30 = function() {
+        console.log('🔧 Manually removing August 30 events...');
+        const august30Section = document.querySelector('.date-section');
+        if (august30Section) {
+            const dateTitle = august30Section.querySelector('.date-title');
+            if (dateTitle && dateTitle.textContent.includes('August 30')) {
+                console.log('🗑️ Found August 30 section, removing...');
+                august30Section.style.transition = 'all 0.5s ease';
+                august30Section.style.opacity = '0';
+                august30Section.style.transform = 'translateY(-20px)';
+                
+                setTimeout(() => {
+                    august30Section.remove();
+                    console.log('✅ August 30 section removed!');
+                }, 500);
+            }
+        }
+    };
+    
+    // Auto-remove August 30 if we're past that date
+    const today = new Date();
+    const august30 = new Date(2025, 7, 30); // August 30, 2025 (month is 0-indexed)
+    if (today > august30) {
+        console.log('📅 Past August 30, auto-removing...');
+        setTimeout(() => {
+            window.forceRemoveAugust30();
+        }, 2000);
+    }
+    
+    // Ensure events are visible on mobile
+    window.ensureEventsVisible = function() {
+        console.log('📱 Ensuring events are visible on mobile...');
+        const eventCards = document.querySelectorAll('.event-card');
+        eventCards.forEach(card => {
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+            card.style.display = 'block';
+        });
         
-        // Reset values
-        isPulling = false;
-        pullDistance = 0;
-    }, { passive: true });
-} 
-
-// Mobile-optimized scrolling
-function initializeMobileScrolling() {
-    // Smooth scrolling for mobile
-    let isScrolling = false;
-    let scrollTimeout;
+        const dateSections = document.querySelectorAll('.date-section');
+        dateSections.forEach(section => {
+            section.style.opacity = '1';
+            section.style.visibility = 'visible';
+            section.style.display = 'block';
+        });
+    };
     
-    // Optimize scroll performance
-    window.addEventListener('scroll', function() {
-        if (!isScrolling) {
-            isScrolling = true;
-            document.body.classList.add('is-scrolling');
-        }
-        
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            isScrolling = false;
-            document.body.classList.remove('is-scrolling');
-        }, 150);
-    }, { passive: true });
-    
-    // Add momentum scrolling for iOS
-    if (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
-        document.body.style.webkitOverflowScrolling = 'touch';
+    // Call this function on mobile devices
+    if (window.innerWidth <= 768) {
+        setTimeout(() => {
+            window.ensureEventsVisible();
+        }, 500);
     }
-    
-    // Optimize scroll events for mobile
-    let ticking = false;
-    function updateScroll() {
-        // Update scroll-based animations here
-        ticking = false;
-    }
-    
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateScroll);
-            ticking = true;
-        }
-    }
-    
-    window.addEventListener('scroll', requestTick, { passive: true });
 }
 
-// Touch-friendly interactions
-function initializeTouchInteractions() {
-    // Add touch feedback to interactive elements
-    const touchElements = document.querySelectorAll('.event-card, .btn, .register-btn, .contact-item, .stat-item');
+// Mobile Optimizations
+function initializeMobileOptimizations() {
+    // Touch-friendly interactions
+    const touchElements = document.querySelectorAll('.event-card, .register-btn, .contact-persons a');
     
     touchElements.forEach(element => {
         element.addEventListener('touchstart', function() {
             this.style.transform = 'scale(0.98)';
-            this.style.transition = 'transform 0.1s ease';
-        }, { passive: true });
-        
-        element.addEventListener('touchend', function() {
-            this.style.transform = 'scale(1)';
-        }, { passive: true });
-        
-        element.addEventListener('touchcancel', function() {
-            this.style.transform = 'scale(1)';
-        }, { passive: true });
-    });
-    
-    // Long press functionality for context menus
-    let longPressTimer;
-    let longPressTarget;
-    
-    touchElements.forEach(element => {
-        element.addEventListener('touchstart', function(e) {
-            longPressTarget = this;
-            longPressTimer = setTimeout(() => {
-                showContextMenu(this, e);
-            }, 800);
-        }, { passive: true });
-        
-        element.addEventListener('touchend', function() {
-            clearTimeout(longPressTimer);
-        }, { passive: true });
-        
-        element.addEventListener('touchmove', function() {
-            clearTimeout(longPressTimer);
-        }, { passive: true });
-    });
-}
-
-// Show context menu on long press
-function showContextMenu(element, event) {
-    // Remove existing context menu
-    const existingMenu = document.querySelector('.context-menu');
-    if (existingMenu) {
-        existingMenu.remove();
-    }
-    
-    // Create context menu
-    const contextMenu = document.createElement('div');
-    contextMenu.className = 'context-menu';
-    
-    let menuItems = [];
-    
-    // Different menu items based on element type
-    if (element.classList.contains('event-card')) {
-        menuItems = [
-            { icon: 'fas fa-share-alt', text: 'Share Event', action: () => shareEvent(element) },
-            { icon: 'fas fa-calendar-plus', text: 'Add to Calendar', action: () => addToCalendar(element) },
-            { icon: 'fas fa-bookmark', text: 'Bookmark', action: () => bookmarkEvent(element) }
-        ];
-    } else if (element.classList.contains('btn') || element.classList.contains('register-btn')) {
-        menuItems = [
-            { icon: 'fas fa-share-alt', text: 'Share', action: () => shareWebsite() },
-            { icon: 'fas fa-copy', text: 'Copy Link', action: () => copyLink() }
-        ];
-    }
-    
-    contextMenu.innerHTML = menuItems.map(item => `
-        <div class="context-menu-item" onclick="this.parentElement.remove(); ${item.action.toString().split('(')[0]}()">
-            <i class="${item.icon}"></i>
-            <span>${item.text}</span>
-        </div>
-    `).join('');
-    
-    // Position menu
-    const rect = element.getBoundingClientRect();
-    contextMenu.style.cssText = `
-        position: fixed;
-        top: ${rect.bottom + 10}px;
-        left: ${rect.left}px;
-        background: white;
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        min-width: 200px;
-        overflow: hidden;
-    `;
-    
-    document.body.appendChild(contextMenu);
-    
-    // Auto-remove after 5 seconds
-    setTimeout(() => {
-        if (contextMenu.parentNode) {
-            contextMenu.remove();
-        }
-    }, 5000);
-    
-    // Remove on outside click
-    document.addEventListener('click', function removeMenu() {
-        if (contextMenu.parentNode) {
-            contextMenu.remove();
-        }
-        document.removeEventListener('click', removeMenu);
-    });
-}
-
-// Share event functionality
-function shareEvent(element) {
-    const eventTitle = element.querySelector('.event-title')?.textContent || 'Event';
-    const eventDate = element.querySelector('.event-date')?.textContent || '';
-    
-    if (navigator.share) {
-        navigator.share({
-            title: `Ganeshotsav 2025 - ${eventTitle}`,
-            text: `Join us for ${eventTitle} on ${eventDate}`,
-            url: window.location.href
         });
-    } else {
-        const shareText = `Ganeshotsav 2025 - ${eventTitle} on ${eventDate}`;
-        navigator.clipboard.writeText(shareText).then(() => {
-            showNotification('Event details copied to clipboard!', 'success');
+        
+        element.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // Optimize for mobile performance
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('✅ Service Worker registered successfully');
+                })
+                .catch(error => {
+                    console.log('❌ Service Worker registration failed:', error);
+                });
+        });
+    }
+    
+    // Add mobile-specific styles
+    if (window.innerWidth <= 768) {
+        document.body.classList.add('mobile');
+        
+        // Optimize touch targets
+        const buttons = document.querySelectorAll('button, a');
+        buttons.forEach(button => {
+            button.style.minHeight = '44px';
+            button.style.minWidth = '44px';
         });
     }
 }
 
-// Add to calendar functionality
-function addToCalendar(element) {
-    const eventTitle = element.querySelector('.event-title')?.textContent || 'Event';
-    const eventDate = element.querySelector('.event-date')?.textContent || '';
-    
-    // Create calendar event URL (Google Calendar)
-    const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=20250827/20250906&details=${encodeURIComponent(`Join us for ${eventTitle} at Windows Society Ganeshotsav 2025`)}`;
-    
-    window.open(calendarUrl, '_blank');
-    showNotification('Calendar event created!', 'success');
-}
+// Enhanced Console Logging
+console.log('🚀 Windows Society Ganeshotsav 2025 - Modern Website Initialized!');
+console.log('📱 Mobile Optimized: ' + (window.innerWidth <= 768));
+console.log('🎨 Modern Design: infinitepig.com inspired');
+console.log('⚡ Performance: Optimized for speed and user experience');
 
-// Bookmark event functionality
-function bookmarkEvent(element) {
-    const eventTitle = element.querySelector('.event-title')?.textContent || 'Event';
+// Error Handling
+window.addEventListener('error', function(e) {
+    console.error('❌ Website Error:', e.error);
+});
+
+// Performance Monitoring
+window.addEventListener('load', function() {
+    const loadTime = performance.now();
+    console.log('⏱️ Page Load Time:', Math.round(loadTime), 'ms');
     
-    // Store in localStorage
-    const bookmarks = JSON.parse(localStorage.getItem('eventBookmarks') || '[]');
-    if (!bookmarks.includes(eventTitle)) {
-        bookmarks.push(eventTitle);
-        localStorage.setItem('eventBookmarks', JSON.stringify(bookmarks));
-        showNotification('Event bookmarked!', 'success');
-    } else {
-        showNotification('Event already bookmarked!', 'info');
+    if (loadTime > 3000) {
+        console.warn('⚠️ Slow page load detected. Consider optimizing images and scripts.');
     }
-}
-
-// Copy link functionality
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        showNotification('Link copied to clipboard!', 'success');
-    });
-} 
+});
 
 
 
@@ -1757,56 +617,8 @@ function initializeMobileAccessibility() {
         });
     });
     
-    // Add skip links for mobile
-    addSkipLinks();
-    
     // Improve focus management
     improveFocusManagement();
-}
-
-// Add skip links for accessibility
-function addSkipLinks() {
-    const skipLinks = [
-        { href: '#home', text: 'Skip to main content' },
-        { href: '#events', text: 'Skip to events' },
-        { href: '#contact', text: 'Skip to contact' }
-    ];
-    
-    const skipContainer = document.createElement('div');
-    skipContainer.className = 'skip-links';
-    skipContainer.style.cssText = `
-        position: absolute;
-        top: -40px;
-        left: 6px;
-        z-index: 1001;
-    `;
-    
-    skipLinks.forEach(link => {
-        const skipLink = document.createElement('a');
-        skipLink.href = link.href;
-        skipLink.textContent = link.text;
-        skipLink.style.cssText = `
-            background: #8B4513;
-            color: white;
-            padding: 8px 16px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            transition: top 0.3s ease;
-        `;
-        
-        skipLink.addEventListener('focus', function() {
-            this.style.top = '6px';
-        });
-        
-        skipLink.addEventListener('blur', function() {
-            this.style.top = '-40px';
-        });
-        
-        skipContainer.appendChild(skipLink);
-    });
-    
-    document.body.insertBefore(skipContainer, document.body.firstChild);
 }
 
 // Improve focus management
